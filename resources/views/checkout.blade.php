@@ -6,11 +6,13 @@
 
 
             <!-- TITLE BANNER START -->
-            <section class="title-banner">
-                <div class="container">
-                    <h1 class="medium-black fw-700">Checkout</h1>
-                </div>
-            </section>
+             <section>
+        <div class="hero-img d-flex align-items-center">
+            <div class="text-center site-container my-5">
+                <h1 class="font-jost fw-bold text-dark">Checkout</h1>
+            </div>
+        </div>
+    </section>
             <!-- TITLE BANNER END -->
 
             <!-- Customer Container Start -->
@@ -18,7 +20,7 @@
             <!-- Customer Container End -->
     
             <!-- Billing Details Start -->
-            <section class="billing-detail pb-40">
+            <section class="billing-detail pb-40 my-5">
                 <div class="container">
                     <form action="" method="post" class="contact-form" id="checkout-form">
                         @csrf
@@ -102,7 +104,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 mb-3">
                                             <div class="input-block">
                                                 <label for="textbox" class="fw-500 mb-16">Order notes (optional)</label>
                                                 <textarea name="textarea" id="textbox" cols="8" rows="5" class="form-control" placeholder="Note About Your Order, e.g. special notes for delivery."></textarea>
@@ -270,11 +272,13 @@
 
         {{-- Cart Items --}}
         @php $subtotal = 0; @endphp
-        @foreach(session('cart') as $index => $item)
-            @php 
-                $lineTotal = $item['price'] * $item['quantity'];
-                $subtotal += $lineTotal;
-            @endphp
+@foreach(session('cart') as $index => $item)
+    @php 
+        $lineTotal = $item['price'] * $item['quantity'];
+        $subtotal += $lineTotal;
+    @endphp
+    <!-- rest of loop content -->
+
 
             <div class="item-container mb-16">
                 <div class="left-box d-flex align-items-center gap-16">
@@ -336,7 +340,7 @@
         {{-- Totals --}}
         <div class="d-flex align-items-center justify-content-between mb-16">
             <h6 class="medium-black">Subtotal</h6>
-            <h6 class="light-gray">${{ number_format($subtotal, 2) }}</h6>
+            <h6 class="light-gray">${{ number_format($subtotal ?? '', 2) }}</h6>
         </div>
         <div class="hr-line mb-16"></div>
         
@@ -354,7 +358,7 @@
         
         <div class="d-flex align-items-center justify-content-between mb-16">
             <h5 class="color-primary">TOTAL</h5>
-            <h5 class="color-primary">${{ number_format($subtotal + 5 - 5, 2) }}</h5>
+            <h5 class="color-primary">${{ number_format($subtotal ?? '' + 5 - 5, 2) }}</h5>
         </div>
         <div class="hr-line mb-16"></div>
 
@@ -439,7 +443,7 @@ form.addEventListener("submit", async function(e) {
                 "X-CSRF-TOKEN": "{{ csrf_token() }}"
             },
             body: JSON.stringify({
-                amount: {{ intval(($subtotal + 5 - 5) * 100) }},
+                amount: {{ intval(($subtotal ?? '' + 5 - 5) * 100) }},
                 billing_name: form.billing_name.value,
                 billing_email: form.billing_email.value
             })

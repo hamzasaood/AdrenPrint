@@ -1,0 +1,228 @@
+body {
+    font-family: "Jost", sans-serif;
+    font-style: normal;
+    background-color: #ffffff;
+}
+
+.site-container {
+    width: 100%;
+    padding-left: 100px;
+    padding-right: 100px;
+    box-sizing: border-box;
+    margin: 25px 0;
+}
+
+.navbar .navbar-toggler {
+    padding: 0;
+}
+
+.navbar a {
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.my-150 {
+    margin-bottom: 150px;
+    margin-top: 150px;
+}
+
+.pb-150 {
+    padding-bottom: 150px;
+    padding-top: 150px;
+}
+
+.font-jost {
+    font-family: "Jost", sans-serif;
+    font-style: normal;
+}
+
+.footer-logo {
+    width: 200px;
+    height: auto;
+}
+
+.footer-links li {
+    margin-bottom: 6px;
+}
+
+.payment-icons img {
+    height: 22px;
+    margin-right: 8px;
+}
+
+.payment-icons a {
+    margin-right: 8px;
+    font-size: 1.25rem;
+    color: #212529;
+    transition: color 0.3s ease;
+}
+
+.payment-icons a:hover {
+    color: #dea928;
+}
+
+.footer-divider {
+    border-top: 1px solid #eee;
+    margin: 2rem 0 1rem 0;
+}
+
+.hero-img {
+    background-image: url('../media/hero.png');
+    background-position: center;
+    background-size: cover;
+    height: 80vh;
+}
+
+section:first-of-type h1 {
+    font-size: 70px;
+}
+
+.brand-yellow {
+    color: #dea928;
+}
+
+.icons a {
+    color: #212529;
+    transition: color 0.3s ease;
+}
+
+.icons a:hover {
+    color: #dea928;
+}
+
+@media (max-width: 576px) {
+    footer .d-flex {
+        flex-direction: column;
+    }
+
+    .icons-regular a {
+        display: none;
+    }
+
+    .footer-logo {
+        margin: 0 auto 15px auto;
+    }
+
+    .site-container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    section:first-of-type h1 {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    section:first-of-type h1 {
+        font-size: 42px;
+    }
+
+    .footer-branding {
+        flex-direction: row;
+    }
+
+    .bottom-bar {
+        flex-direction: row;
+        text-align: left;
+    }
+}
+
+@media (max-width: 992px) {
+    .site-container {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+.footer-branding {
+    flex-direction: column;
+}
+
+.bottom-bar {
+    flex-direction: column;
+    text-align: center;
+}
+
+.navbar-brand img {
+    max-height: 80px;
+    width: auto;
+    height: auto;
+}
+
+.feature-card {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border: 1px solid black;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    font-size: 1.2rem;
+    color: #dea928;
+    margin-right: 3px;
+}
+
+.accordion-button::after {
+    filter: invert(1);
+}
+
+.section-title {
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    color: #dea928;
+}
+
+.list-group-item strong {
+    color: #dea928;
+}
+
+.card {
+    border: none;
+}
+
+.user-content p {
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.gng-sheet img {
+    height: 650px;
+}
+
+.ratings i {
+    color: #dea928;
+}
+
+.product-img {
+    max-width: 80px;
+    object-fit: contain;
+}
+
+.quantity-input {
+    width: 60px;
+}
+
+.cart-tip {
+    background: #e9f7ef;
+    border-left: 5px solid #28a745;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    color: #155724;
+    border-radius: 0.2rem;
+}
+
+.checkout-button {
+    background-color: #dea928;
+    border: #dea928;
+}
+
+.checkout-button:hover {
+    background-color: #a07813;
+    border: #a07813;
+}

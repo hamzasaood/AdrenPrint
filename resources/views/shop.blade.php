@@ -22,16 +22,19 @@
 
 
             <!-- TITLE BANNER START -->
-            <section class="title-banner">
-                <div class="container">
-                    <h1 class="medium-black fw-700">Shop</h1>
-                </div>
-            </section>
+             <section>
+        <div class="hero-img d-flex align-items-center">
+            <div class="text-center site-container my-5">
+                <h1 class="font-jost fw-bold text-dark">Shop</h1>
+            </div>
+        </div>
+    </section>
             <!-- TITLE BANNER END -->
 
             <!-- COLLECTION SECTION START -->
-            <div class="collection-sec pt-80 pb-40">
-                <div class="container">
+            <section class="site-container">
+      <div class="collection-sec pt-80 pb-40">
+                <div class="">
                     <div class="row gx-lg-4 gx-3 row-gap-lg-4 row-gap-3">
                         <div class="col-xl-2 col-lg-3 col-md-3 col-sm-4 col-6">
                             <a href="{{url('/shop')}}" class="collection-block w-100">
@@ -107,11 +110,11 @@
 
             <!-- Shop SECTION START -->
             <section class="shop-section py-80">
-                <div class="container">
+                <div class="">
                     <div class="row row-gap-4">
                         <div class="col-lg-3">
                             <div class="sidebar">
-                                <form action="https://uiparadox.co.uk/templates/print-hive/index.html" method="post" class="search-bar-container mb-24">
+                                <form action="https://uiparadox.co.uk/templates/print-hive/index.html" method="post" class="search-bar- mb-24">
                                     <div class="search-input-block">
                                         <input type="text" name="search" placeholder="Search Here...">
                                     </div>
@@ -276,7 +279,7 @@
                                     <div class="d-flex align-items-center gap-16 justify-content-end">
                                         <div class="d-flex align-items-center gap-8">
                                             <p class="dark-gray">Short by:</p>
-                                            <div class="drop-container shop-dropdown">
+                                            <div class="drop- shop-dropdown">
                                                 <div class="wrapper-dropdown" id="dropdown8">
                                                     <span class="selected-display" id="destination8">high to low</span>
                                                     <svg id="drp-arrow8" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="arrow transition-all ml-auto rotate-180">
@@ -359,9 +362,9 @@
                             @endif                                            
                         </p>
                     </div>
-                    <a href="javascript:void(0)" class="cart-btn modalCartBtn" data-product-id="{{ $product->id }}">
+                    <a href="javascript:void(0)" class="cart-btn modalCartBtn bg-brand-yellow" data-product-id="{{ $product->id }}">
                         <!-- cart SVG -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" class="">
                             <path d="M18.6372 17.8959C18.1487 14.4776 16.957 6.13472 16.957 6.13472C16.9157 5.84569 16.6681 5.63102 16.3762 5.63102H13.821V3.70419C13.6329 -1.23661 6.55028 -1.23285 6.364 3.70419V5.63102H3.80887C3.51691 5.63102 3.26943 5.84569 3.22813 6.13472C3.22813 6.13472 2.03641 14.4776 1.54789 17.8959C1.47221 18.4253 1.62982 18.9606 1.98021 19.3644C2.33059 19.7684 2.83816 20 3.37279 20H16.8123C17.3469 20 17.8544 19.7683 18.2048 19.3644C18.5552 18.9606 18.7128 18.4254 18.6372 17.8959ZM7.53734 3.70419C7.66621 0.318209 12.52 0.320751 12.6477 3.70419V5.63102H7.53734V3.70419ZM17.3186 18.5956C17.1912 18.7425 17.0066 18.8267 16.8123 18.8267H3.37279C3.17842 18.8267 2.9939 18.7425 2.86648 18.5956C2.73914 18.4488 2.68188 18.2543 2.70937 18.0619C3.12574 15.1487 4.0528 8.65872 4.31769 6.80432H6.36404V8.10277C6.3929 8.88031 7.50875 8.87973 7.53734 8.10277V6.80432H12.6477V8.10277C12.6766 8.88031 13.7924 8.87973 13.821 8.10277V6.80432H15.8674C16.1323 8.65872 17.0594 15.1487 17.4757 18.0619C17.5032 18.2543 17.4459 18.4488 17.3186 18.5956Z" fill="white"/>
                         </svg>
                     </a>
@@ -393,6 +396,8 @@
                     </div>
                 </div>
             </section>
+            </section>
+      
             <!-- Shop SECTION END -->
 
             <!-- FOOTER Start -->
