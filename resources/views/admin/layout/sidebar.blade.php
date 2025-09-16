@@ -1,4 +1,4 @@
-<nav class="sidebar dark_sidebar">
+<nav class="sidebar ">
 
 
 <style>
@@ -16,13 +16,13 @@
 <style>
 
 .sidebar #sidebar_menu>li ul li a.active {
-    color: #1f993d!important;
+    color: #fbaf1c!important;
 }
 
 </style>
 <div class="logo d-flex justify-content-between" style="    background-color: azure; justify-content:center !important;     padding: 0 !important;">
-<a class="large_logo" href="#"><img height="80" src="{!! asset('logo.png') !!}" alt></a>
-<a class="small_logo" href="#"><img width="101" height="80" src="{!! asset('logo.png') !!}" alt></a>
+<a class="large_logo" href="#"><img height="80" src="{!! asset('/assets/media/logo.gif') !!}" alt></a>
+<a class="small_logo" href="#"><img width="101" height="80" src="{!! asset('/assets/media/logo.gif') !!}" alt></a>
 <div class="sidebar_close_icon d-lg-none">
 <i class="ti-close"></i>
 </div>
@@ -251,17 +251,7 @@
 
 
 
-<li class>
-<a class="" href="{{url('/admin/contacts')}}" >
-<div class="nav_icon_small">
-<img src="{!! asset('admin/assets/img/menu-icon/8.svg') !!}" alt>
-</div>
-<div class="nav_title">
-<span>Contact US form (Entries) </span>
-</div>
-</a>
 
-</li>
 
 
 

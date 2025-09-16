@@ -36,9 +36,16 @@
             shop_id: {!! json_encode(config('services.dripapps.shop_id')) !!},
             mode: 'production',
             sizes: [
-                {id: 1, width: 22, height: 22, title: '22 x 22 in'},
-                {id: 2, width: 22, height: 60, title: '22 x 60 in'},
-                {id: 3, width: 22, height: 120, title: '22 x 120 in'},
+                
+                { id: 1, width: 22, height: 22, title: '22 × 22 in' },
+                { id: 2, width: 22, height: 60, title: '22 × 60 in' },
+                { id: 3, width: 22, height: 120, title: '22 × 120 in' },
+                // Add more standard sizes if needed:
+                { id: 4, width: 24, height: 36, title: '24 × 36 in' },
+                { id: 5, width: 24, height: 48, title: '24 × 48 in' },
+                { id: 6, width: 48, height: 60, title: '48 × 60 in' },
+
+
             ],
             customer: {
                 id: {{ auth()->id() ?? 'null' }},

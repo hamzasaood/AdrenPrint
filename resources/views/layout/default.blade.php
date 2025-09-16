@@ -53,6 +53,21 @@
             background-color: #1f993d;
             color: #FAFAFA;
         }
+
+        .btn-primary-custom {
+            background: #111;
+            color: #fff;
+            border-radius: 30px;
+            padding: 10px 22px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary-custom:hover {
+            background: #dea928;
+            color: #111;
+        }
     </style>
 
 
@@ -500,12 +515,20 @@
 
         // Reusable function
         function addToCart(productId, quantity = 1, design_json = null, preview = null) {
+            var unitprice = $("#variant-price-value").text().trim('$');
+
+            console.log('unitprice', unitprice);
+            var size = $("input[name='size']:checked").val() || null;
+            var color = $("input[name='color']:checked").val() || null;
             $.post("{{ route('cart.add') }}", {
                 _token: "{{ csrf_token() }}",
                 product_id: productId,
                 quantity: quantity,
                 design_json: design_json,
-                preview: preview
+                preview: preview,
+                size: size ? size : null,
+                color: color ? color : null,
+                variant_price_value: unitprice ? unitprice : null,
             }, function (response) {
                 if (response.success) {
                     loadCart();
@@ -587,9 +610,24 @@
                     total += itemTotal;
 
                 }
-                else {
+                else if(item.type=='pod')
+                {
                     name = item.name || 'Unnamed Item';
-                    imgSrc = `/images/${item.image}` || 'https://via.placeholder.com/60x60?text=No+Image';
+                    imgSrc = `${item.design_preview}` || 'https://via.placeholder.com/60x60?text=No+Image';
+                    itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                }
+                
+                else {
+
+                    name = item.name || 'Unnamed Item';
+                    if(item.image && item.image.startsWith('http')) {
+                        imgSrc = item.image; // full URL
+                    } else {
+                        imgSrc = `/images/${item.image}` || 'https://via.placeholder.com/60x60?text=No+Image';
+                    }
+                    
                     itemTotal = item.price * item.quantity;
                     total += itemTotal;
                 }

@@ -21,8 +21,8 @@ $gradientBase64 = base64_encode($gradientSvg);
     body { font-family: DejaVu Sans, sans-serif; margin:0; padding:0; font-size:12px; color:#333; }
     .card { border:1px solid #ddd; border-radius:6px; overflow:hidden; }
     .card-header {
-        background: #1f993d; /* ✅ fallback solid color */
-        background: url('data:image/svg+xml;base64,{{ $gradientBase64 }}') no-repeat, #1f993d;
+        background: #dea928; /* ✅ fallback solid color */
+        background: url('data:image/svg+xml;base64,{{ $gradientBase64 }}') no-repeat, #dea928;
         background-size: cover;
         color:#fff;
         padding:20px;
@@ -55,9 +55,9 @@ $gradientBase64 = base64_encode($gradientSvg);
                 <small>Order #{{ $order->id }}</small>
             </div>
             <div style="text-align:right;">
-                <h5 style="margin:0;">FullyPrint</h5>
-                <small>123 Business Street, City</small><br>
-                <small>support@fullyprint.com</small>
+                <h5 style="margin:0;">Ardens Print</h5>
+                <small>16131 N Eldridge Pkwy, Suite 108, Tomball, TX 77377</small><br>
+                <small>info@ardensprint.com</small>
             </div>
         </div>
 
@@ -115,7 +115,9 @@ $gradientBase64 = base64_encode($gradientSvg);
                                     Width: {{ $item->width }} in <br>
                                     Height: {{ $item->height }} in
                                 @else
-                                    Standard Product
+                                    Standard Product <br>
+                                    <p class="mb-1"><strong>Size:</strong> {{ $item->size ?? 'N/A' }}</p><br>
+                                        <p class="mb-1"><strong>Color:</strong> {{ $item->color ?? 'N/A' }}</p>
                                 @endif
                             </td>
                             <td class="text-center">{{ $item->quantity }}</td>

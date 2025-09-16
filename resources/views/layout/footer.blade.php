@@ -216,10 +216,10 @@
             <div class="col-lg-2 col-md-6">
                 <h5 class="mb-4">Information</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="#" class="brand-yellow text-decoration-none">Home</a></li>
-                    <li class="mb-2"><a href="#" class="brand-yellow text-decoration-none">Shop</a></li>
-                    <li class="mb-2"><a href="#" class="brand-yellow text-decoration-none">About</a></li>
-                    <li class="mb-2"><a href="#" class="brand-yellow text-decoration-none">Contact</a></li>
+                    <li class="mb-2"><a href="{{url('/')}}" class="brand-yellow text-decoration-none">Home</a></li>
+                    <li class="mb-2"><a href="{{url('/shop')}}" class="brand-yellow text-decoration-none">Shop</a></li>
+                    <li class="mb-2"><a href="{{url('/about')}}" class="brand-yellow text-decoration-none">About</a></li>
+                    <li class="mb-2"><a href="{{url('/contact')}}" class="brand-yellow text-decoration-none">Contact</a></li>
                 </ul>
             </div>
 
@@ -227,11 +227,11 @@
             <div class="col-lg-2 col-md-6">
                 <h5 class="mb-4">Account</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="#" class="brand-yellow text-decoration-none">Dashboard</a></li>
-                    <li class="mb-2"><a href="#" class="brand-yellow text-decoration-none">My Orders</a></li>
-                    <li class="mb-2"><a href="#" class="brand-yellow text-decoration-none">Wishlist</a></li>
-                    <li class="mb-2"><a href="#" class="brand-yellow text-decoration-none">Account details</a></li>
-                    <li class="mb-2"><a href="#" class="brand-yellow text-decoration-none">Track Orders</a></li>
+                    <li class="mb-2"><a href="{{url('/orders')}}" class="brand-yellow text-decoration-none">Dashboard</a></li>
+                    <li class="mb-2"><a href="{{url('/orders')}}" class="brand-yellow text-decoration-none">My Orders</a></li>
+
+                    <li class="mb-2"><a href="{{url('/profile')}}" class="brand-yellow text-decoration-none">Account details</a></li>
+                    <li class="mb-2"><a href="{{url('/orders')}}" class="brand-yellow text-decoration-none">Track Orders</a></li>
                 </ul>
             </div>
 
@@ -239,18 +239,26 @@
             <div class="col-lg-2 col-md-6">
                 <h5 class="mb-4">Shop</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="#" class="brand-yellow text-decoration-none">Bestsellers</a></li>
-                    <li class="mb-2"><a href="#" class="brand-yellow text-decoration-none">Discounts</a></li>
-                    <li class="mb-2"><a href="#" class="brand-yellow text-decoration-none">Latest Products</a></li>
+                    <li class="mb-2"><a href="{{url('/shop')}}" class="brand-yellow text-decoration-none">Bestsellers</a></li>
+                    <li class="mb-2"><a href="{{url('/shop')}}" class="brand-yellow text-decoration-none">Discounts</a></li>
+                    <li class="mb-2"><a href="{{url('/shop')}}" class="brand-yellow text-decoration-none">Latest Products</a></li>
                 </ul>
             </div>
+
+            @php
+                use App\Models\Category;
+                $categories = Category::where('is_active', '1')->take(5)->get();
+
+
+            @endphp
 
             <!-- Categories -->
             <div class="col-lg-2 col-md-6">
                 <h5 class="mb-4">Categories</h5>
                 <ul class="list-unstyled">
-                    <li class="mb-2"><a href="#" class="brand-yellow text-decoration-none">Women</a></li>
-                    <li class="mb-2"><a href="#" class="brand-yellow text-decoration-none">Bags</a></li>
+                    @foreach ($categories as $category)
+                        <li class="mb-2"><a href="{{ url('category/'.$category->slug) }}" class="brand-yellow text-decoration-none">{{ $category->name }}</a></li>
+                    @endforeach
                 </ul>
             </div>
         </div>

@@ -13,10 +13,10 @@
                     <p class="text-muted">Date: {{ $order->created_at->format('M d, Y') }}</p>
                 </div>
                 <div class="text-end">
-                    <h4 class="fw-bold mb-0">Your Company Name</h4>
-                    <p class="mb-0">123 Business Street</p>
-                    <p class="mb-0">City, Country</p>
-                    <p class="mb-0">support@company.com</p>
+                    <h4 class="fw-bold mb-0">Arden’s Print</h4>
+                    <p class="mb-0">16131 N Eldridge Pkwy, Suite 108, Tomball, TX 77377</p>
+                    <p class="mb-0">TOMBALL, TX</p>
+                    <p class="mb-0">info@ardensprint.com</p>
                 </div>
             </div>
 
@@ -76,8 +76,22 @@
                                     <img src="{{ $item->preview ? asset($item->preview) : asset('assets/media/products/nav-image-1.png') }}" 
                                          alt="Preview" width="80" class="rounded border">
                                 @else
-                                    <img src="{{ $item->product && $item->product->image ? asset('images/'.$item->product->image) : asset('assets/media/products/nav-image-1.png') }}" 
-                                         alt="Product" width="80" class="rounded border">
+                                    @php
+                                       // use Illuminate\Support\Str;
+                                    @endphp
+
+                                    @if(Str::startsWith($item->product_image, 'https://www.ssactivewear.com'))
+                                        <img src="{{ $item->product_image }}" alt="Product" width="80" class="rounded border">
+                                    @else
+                                        @if(Str::startsWith($item->product_image, 'pods/'))
+                                        <img src="{{ asset($item->product_image) }}" alt="Product" width="80" class="rounded border">
+                                        @else
+                                        <img src="{{ asset('images/' . $item->product_image) }}" alt="Product" width="80" class="rounded border">
+                                        @endif
+                                    @endif
+
+
+                                    
                                 @endif
                             </td>
                             <td>
@@ -93,7 +107,8 @@
                                     <p class="mb-1"><strong>Width:</strong> {{ $item->width }} in</p>
                                     <p class="mb-1"><strong>Height:</strong> {{ $item->height }} in</p>
                                 @else
-                                    <p class="mb-1"><strong>Variant:</strong> {{ $item->variant->variant_name ?? '-' }}</p>
+                                    <p class="mb-1"><strong>Size:</strong> {{ $item->size ?? 'N/A' }}</p>
+                                    <p class="mb-1"><strong>Color:</strong> {{ $item->color ?? 'N/A' }}</p>
                                 @endif
                             </td>
                             <td class="text-center">{{ $item->quantity }}</td>
@@ -133,6 +148,13 @@
                     @csrf @method('DELETE')
                     <button type="submit" class="btn btn-danger">Delete Order</button>
                 </form>
+
+               @foreach($order->items as $item)
+    <a href="{{ route('admin.order.download.item', [$order->id, $item->id]) }}" class="btn btn-sm btn-primary mb-1">
+        Download Image
+    </a>
+@endforeach
+
             </div>
 
         </div>

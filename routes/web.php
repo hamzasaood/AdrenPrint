@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DtfController;
 use App\Http\Controllers\DTFuploadController;
 use App\Http\Controllers\ProductSyncController;
+use App\Http\Controllers\ShopController;
 
 
 
@@ -26,9 +27,10 @@ use App\Http\Controllers\ProductSyncController;
 
 Route::get('/', function () {
     $categories = \App\Models\Category::with('products')->get();
-    $products = \App\Models\Product::with('category')->take(8)->get();
+    $products = \App\Models\Product::with('category')->where('stock', '>', 0)->where('category_id','15')->take(30)->get();
+    $blanks = \App\Models\Product::with('category')->where('stock', '>', 0)->where('category_id','15')->take(4)->get();
 
-    return view('home', compact('categories', 'products'));
+    return view('home', compact('categories', 'products','blanks'));
 });
     
 
@@ -48,10 +50,15 @@ Route::get('/cart', function () {
 Route::get('/checkout', function () {
     return view('checkout');
 });
+
+
+
+Route::get('/shop/category/{slug}', [ShopController::class, 'category'])->name('shop.category');
+
 Route::get('/shop', function () {
 
     //$categories = \App\Models\Category::with('products')->get();
-    $products = \App\Models\Product::with('category')->paginate(6);
+    $products = \App\Models\Product::with('category')->paginate(24);
 
 
 
@@ -71,8 +78,13 @@ Route::get('/shop', function () {
                 ->select('variant_name','type')
                 ->distinct()
                 ->pluck('variant_name');
+     $brands = \App\Models\Product::select('brand')
+    ->whereNotNull('brand')
+    ->groupBy('brand')
+    ->selectRaw('brand, COUNT(*) as product_count')
+    ->get();
 
-    return view('shop', compact('categories', 'products', 'availability', 'sizes', 'colors'));
+    return view('shop', compact('categories', 'products', 'availability', 'sizes', 'colors','brands'));
 });
 // For AJAX pagination (returns JSON or HTML)
 Route::get('/products/fetch', [GangSheetController::class, 'fetch'])->name('products.fetch');
@@ -81,11 +93,13 @@ Route::post('/products/sort', [GangSheetController::class, 'sort'])->name('produ
 // routes/web.php
 Route::get('/products/filter', [GangSheetController::class, 'filter'])->name('products.filter');
 
+Route::get('/product/{slug}', [\App\Http\Controllers\ProductController::class, 'show'])->name('product.show');
 
-
+/*
 Route::get('/product-detail', function () {
     return view('product-detail');
 });
+*/
 Route::get('/wishlist', function () {
     return view('wishlist');
 });
@@ -105,7 +119,7 @@ Route::get('/cart/show', [CartController::class, 'showCart'])->name('cart.show')
 Route::post('/cart/mini/update', [CartController::class, 'updateCart'])->name('cart.update');
 Route::delete('/cart/delete/{index}', [CartController::class, 'deleteCart'])->name('cart.delete');
 
-   
+   Route::get('/product/{id}/processed-image', [GangSheetController::class, 'getProcessedImage']);
    
     Route::get('/gang-sheet/{product}', [GangSheetController::class, 'builder'])->name('gangsheet.builder');
 Route::post('/gang-sheet/save-to-cart', [GangSheetController::class, 'saveToCart'])->name('gangsheet.saveToCart');
@@ -126,6 +140,11 @@ Route::get('/orders', [CartController::class, 'orders'])->name('user.orders');
 Route::get('/orders/{order}/invoice', [CartController::class, 'downloadInvoice'])
      ->name('order.invoice.download');
 
+
+    Route::get('/profile', [ShopController::class, 'profile'])->name('user.profile');
+    Route::get('/profile/edit', [ShopController::class, 'editProfile'])->name('profile.edit');
+    Route::post('/profile/update', [ShopController::class, 'updateProfile'])->name('profile.update');
+     Route::post('/profile/password', [ShopController::class, 'updatePassword'])->name('profile.password');
 
 
 Route::view('/thank-you', 'thankyou')->name('thankyou');
@@ -170,6 +189,9 @@ Route::resource('/admin/users', UserController::class)->middleware('admin');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
 
+     Route::get('/settings', [App\Http\Controllers\Admin\OrderController::class, 'settings'])->name('admin.settings');
+    Route::post('/update/settings', [App\Http\Controllers\Admin\OrderController::class, 'updatesettings'])->name('admin.settings.update');
+
     Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
     Route::resource('products', App\Http\Controllers\Admin\ProductController::class);
     Route::post('/ss/sync', [\App\Http\Controllers\Admin\SSSyncController::class, 'syncProducts'])->name('ss.sync');
@@ -184,6 +206,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::resource('customers', \App\Http\Controllers\Admin\CustomerController::class);
 
 
+Route::get('/order/{order}/download-item/{item}', [OrderController::class, 'downloadImage'])
+    ->name('order.download.item');
+
 
 
     Route::get('/best-sellers', [DashboardController::class, 'bestSellers']);
@@ -191,10 +216,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/visitor-data', [DashboardController::class, 'visitorData']);
     Route::get('/latest/order', [DashboardController::class, 'latestOrders']);
     Route::get('/get/Monthly/Revenue', [DashboardController::class, 'monthlyRevenue']);
+    Route::get('/get/Yearly/Revenue', [DashboardController::class, 'yearly']);
     Route::get('/fetch-gross-profit-data', [DashboardController::class, 'grossProfit']);
     Route::get('/fetch-revenue-vs-cogs', [DashboardController::class, 'revenueVsCogs']);
     Route::get('/fetch-sales-category-subcategory', [DashboardController::class, 'salesByCategory']);
 
+
+         //Route::get('//admin/latest/order', [App\Http\Controllers\Admin\OrderController::class, 'settings'])->name('admin.settings');
 
 
 

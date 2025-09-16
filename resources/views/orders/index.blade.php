@@ -9,7 +9,7 @@
 }
 
 .table-orders thead {
-    background: linear-gradient(90deg, #1f993d, #28c76f);
+    background: linear-gradient(90deg, #dea928, #000201);
     color: #fff;
 }
 
@@ -49,20 +49,20 @@
     border-radius: 6px;
     font-weight: 600;
     text-decoration: none;
-    color: #1f993d; /* brand green */
-    border: 1px solid #1f993d;
+    color: #dea928; /* brand green */
+    border: 1px solid #dea928;
     transition: all 0.2s ease-in-out;
 }
 
 .custom-pagination a:hover {
-    background: #28c76f;
-    border-color: #28c76f;
+    background: #dea928;
+    border-color: #dea928;
     color: #fff;
 }
 
 .custom-pagination .active span {
-    background: #1f993d;
-    border-color: #1f993d;
+    background: #dea928;
+    border-color: #dea928;
     color: #fff;
 }
 
@@ -74,10 +74,21 @@
 }
 
 </style>
+<style>
+
+.nav-dashboard { margin-bottom: 30px; }
+.nav-dashboard a { margin-right: 15px; font-weight: 600; color: #333; }
+.nav-dashboard a.active { color: #fff; background: linear-gradient(90deg, #dea928, #000201); padding: 6px 12px; border-radius: 6px; }
+</style>
 <div class="container py-5">
+    {{-- Navigation --}}
+    <div class="nav-dashboard mb-4">
+        <a href="{{ url('/orders') }}" class="active">My Orders</a>
+        <a href="{{ route('user.profile') }}">Profile Details</a>
+    </div>
     <div class="card shadow-lg border-0 rounded-3">
         <div class="card-header text-white d-flex justify-content-between align-items-center"
-             style="background:linear-gradient(135deg, #1f993d, #28c76f); border-top-left-radius: .5rem; border-top-right-radius: .5rem;">
+             style="background:linear-gradient(135deg, #dea928, #000201); border-top-left-radius: .5rem; border-top-right-radius: .5rem;">
             <h3 class="mb-0"><i class="fas fa-box me-2"></i> My Orders</h3>
             <small class="text-white-50">Track & manage your purchases</small>
         </div>

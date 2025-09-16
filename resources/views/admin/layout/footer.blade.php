@@ -3,7 +3,7 @@
 <div class="row">
 <div class="col-lg-12">
 <div class="footer_iner text-center">
-<p>2023 ©  - Developed by <a href="https://itify.website"> ITify (SMC Private) Limited</a></p>
+<p>2025 ©  - Developed by <a href="#"> ArdensPrint</a></p>
 </div>
 </div>
 </div>

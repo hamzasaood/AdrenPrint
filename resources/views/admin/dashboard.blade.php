@@ -12,7 +12,7 @@
     }
     .card-header {
         border-radius: 15px 15px 0 0;
-        background: linear-gradient(90deg, #1f993d, #16a085);
+        background: linear-gradient(90deg, #fbaf1c, #f9c459);
         text-align: center;
         color: #fff;
         padding: 15px;
@@ -43,7 +43,7 @@
     .stat-visitors { background: linear-gradient(45deg,#36d1dc,#5b86e5); }
     .stat-products { background: linear-gradient(45deg,#ff512f,#dd2476); }
     .table thead {
-        background: #1f993d;
+        background: #fbaf1c;
         color: #fff;
     }
 </style>
@@ -100,14 +100,14 @@
             </div>
         </div>
     </div>
-    {{-- Revenue vs COGS --}}
+    {{-- Revenue by year --}}
     <div class="col-lg-6">
         <div class="card">
             <div class="card-header">
-                <h3><i class="fa-solid fa-scale-balanced me-2"></i> Revenue vs. COGS</h3>
+                <h3><i class="fa-solid fa-scale-balanced me-2"></i> Revenue by year</h3>
             </div>
             <div class="card-body">
-                <canvas id="revenueVsCOGSChart"></canvas>
+                <canvas id="revenuebyyear"></canvas>
             </div>
         </div>
     </div>
@@ -174,20 +174,10 @@
 </div>
 
 <div class="row">
-    {{-- Gross Profit --}}
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header">
-                <h3><i class="fa-solid fa-money-bill-trend-up me-2"></i> Gross Profit</h3>
-            </div>
-            <div class="card-body">
-                <canvas id="grossProfitChart"></canvas>
-            </div>
-        </div>
-    </div>
+    
 
     {{-- Latest Orders --}}
-    <div class="col-lg-6">
+    <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
                 <h3><i class="fa-solid fa-clock-rotate-left me-2"></i> Latest Orders</h3>
@@ -266,6 +256,29 @@ function fetchMonthlyRevenue() {
     });
 }
 
+
+
+
+function fetchYearlyRevenue() {
+    $.get('/admin/get/Yearly/Revenue', function(res) {
+        const ctx = document.getElementById('revenuebyyear').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(res),
+                datasets: [{
+                    label: 'Revenue',
+                    data: Object.values(res),
+                    borderColor: '#f53c79',
+                    backgroundColor: 'rgba(245,60,121,0.3)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            }
+        });
+    });
+}
+
 // 👉 Visitors
 function fetchVisitors() {
     $.get('/admin/visitor-data', function(res) {
@@ -295,8 +308,8 @@ function fetchLatestOrders() {
         res.forEach(o => {
             tbody.append(`<tr>
                 <td>${o.user.name}</td>
-                <td>${o.order_number}</td>
-                <td>${o.total_amount}</td>
+                <td>${o.id}</td>
+                <td>${o.total}</td>
                 <td><span class="badge bg-info">${o.status}</span></td>
                 <td>${moment(o.created_at).format('D/M/Y')}</td>
             </tr>`);
@@ -309,6 +322,7 @@ $(function(){
     fetchBestSellers();
     fetchLowStock();
     fetchMonthlyRevenue();
+    fetchYearlyRevenue();
     fetchVisitors();
     fetchLatestOrders();
 });

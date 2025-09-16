@@ -5,15 +5,15 @@
     <div class="card shadow-lg border-0">
         {{-- Invoice Header --}}
         <div class="card-header text-white d-flex justify-content-between align-items-center" 
-             style="background:linear-gradient(90deg, #1f993d, #28c76f);">
+             style="background:linear-gradient(90deg, #dea928, #000201);">
             <div>
                 <h3 class="mb-0">Invoice</h3>
                 <small>Order #{{ $order->id }}</small>
             </div>
             <div class="text-end">
-                <h5 class="mb-0">FullyPrint</h5>
-                <small class="d-block">123 Business Street, City</small>
-                <small class="d-block">support@fullyprint.com</small>
+                <h5 class="mb-0">Ardens Print</h5>
+                <small class="d-block">16131 N Eldridge Pkwy, Suite 108, Tomball, TX 77377</small>
+                <small class="d-block">info@ardensprint.com</small>
             </div>
             <div class="d-flex justify-content-end mb-3">
                 <a href="{{ route('order.invoice.download', $order->id) }}" 
@@ -73,9 +73,9 @@
                                         @endif
                                     @else
                                         <strong>{{ $item->product->name ?? 'Product' }}</strong>
-                                        @if($item->product->image)
+                                        @if($item->product_image)
                                             <br>
-                                            <img src="{{ asset('images/'.$item->product->image) }}" alt="Product" width="80" class="mt-2 rounded border">
+                                            <img src="{{ asset($item->product_image) }}" alt="Product" width="80" class="mt-2 rounded border">
                                         @endif
                                     @endif
                                 </td>
@@ -89,6 +89,8 @@
                                         <p class="mb-1"><strong>Color:</strong> {{ $item->options }}</p>
                                     @else
                                         <p class="mb-1">Standard Product</p>
+                                        <p class="mb-1"><strong>Size:</strong> {{ $item->size ?? 'N/A' }}</p>
+                                        <p class="mb-1"><strong>Color:</strong> {{ $item->color ?? 'N/A' }}</p>
                                     @endif
                                 </td>
 

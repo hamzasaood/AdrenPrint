@@ -242,6 +242,11 @@
         </div>
     </div>
 </header> --}}
+
+
+@php
+    $categories = \App\Models\Category::with('products')->get();
+@endphp
 <!-- Header Menu End -->
 <nav class="navbar bg-white shadow-sm">
     <div class="site-container">
@@ -264,13 +269,14 @@
                         <ul class="dropdown-menu list-unstyled">
                             <li><a class="dropdown-item" href="{{url('/dtf/transfer_by_size')}}">DTF Transfer By
                                     Size</a></li>
+                            <li><a class="dropdown-item" href="{{url('/gangsheet')}}">DTF Gangsheet Builder</a></li>
                             <li><a class="dropdown-item" href="{{url('/dtf/upload-gangsheet')}}">DTF Transfer - Upload
                                     Gang
                                     Sheet</a></li>
                         </ul>
                     </li>
                     <a href="#" class="text-dark text-decoration-none">UV DTF TRANSFERS</a>
-                    <a href="#" class="text-dark text-decoration-none">BLANKS</a>
+                    <a href="{{url('/shop')}}" class="text-dark text-decoration-none">BLANKS</a>
                 </div>
 
             </div>
@@ -444,9 +450,9 @@
                                 </svg>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="{{url('/profile')}}">Profile</a></li>
                                 <li><a class="dropdown-item" href="{{url('/orders')}}">Orders</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="{{url('/profile/edit')}}">Settings</a></li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -459,7 +465,15 @@
                         </div>
                     @else
                         <a href="{{ route('login') }}" class="button-block d-flex align-items-center">
-                            <!-- Same user SVG as above -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 0C8.51 0 5.67 2.84 5.67 6.33c0 3.49 2.84 6.33 6.33 6.33 3.49 0 6.33-2.84 6.33-6.33C18.33 2.84 15.49 0 12 0Zm0 11.25c-2.71 0-4.92-2.21-4.92-4.92 0-2.71 2.21-4.92 4.92-4.92s4.92 2.21 4.92 4.92c0 2.71-2.21 4.92-4.92 4.92Z"
+                                        fill="#1E1F20" />
+                                    <path
+                                        d="M19.87 16.79c-1.73-1.76-4.03-2.73-6.46-2.73h-2.81c-2.44 0-4.74.97-6.46 2.73C2.4 18.54 1.45 20.85 1.45 23.3c0 .39.32.7.71.7h19.69c.39 0 .71-.31.71-.7 0-2.45-.95-4.76-2.69-6.51ZM2.89 22.59c.35-3.99 3.67-7.13 7.7-7.13h2.81c4.01 0 7.33 3.14 7.67 7.13H2.89Z"
+                                        fill="#1E1F20" />
+                                </svg>
                         </a>
                     @endif
 
@@ -499,16 +513,16 @@
                                 <li><a class="dropdown-item" href="{{url('/dtf/transfer_by_size')}}">DTF Transfer By
                                         Size</a>
                                 </li>
+                                 <li><a class="dropdown-item" href="{{url('/gangsheet')}}">DTF Gangsheet Builder</a>
+                                </li>
                                 <li><a class="dropdown-item" href="{{url('/dtf/upload-gangsheet')}}">DTF Transfer -
                                         Upload
                                         Gang Sheet</a></li>
                             </ul>
                         </li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">UV DTF
-                                Transfers</a></li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Blanks</a></li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Print on
-                                Demand</a></li>
+                        
+                        <li><a href="{{url('/shop')}}" style="text-decoration:none; color:black; display:block;">Blanks</a></li>
+                        
                         <li class=""><a href="{{url('/shop')}}" style="text-decoration:none; color:black; display:block;">Shop</a>
                         </li>
                         <li class=""><a href="{{url('/about')}}"
@@ -520,29 +534,10 @@
                     <span class="d-block mt-4 mb-2 fw-bold" style="color:black;">Categories</span>
 
                     <ul class="navbar-nav flex-column gap-3">
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Men</a></li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Kids</a></li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Baby</a></li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Shoes</a></li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Bags</a></li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Accessories</a>
-                        </li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Watches</a></li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Cargo Trousers</a>
-                        </li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Outerwear</a></li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Wallets</a></li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Belts</a></li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Best Sellers</a>
-                        </li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Featured
-                                Products</a></li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">New Arrivals</a>
-                        </li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">Ready to Wear</a>
-                        </li>
-                        <li><a href="#" style="text-decoration:none; color:black; display:block;">All For Men</a>
-                        </li>
+                        @foreach($categories as $category)
+                        <li><a href="{{url('/shop/category/'.$category->slug)}}" style="text-decoration:none; color:black; display:block;">{{$category->name}}</a></li>
+                        @endforeach
+                        
                     </ul>
                     <div class="gap-3 mt-3 fs-5 align-items-center flex-wrap d-sm-none d-flex">
                         <a href="#" class="p-2"><i class="fa-regular fa-user text-dark"></i></a>

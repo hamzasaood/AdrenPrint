@@ -25,24 +25,25 @@
 
                 <div class="white_card_body">
 
-                    <!-- 🔄 Sync Section -->
-                    <div class="mb-4">
-                        <button id="startSync" class="btn btn-primary">Start Sync</button>
+                      <div class="mb-4">
+    <button id="startSync" class="btn btn-primary">Initialize Sync</button>
+    <button id="fetchProducts" class="btn btn-success" disabled>Fetch 1000 Products</button>
 
-                        <div class="progress mt-3" style="height: 25px; display:none; max-width:400px;">
-                            <div id="syncProgressBar"
-                                 class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                                 role="progressbar"
-                                 style="width: 0%">0%</div>
-                        </div>
+    <div class="progress mt-3" style="height: 25px; display:none; max-width:400px;">
+        <div id="syncProgressBar"
+             class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+             role="progressbar"
+             style="width: 0%">0%</div>
+    </div>
 
-                        <p id="syncStatus" class="mt-2 text-muted">Click "Start Sync" to begin.</p>
+    <p id="syncStatus" class="mt-2 text-muted">Click "Start Sync" to initialize.</p>
 
-                        <div id="syncLogs"
-                             style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:6px; padding:10px; height:200px; overflow-y:auto; font-size:14px;">
-                        </div>
-                    </div>
-                    <!-- 🔄 End Sync Section -->
+    <div id="syncLogs"
+         style="background:#f8f9fa; border:1px solid #dee2e6; border-radius:6px; padding:10px; height:200px; overflow-y:auto; font-size:14px;">
+    </div>
+</div>
+
+
 
                     <div class="QA_section">
                         <div class="table-responsive">
@@ -60,7 +61,12 @@
                                 </thead>
                                 <tbody>
                                     @foreach($products as $p)
+                                        @if($p->stock <= 10)
+                                      <tr class="table-danger">
+                                        @else
+
                                         <tr>
+                                        @endif
                                             <td>{{ $p->name }}</td>
                                             <td>{{ $p->category->name ?? '-' }}</td>
                                             <td>${{ $p->price }}</td>
@@ -106,74 +112,80 @@
         });
     });
 
-    let totalStyles = 0;
-    let currentStyleIndex = 0;
-    let productsDone = 0;
-    let productsTotal = 0;
+        
 
-    document.getElementById("startSync").addEventListener("click", function() {
-        document.querySelector(".progress").style.display = "block"; // show bar
-        updateProgress(0);
-        document.getElementById("syncLogs").innerHTML = "";
+let totalStyles = 0;
+let currentStyleIndex = 0;
+let productsDone = 0;
+let productsTotal = 0;
 
-        fetch("{{ url('/admin/sync/start') }}")
-            .then(res => res.json())
-            .then(data => {
-                if (data.error) {
-                    logMessage("❌ " + data.error);
-                    return;
-                }
-                totalStyles = data.total_styles;
-                currentStyleIndex = 0;
-                logMessage("✅ Sync initialized. Total Styles: " + totalStyles);
-                syncNextBatch();
-            });
-    });
+document.getElementById("startSync").addEventListener("click", function() {
+    document.querySelector(".progress").style.display = "block"; 
+    updateProgress(0);
+    logMessage("Initializing sync...");
 
-    function syncNextBatch() {
-        fetch("{{ url('/admin/sync/batch') }}")
-            .then(res => res.json())
-            .then(data => {
-                if (data.error) {
-                    logMessage("❌ " + data.error);
-                    return;
-                }
+    fetch("{{ url('/admin/sync/start') }}")
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                logMessage("❌ " + data.error);
+                return;
+            }
+            totalStyles = data.total_styles;
+            currentStyleIndex = 0;
+            productsDone = 0;
+            productsTotal = 0;
 
-                if (data.done) {
-                    updateProgress(100);
-                    logMessage("🎉 All styles synced successfully!");
-                    document.getElementById("syncStatus").innerText = "✅ Completed!";
-                    return;
-                }
+            logMessage("✅ Sync initialized. Total Styles: " + totalStyles);
+            document.getElementById("fetchProducts").disabled = false; 
+        });
+});
 
-                currentStyleIndex = data.style_index;
-                productsDone = data.products_done ?? productsDone;
-                productsTotal = data.products_total ?? productsTotal;
+document.getElementById("fetchProducts").addEventListener("click", function() {
+    fetch("{{ url('/admin/sync/batch') }}")
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                logMessage("❌ " + data.error);
+                return;
+            }
 
-                let percent = 0;
-                if (productsTotal > 0) {
-                    percent = Math.round((productsDone / productsTotal) * 100);
-                }
+            if (data.done) {
+                updateProgress(100);
+                logMessage("🎉 All styles synced successfully!");
+                document.getElementById("syncStatus").innerText = "✅ Completed!";
+                document.getElementById("fetchProducts").disabled = true;
+                return;
+            }
 
-                updateProgress(percent);
-                logMessage("🔄 " + data.message);
+            currentStyleIndex = data.style_index;
+            productsDone = data.products_done ?? productsDone;
+            productsTotal = data.products_total ?? productsTotal;
 
-                setTimeout(syncNextBatch, 500);
-            });
-    }
+            let percent = 0;
+            if (productsTotal > 0) {
+                percent = Math.round((productsDone / productsTotal) * 100);
+            }
 
-    function updateProgress(percent) {
-        let bar = document.getElementById("syncProgressBar");
-        bar.style.width = percent + "%";
-        bar.innerText = percent + "%";
-        document.getElementById("syncStatus").innerText =
-            "Progress: " + percent + "% (Style " + (currentStyleIndex+1) + "/" + totalStyles + ")";
-    }
+            updateProgress(percent);
+            logMessage("🔄 " + data.message);
+        });
+});
 
-    function logMessage(msg) {
-        let logs = document.getElementById("syncLogs");
-        logs.innerHTML += msg + "<br>";
-        logs.scrollTop = logs.scrollHeight;
-    }
+function updateProgress(percent) {
+    let bar = document.getElementById("syncProgressBar");
+    bar.style.width = percent + "%";
+    bar.innerText = percent + "%";
+    document.getElementById("syncStatus").innerText =
+        "Progress: " + percent + "% (Style " + (currentStyleIndex+1) + "/" + totalStyles + ")";
+}
+
+function logMessage(msg) {
+    let logs = document.getElementById("syncLogs");
+    logs.innerHTML += msg + "<br>";
+    logs.scrollTop = logs.scrollHeight;
+}
 </script>
+
+
 @endsection

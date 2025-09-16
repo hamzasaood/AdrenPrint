@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Http;
 
 class GangSheetController extends Controller
 {
@@ -58,6 +59,10 @@ public function filter(Request $request)
    if ($request->has('categories') && count($request->categories) > 0) {
     $query->whereIn('category_id', $request->categories);
     }
+    // 🔎 Brands
+    if ($request->has('brands') && count($request->brands) > 0) {
+    $query->whereIn('brand', $request->brands);
+    }
 
 
     // 🔎 Price range
@@ -86,7 +91,7 @@ public function filter(Request $request)
         });
     }
 
-    $products = $query->get();
+    $products = $query->where('stock','>',0)->get();
 
     // Empty state
     if ($products->isEmpty()) {
@@ -96,9 +101,22 @@ public function filter(Request $request)
         ]);
     }
 
+    
     // Build HTML
     $html = '';
     foreach ($products as $product) {
+        if(!empty($product->image)) {
+                        //return response()->json(['error' => 'Product has no image'], 404);
+                        $imagePath = asset('images/' . $product->image);
+
+                    }
+                    elseif(!empty($product->main_image)){
+                       $imagePath =  'https://www.ssactivewear.com/'.$product->main_image;
+                    }
+                    else{       
+                        $imagePath = asset('images/' . $product->image);
+                    }
+
         $html .= '
         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
             <div class="latest-product-card">
@@ -106,35 +124,14 @@ public function filter(Request $request)
                     ($product->sale_price && $product->sale_price < $product->price
                         ? '<span class="sale-label subtitle fw-400 white">Sale</span>' : ''
                     ).
-                    '<a href="'.url('/product-detail').'">
-                        <img src="'.asset('images/'.$product->image).'" class="product-image" alt="" style="height: 230px;">
+                    '<a href="'.url('/product/').$product->slug.'">
+                        <img src="'.$imagePath.'" class="product-image" alt="" style="height: 230px;">
                     </a>
-                    <div class="side-icons">
-                        <ul class="list-unstyled">
-                            <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                            <li>
-                                <a href="javascript:void(0);" class="btn quick-view-btn"
-                                  data-bs-toggle="modal" 
-                                  data-bs-target="#productQuickView"
-                                  data-id="'.$product->id.'" 
-                                  data-name="'.$product->name.'" 
-                                  data-price="'.$product->price.'" 
-                                  data-regular-price="'.$product->price.'" 
-                                  data-sale-price="'.$product->sale_price.'" 
-                                  data-image="'.asset('images/'.$product->image).'" 
-                                  data-description="'.$product->description.'" 
-                                  data-design="'.$product->design_type.'" 
-                                  data-stock="'.$product->stock.'" 
-                                  data-category="'.($product->category->name ?? '').'">
-                                  <i class="fa-regular fa-eye"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    
                 </div>
                 <div class="product-desc">
                     <div>
-                        <a href="'.url('/product-detail').'" class="product-title h6 fw-500 mb-12">'.$product->name.'</a>
+                        <a href="'.url('/product/').$product->slug.'" class="product-title h6 fw-500 mb-12">'.$product->name.'</a>
                         <p class="black fw-600">'.
                             ($product->sale_price && $product->sale_price < $product->price
                                 ? '<span class="subtitle text-decoration-line-through fw-400 light-gray">$'.$product->price.'</span>&nbsp; $'.$product->sale_price
@@ -142,10 +139,8 @@ public function filter(Request $request)
                             ).
                         '</p>
                     </div>
-                    <a href="javascript:void(0)" class="cart-btn modalCartBtn" data-product-id="'.$product->id.'">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="..." fill="white"/>
-                        </svg>
+                    <a href="'.url('/gang-sheet/').$product->id.'" class="btn-primary-custom w-100" data-product-id="'.$product->id.'">
+                        Design & Buy
                     </a>
                 </div>
             </div>
@@ -178,50 +173,36 @@ public function filter(Request $request)
 
                 $products = $query->get();
 
+
+                
+
                 // Build product HTML same as your Blade
                 $html = '';
                 foreach ($products as $product) {
+                    if(!empty($product->image)) {
+                        //return response()->json(['error' => 'Product has no image'], 404);
+                        $imagePath = asset('images/' . $product->image);
+
+                    }
+                    elseif(!empty($product->main_image)){
+                       $imagePath =  'https://www.ssactivewear.com/'.$product->main_image;
+                    }
+                    else{       
+                        $imagePath = asset('images/' . $product->image);
+                    }
                     $html .= '
                     <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
                         <div class="latest-product-card">
                             <div class="image-box mb-16">'.
                                 ($product->sale_price && $product->sale_price < $product->price ? '<span class="sale-label subtitle fw-400 white">Sale</span>' : '').
-                                '<a href="'.url('/product-detail').'">
-                                    <img src="'.asset('images/'.$product->image).'" class="product-image" alt="" style="height: 230px;">
+                                '<a href="'.url('/product/').$product->slug.'">
+                                    <img src="'.$imagePath.'" class="product-image" alt="" style="height: 230px;">
                                 </a>
-                                <div class="side-icons">
-                                    <ul class="list-unstyled">
-                                        <li><a href="#"><i class="fa-light fa-heart"></i></a></li>
-                                        <li>
-                                            <a href="javascript:void(0);" class="btn quick-view-btn"
-                                              data-bs-toggle="modal" 
-                                              data-bs-target="#productQuickView"
-                                              data-id="'.$product->id.'" 
-                                              data-name="'.$product->name.'" 
-                                              data-price="'.$product->price.'" 
-                                              data-regular-price="'.$product->price.'" 
-                                              data-sale-price="'.$product->sale_price.'" 
-                                              data-image="'.asset('images/'.$product->image).'" 
-                                              data-description="'.$product->description.'" 
-                                              data-design="'.$product->design_type.'" 
-                                              data-stock="'.$product->stock.'" 
-                                              data-category="'.($product->category->name ?? '').'">
-                                              <i class="fa-regular fa-eye"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="zui-wrapper-button" data-bs-toggle="modal" data-bs-target="#comparepopup">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
-                                                    <path d="..." fill="#363636"/>
-                                                </svg>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                
                             </div>
                             <div class="product-desc">
                                 <div>
-                                    <a href="'.url('/product-detail').'" class="product-title h6 fw-500 mb-12">'.$product->name.'</a>
+                                    <a href="'.url('/product/').$product->slug.'" class="product-title h6 fw-500 mb-12">'.$product->name.'</a>
                                     <p class="black fw-600">';
                                         if($product->sale_price && $product->sale_price < $product->price) {
                                             $html .= '<span class="subtitle text-decoration-line-through fw-400 light-gray">$'.$product->price.'</span>&nbsp; $'.$product->sale_price;
@@ -230,11 +211,9 @@ public function filter(Request $request)
                                         }
                     $html .= '</p>
                                 </div>
-                                <a href="javascript:void(0)" class="cart-btn modalCartBtn" data-product-id="'.$product->id.'">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                        <path d="..." fill="white"/>
-                                    </svg>
-                                </a>
+                                    <a href="'.url('/gang-sheet/').$product->id.'" class="btn-primary-custom w-100" data-product-id="'.$product->id.'">
+                                        Design & Buy
+                                    </a>
                             </div>
                         </div>
                     </div>';
@@ -248,7 +227,60 @@ public function filter(Request $request)
     /**
      * Save design JSON + preview PNG into session cart item
      * expected payload: product_id, design_json, preview (dataURL), quantity (optional)
+     * 
+     * 
+     
      */
+
+
+    public function getProcessedImage($id)
+        {
+            $product = Product::findOrFail($id);
+
+            if($product->image) {
+                //return response()->json(['error' => 'Product has no image'], 404);
+                $imagePath = public_path('images/' . $product->image);
+
+            }
+            elseif($product->main_image){
+            $imagePath =  'https://www.ssactivewear.com/'.$product->main_image;
+            }
+            else{
+                return response()->json(['error' => 'Product has no image'], 404);
+            }
+
+            //$imagePath = public_path('images/products/' . $product->image);
+
+            // Save all processed images in public/bgremove/
+            $outputDir = public_path('bgremove');
+            if (!file_exists($outputDir)) {
+                mkdir($outputDir, 0755, true);
+            }
+
+            $outputPath = $outputDir . '/processed-' . $product->id . '.png';
+
+            if (!file_exists($outputPath)) {
+                $apiKey = "vnbjJS7PR2eSG1aUyhM5JRLg";
+
+                $response = Http::withHeaders([
+                    'X-Api-Key' => $apiKey,
+                ])->attach(
+                    'image_file', file_get_contents($imagePath), basename($imagePath)
+                )->post('https://api.remove.bg/v1.0/removebg', [
+                    'size' => 'auto',
+                ]);
+
+                if ($response->successful()) {
+                    file_put_contents($outputPath, $response->body());
+                } else {
+                    return response()->json(['error' => $response->body()], 500);
+                }
+            }
+
+            return response()->json([
+                'url' => asset('bgremove/processed-' . $product->id . '.png'),
+            ]);
+        }
     public function saveToCart(Request $request)
    {
        $request->validate([
@@ -265,12 +297,15 @@ public function filter(Request $request)
        if ($request->has('design_json') && $request->has('preview'))
       {
         $cartItem = [
+            'type'           => 'pod',
             'product_id'     => $product->id,
             'name'           => $product->name,
-            'price'          => $product->price,
+            'price'          => $request->price ?? $product->price,
             'quantity'       => $request->quantity ?? 1,
             'design_json'    => $request->design_json,
             'design_preview' => $request->preview,
+            'size'           => $request->size ?? null,
+            'color'          => $request->color ?? null,
             'added_at'       => now()->toDateTimeString(),
         ];
       } else {

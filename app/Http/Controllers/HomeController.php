@@ -23,13 +23,20 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->isAdmin()) {
+        if (auth()->user()->isAdmin()) 
+        {
         return redirect()->route('admin.index');
-    } else {
-        $categories = \App\Models\Category::with('products')->get();
-    $products = \App\Models\Product::with('category')->take(8)->get();
-        return view('home', compact('categories', 'products'));
-    }
+
+        } 
+        else 
+        {
+            $categories = \App\Models\Category::with('products')->get();
+    $products = \App\Models\Product::with('category')->where('stock', '>', 0)->where('category_id','15')->take(30)->get();
+
+    $blanks = \App\Models\Product::with('category')->where('stock', '>', 0)->where('category_id','15')->take(4)->get();
+
+    return view('home', compact('categories', 'products','blanks'));
+        }
         
     }
 }

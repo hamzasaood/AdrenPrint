@@ -92,6 +92,29 @@ class DashboardController extends Controller
         return response()->json(array_combine($labels, $data));
     }
 
+    public function yearly()
+{
+    // Get monthly revenue for the current year
+    $revenues = Order::select(
+            DB::raw('SUM(total) as total'),
+            DB::raw('MONTH(created_at) as month')
+        )
+        ->whereYear('created_at', Carbon::now()->year)
+        ->groupBy('month')
+        ->pluck('total', 'month'); // keys = month numbers 1..12
+
+    $labels = [];
+    $data = [];
+
+    for ($i = 1; $i <= 12; $i++) {
+        $labels[] = Carbon::create()->month($i)->format('M');
+        $data[] = $revenues[$i] ?? 0;
+    }
+
+    return response()->json(array_combine($labels, $data));
+}
+
+
     // 🔹 6. Gross Profit
     public function grossProfit()
     {
@@ -137,9 +160,9 @@ class DashboardController extends Controller
                 DB::raw('SUM(order_products.quantity * order_products.price) as total_amount'),
                 DB::raw('SUM(order_products.quantity) as total_qty')
             )
-            ->join('orders', 'order_products.order_id', '=', 'orders.id')
-            ->join('products', 'order_products.product_id', '=', 'products.id')
-            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->leftjoin('orders', 'order_products.order_id', '=', 'orders.id')
+            ->leftjoin('products', 'order_products.product_id', '=', 'products.id')
+            ->leftjoin('categories', 'products.category_id', '=', 'categories.id')
             // ->where('orders.status', 'completed') // 🔹 Remove this for debugging first
             ->groupBy('categories.name')
             ->orderByDesc('total_amount')

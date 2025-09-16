@@ -15,16 +15,20 @@ class Product extends Model
     ];
 
     public function category()
-{
+    {
     return $this->belongsTo(\App\Models\Category::class, 'category_id', 'id');
-}
+    }
     public function variants()
-{
+    {
     return $this->hasMany(ProductVariant::class);
-}
-public function refreshStock(): void
+    }
+    public function refreshStock(): void
     {
         $this->update(['stock' => (int) $this->variants()->sum('stock')]);
+    }
+    public function images()
+    {
+        return $this->hasMany(Product_Image::class);
     }
 
 }

@@ -1,6 +1,9 @@
 @extends('layout.default')
 
 @section('content')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <section>
         <div class="hero-img d-flex align-items-center">
             <div class="text-center site-container my-5">
@@ -15,19 +18,32 @@
                 {{-- LEFT SIDE: Product Gallery --}}
                 <div class="col-lg-6">
                     <div class="product-gallery">
-                        <div class="main-image mb-3">
-                            <img id="mainProductImg" src="{{ asset('assets/media/gangSheet.png') }}"
-                                class="img-fluid rounded shadow-sm object-fit-cover"
-                                style="max-height: 800px; width: 100%; object-fit: cover;" alt="DTF Transfers">
-                        </div>
+    <!-- Main Slider -->
+    <div class="swiper mySwiper2 mb-3">
+        <div class="swiper-wrapper">
+            @foreach($images as $img)
+                <div class="swiper-slide">
+                    <img src="{{ asset('dtf-transfer/'.$img->path) }}" class="img-fluid rounded shadow-sm">
+                </div>
+            @endforeach
+        </div>
+        <!-- Navigation -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
 
-                        <div class="thumbs d-flex gap-2 flex-wrap">
-                            @foreach($images as $img)
-                                <img src="{{ asset('assets/media/gangSheet.png') }}"
-                                    class="thumb-img img-thumbnail {{ $loop->first ? 'active' : '' }}" width="80">
-                            @endforeach
-                        </div>
-                    </div>
+    <!-- Thumbs Slider -->
+    <div class="swiper mySwiper mt-2">
+        <div class="swiper-wrapper">
+            @foreach($images as $img)
+                <div class="swiper-slide">
+                    <img src="{{ asset('dtf-transfer/'.$img->path) }}" class="img-thumbnail">
+                </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+
                 </div>
 
                 {{-- RIGHT SIDE: Product Options --}}
@@ -630,6 +646,29 @@
 
 
     <script>
+
+
+        
+    var swiper = new Swiper(".mySwiper", {
+        loop: true,
+        spaceBetween: 10,
+        slidesPerView: 4,
+        freeMode: true,
+        watchSlidesProgress: true,
+    });
+    var swiper2 = new Swiper(".mySwiper2", {
+        loop: true,
+        spaceBetween: 10,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        thumbs: {
+            swiper: swiper,
+        },
+    });
+
+
         document.addEventListener("DOMContentLoaded", function () {
             // STEP HANDLING
             const step2 = document.querySelector('.step-2');

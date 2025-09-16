@@ -283,13 +283,13 @@
             <div class="item-container mb-16">
                 <div class="left-box d-flex align-items-center gap-16">
                     <div class="icon-box">
-                        @if($item['type'] === 'gangsheet')
+                        @if(($item['type'] ?? '') === 'gangsheet')
                             <img src="{{ $item['preview'] ?? asset('assets/media/products/nav-image-1.png') }}" 
                                 alt="Gangsheet" 
                                 style="max-width:65px; border:1px solid #ddd; cursor:pointer;" 
                                 onclick="openModal('{{ $item['preview'] ?? asset('assets/media/products/nav-image-1.png') }}')">
 
-                        @elseif($item['type'] === 'dtf' || $item['type'] === 'dtf-gangsheet-upload')
+                        @elseif(($item['type'] ?? '') === 'dtf' || ($item['type'] ?? '') === 'dtf-gangsheet-upload')
                             <img src="{{ isset($item['artwork']) && $item['artwork'] 
                                         ? asset($item['artwork']) 
                                         : asset('assets/media/products/nav-image-1.png') }}" 
@@ -298,26 +298,36 @@
                                 onclick="openModal('{{ isset($item['artwork']) && $item['artwork'] 
                                                         ? asset($item['artwork']) 
                                                         : asset('assets/media/products/nav-image-1.png') }}')">
-
+                        @elseif($item['type'] ?? '' === 'pod')
+                                             <img src="{{ $item['design_preview'] }}" alt="Gangsheet Design"
+                                                    style="max-width:65px; border:1px solid #ddd; cursor:pointer;"
+                                                    onclick="openModal('{{ $item['design_preview'] }}')">
 
                         
 
                         @else
-                            <img src="{{ isset($item['image']) && $item['image'] 
-                                        ? asset('images/'.$item['image']) 
-                                        : asset('assets/media/products/nav-image-1.png') }}" 
-                                alt="Product" 
-                                style="max-width:65px; border:1px solid #ddd;" 
-                                onclick="openModal('{{ isset($item['image']) && $item['image'] 
-                                                        ? asset('images/'.$item['image']) 
-                                                        : asset('assets/media/products/nav-image-1.png') }}')">
+
+                            @if (Illuminate\Support\Str::startsWith($item['image'] ?? '', 'http'))
+                            <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" style="max-width:65px; border:1px solid #ddd; cursor:pointer;"
+                                onclick="openModal('{{ $item['image'] }}')">
+
+                            @else
+                                <img src="{{ isset($item['image']) && $item['image'] 
+                                            ? asset('images/'.$item['image']) 
+                                            : asset('assets/media/products/nav-image-1.png') }}" 
+                                    alt="Product" 
+                                    style="max-width:65px; border:1px solid #ddd;" 
+                                    onclick="openModal('{{ isset($item['image']) && $item['image'] 
+                                                            ? asset('images/'.$item['image']) 
+                                                            : asset('assets/media/products/nav-image-1.png') }}')">
+                            @endif
                         @endif
 
 
                     </div>
 
                     <span class="h6 medium-black">
-                        @if($item['type'] === 'gangsheet')
+                        @if(($item['type'] ?? '') === 'gangsheet')
                             {{ $item['design_name'] ?? 'Gang Sheet' }} x {{ $item['quantity'] }}
                         @else
                             {{ $item['name'] ?? 'Product' }} x {{ $item['quantity'] }}

@@ -7,7 +7,7 @@
 .profile_info_details a{
      /* Change background color on hover */
     text-align:center;
-    background-color: #1f993d;
+    background-color: #fbaf1c;
     color: azure !important;
     cursor: pointer;"
     
@@ -41,7 +41,7 @@
 .low-stock-menu .low_Header {
     padding: 15px 20px;
     border-radius: 10px 10px 0 0;
-    background: #1f993d;
+    background: #fbaf1c;
 }
 
 .low-stock-menu .low_body {

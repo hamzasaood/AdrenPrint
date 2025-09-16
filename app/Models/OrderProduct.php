@@ -11,7 +11,7 @@ class OrderProduct extends Model
 
     protected $fillable = [
         'order_id', 'product_id', 'variant_id', 'quantity', 'price','gangsheet','printify_product_id','printify_variant_id'
-        ,'product_name','product_image','design_id','design_name','preview','width','height','size_title','options'
+        ,'product_name','product_image','design_id','design_name','preview','width','height','size_title','options','size','color',
     ];
 
     public function order()

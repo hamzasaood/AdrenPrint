@@ -94,7 +94,7 @@
 .custom-label {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #1f993d; /* Background color */
+  background-color: #fbaf1c; /* Background color */
   color: white; /* Text color */
   border-radius: 5px; /* Rounded corners */
   cursor: pointer;
@@ -113,7 +113,7 @@
 .custom-labels {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #1f993d; /* Background color */
+  background-color: #fbaf1c; /* Background color */
   color: white; /* Text color */
   border-radius: 5px; /* Rounded corners */
   cursor: pointer;

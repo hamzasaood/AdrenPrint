@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use JsonMachine\JsonMachine;
+set_time_limit(0);
+
 
 class ProductSyncController extends Controller
 {
@@ -18,72 +21,57 @@ class ProductSyncController extends Controller
     public function startSync()
     {
         try {
-            // 🔹 Use stream mode to avoid memory spikes
-            $stylesRes = Http::withBasicAuth(env('SS_ACCOUNT_NUMBER'), env('SS_API_KEY'))
-                ->timeout(30) // smaller timeout, we'll call multiple times
-                ->get('https://api.ssactivewear.com/v2/styles/', [
-                    'fields'    => 'styleID,brandName,partNumber,styleName,baseCategory,brandImage,styleImage',
-                    'mediatype' => 'json',
-                ]);
+            // Fetch styles list from SS API (or cache if already fetched)
+            $styles = Cache::remember('ss_styles', 3600, function () {
+                $res = Http::withBasicAuth(env('SS_ACCOUNT_NUMBER'), env('SS_API_KEY'))
+                    ->timeout(60)
+                    ->get('https://api.ssactivewear.com/v2/styles');
 
-            if ($stylesRes->failed()) {
-                return response()->json(['error' => 'Failed to fetch styles']);
-            }
+                if ($res->failed()) {
+                    throw new \Exception("Failed to fetch styles list");
+                }
+                return $res->json();
+            });
 
-            $styles = $stylesRes->json();
-
-            // 🔹 Only keep the required info in cache
-            $lightweight = collect($styles)->map(function ($s) {
-                return [
-                    'styleID'      => $s['styleID'] ?? null,
-                    'brandName'    => $s['brandName'] ?? '',
-                    'styleName'    => $s['styleName'] ?? ($s['partNumber'] ?? 'Unknown'),
-                    'partNumber'   => $s['partNumber'] ?? '',
-                    'baseCategory' => $s['baseCategory'] ?? 'Uncategorized',
-                    'brandImage'   => $s['brandImage'] ?? null,
-                    'styleImage'   => $s['styleImage'] ?? null,
-                ];
-            })->filter(fn($s) => !empty($s['styleID']))->values()->all();
-
-            // 🔹 Cache reset
-            Cache::put('ss_styles', $lightweight, 7200); // 2 hrs
+            // Reset indexes
             Cache::put('ss_style_index', 0);
             Cache::put('ss_product_offset', 0);
 
             return response()->json([
-                'total_styles' => count($lightweight),
-                'message'      => 'Sync initialized',
+                'message' => '✅ Sync initialized',
+                'total_styles' => count($styles)
             ]);
         } catch (\Throwable $e) {
-            Log::error("SS Sync start failed: ".$e->getMessage());
-            return response()->json(['error' => 'Sync start failed']);
+            Log::error("SS Sync start failed: " . $e->getMessage());
+            return response()->json(['error' => '❌ Initialization failed']);
         }
     }
 
-    /**
-     * STEP 2 → Sync products in batches of 100 per request
-     */
+    // Step 2: Fetch Batch (1000 at a time)
     public function syncBatch()
-    {
-        try {
-            $styles   = Cache::get('ss_styles', []);
-            $styleIdx = Cache::get('ss_style_index', 0);
-            $offset   = Cache::get('ss_product_offset', 0);
+{
+    try {
+        $styles   = Cache::get('ss_styles', []);
+        $styleIdx = Cache::get('ss_style_index', 0);
+        $offset   = Cache::get('ss_product_offset', 0);
 
-            // 🔹 No more styles → finished
-            if (!isset($styles[$styleIdx])) {
-                Cache::forget('ss_styles');
-                Cache::forget('ss_style_index');
-                Cache::forget('ss_product_offset');
-                return response()->json(['done' => true, 'message' => '✅ All styles synced']);
-            }
+        if (!isset($styles[$styleIdx])) {
+            Cache::forget('ss_styles');
+            Cache::forget('ss_style_index');
+            Cache::forget('ss_product_offset');
+            return response()->json(['done' => true, 'message' => '✅ All styles synced']);
+        }
 
+        $processedCount = 0; // total products processed this click
+        $messages = [];
+
+        while ($processedCount < 1000 && isset($styles[$styleIdx])) {
             $style     = $styles[$styleIdx];
             $styleId   = $style['styleID'];
             $brand     = $style['brandName'];
             $styleName = $style['styleName'];
 
-            // 🔹 Ensure category exists
+            // Ensure category exists
             $category = Category::updateOrCreate(
                 ['slug' => Str::slug($style['baseCategory'] ?? 'uncategorized')],
                 [
@@ -93,13 +81,12 @@ class ProductSyncController extends Controller
                 ]
             );
 
-            // 🔹 Load cached products for this style
-            $allProducts = Cache::get("ss_current_products_{$styleId}");
-
-            if (!$allProducts) {
-                // First time → fetch products for this style
+            // JSON cache per style
+            $jsonFile = storage_path("app/ss_products_{$styleId}.json");
+            if (!file_exists($jsonFile)) {
                 $prodRes = Http::withBasicAuth(env('SS_ACCOUNT_NUMBER'), env('SS_API_KEY'))
-                    ->timeout(300)
+                    ->timeout(600)
+                    ->sink($jsonFile)
                     ->get('https://api.ssactivewear.com/v2/products/', [
                         'styleid'   => $styleId,
                         'mediatype' => 'json',
@@ -108,80 +95,159 @@ class ProductSyncController extends Controller
                 if ($prodRes->failed()) {
                     return response()->json(['error' => "❌ Failed to fetch products for style {$styleId}"]);
                 }
-
-                $allProducts = $prodRes->json() ?? [];
-
-                // 🔹 Store in cache (avoid sha1 error by serializing cleanly)
-                Cache::put("ss_current_products_{$styleId}", $allProducts, 3600);
             }
 
-            // 🔹 Get batch of 100 products
-            $batch = array_slice($allProducts, $offset, 100);
+            // 🔹 Load JSON safely
+$allProducts = [];
+if (file_exists($jsonFile)) {
+    $allProducts = json_decode(file_get_contents($jsonFile), true);
+}
 
-            if (empty($batch)) {
-                // Finished this style → clear + move to next
-                Cache::forget("ss_current_products_{$styleId}");
-                Cache::put('ss_style_index', $styleIdx + 1);
-                Cache::put('ss_product_offset', 0);
+// ✅ If file empty or invalid → skip style
+if (!$allProducts || !is_array($allProducts)) {
+    if (file_exists($jsonFile)) {
+        unlink($jsonFile); // remove invalid JSON
+    }
+    // Move to next style
+    $styleIdx++;
+    Cache::put('ss_style_index', $styleIdx);
+    Cache::put('ss_product_offset', 0);
 
-                return response()->json([
-                    'message'      => "✅ Finished style {$styleName} ({$brand})",
-                    'style_done'   => true,
-                    'style_index'  => $styleIdx + 1,
-                    'total_styles' => count($styles),
-                ]);
-            }
+    return response()->json([
+        'message' => "⚠️ Skipped style {$styleName} ({$brand}) — no products found or invalid JSON",
+        'style_index' => $styleIdx,
+        'total_styles' => count($styles),
+        'done' => false,
+    ]);
+}
 
-            // 🔹 Parent product
-            $product = Product::updateOrCreate(
-                ['ss_product_id' => $styleId],
-                [
-                    'name'         => trim(($brand ? $brand.' ' : '').$styleName),
-                    'slug'         => Str::slug(($brand ?: 'style').'-'.$styleId.'-'.$styleName),
-                    'brand'        => $brand,
-                    'category_id'  => $category->id,
-                    'style_number' => $styleName,
-                    'main_image'   => $batch[0]['colorFrontImage'] ?? null,
-                    'price'        => (float)($batch[0]['customerPrice'] ?? 0),
-                    'stock'        => (int)($batch[0]['qty'] ?? 0),
-                ]
-            );
+$totalProducts = count($allProducts);
 
-            // 🔹 Variants
+
+            // Remaining products in this style
+            $remainingInStyle = $totalProducts - $offset;
+            $remainingQuota = 1000 - $processedCount;
+            $take = min($remainingInStyle, $remainingQuota);
+
+            $batch = array_slice($allProducts, $offset, $take);
+
             foreach ($batch as $p) {
-                $product->variants()->updateOrCreate(
-                    ['sku' => $p['sku']],
-                    [
-                        'ss_sku_id'    => $p['skuID_Master'] ?? null,
-                        'variant_name' => $p['sizeName'] ?? null,
-                        'color'        => $p['colorName'] ?? null,
-                        'color_code'   => $p['colorCode'] ?? null,
-                        'swatch_image' => $p['colorSwatchImage'] ?? null,
-                        'size'         => $p['sizeName'] ?? null,
-                        'price'        => (float)($p['customerPrice'] ?? 0),
-                        'map_price'    => (float)($p['mapPrice'] ?? 0),
-                        'stock'        => (int)($p['qty'] ?? 0),
-                        'warehouses'   => json_encode($p['warehouses'] ?? []),
-                        'is_active'    => true,
-                    ]
-                );
+                $this->processProduct($p, $styleId, $brand, $styleName, $category);
             }
 
-            // 🔹 Update offset
-            Cache::put('ss_product_offset', $offset + 100);
+            $processedCount += count($batch);
+            $offset += count($batch);
 
-            return response()->json([
-                'message'        => "Synced " . count($batch) . " products for {$styleName}",
-                'style_index'    => $styleIdx,
-                'total_styles'   => count($styles),
-                'batch_size'     => count($batch),
-                'products_total' => count($allProducts),
-                'products_done'  => min($offset + 100, count($allProducts)),
-                'done'           => false,
-            ]);
-        } catch (\Throwable $e) {
-            Log::error("SS Sync batch failed: ".$e->getMessage());
-            return response()->json(['error' => '❌ Batch failed']);
+            // Finished this style → move to next
+            if ($offset >= $totalProducts) {
+                if (file_exists($jsonFile)) {
+                    unlink($jsonFile);
+                }
+                $styleIdx++;
+                $offset = 0;
+                Cache::put('ss_style_index', $styleIdx);
+                $messages[] = "✅ Finished style {$styleName} ({$brand})";
+            }
+
+            Cache::put('ss_product_offset', $offset);
+        }
+
+        return response()->json([
+            'message'        => implode(" | ", $messages) ?: "Processed {$processedCount} products",
+            'style_index'    => $styleIdx,
+            'total_styles'   => count($styles),
+            'batch_size'     => $processedCount,
+            'products_done'  => $processedCount,
+            'done'           => false,
+        ]);
+    } catch (\Throwable $e) {
+        Log::error("SS Sync batch failed: " . $e->getMessage());
+        return response()->json(['error' => '❌ Batch failed'.$e->getMessage()]);
+    }
+}
+
+
+/**
+ * Process and save a single product safely
+ */
+protected function processProduct(array $p, $styleId, $brand, $styleName, $category)
+{
+    // Parent product
+    $possibleImages = [
+        'colorFrontImage',
+        'colorSideImage',
+        'colorBackImage',
+        'colorDirectSideImage',
+        'colorOnModelFrontImage',
+        'colorOnModelSideImage',
+        'colorOnModelBackImage',
+        'colorSwatchImage',
+    ];
+    $mainImage = null;
+    foreach ($possibleImages as $key) {
+        if (!empty($p[$key])) {
+            $mainImage = $p[$key];
+            break;
         }
     }
+
+    $product = Product::updateOrCreate(
+        ['ss_product_id' => $styleId],
+        [
+            'name'         => trim(($brand ? $brand.' ' : '').$styleName),
+            'slug'         => Str::slug(($brand ?: 'style').'-'.$styleId.'-'.$styleName),
+            'brand'        => $brand,
+            'category_id'  => $category->id,
+            'style_number' => $styleName,
+            'main_image'   => $mainImage,
+            'price'        => (float)($p['customerPrice'] ?? 0),
+            'stock'        => (int)($p['qty'] ?? 0),
+        ]
+    );
+
+    // Images
+    $imageKeys = [
+        'colorSwatchImage',
+        'colorFrontImage',
+        'colorSideImage',
+        'colorBackImage',
+        'colorDirectSideImage',
+        'colorOnModelFrontImage',
+        'colorOnModelSideImage',
+        'colorOnModelBackImage',
+    ];
+
+    $images = [];
+    foreach ($imageKeys as $sort => $key) {
+        if (!empty($p[$key])) {
+            $images[$p[$key]] = $sort;
+        }
+    }
+
+    foreach ($images as $path => $sort) {
+        $product->images()->updateOrCreate(
+            ['path' => $path],
+            ['sort' => $sort]
+        );
+    }
+
+    // Variants
+    $product->variants()->updateOrCreate(
+        ['sku' => $p['sku'] ?? null],
+        [
+            'ss_sku_id'    => $p['skuID_Master'] ?? null,
+            'variant_name' => $p['sizeName'] ?? null,
+            'color'        => $p['colorName'] ?? null,
+            'color_code'   => $p['color1'] ?? $p['color2'] ?? null,
+            'swatch_image' => $p['colorSwatchImage'] ?? null,
+            'size'         => $p['sizeName'] ?? null,
+            'price'        => (float)($p['customerPrice'] ?? 0),
+            'map_price'    => (float)($p['mapPrice'] ?? 0),
+            'stock'        => (int)($p['qty'] ?? 0),
+            'warehouses'   => json_encode($p['warehouses'] ?? []),
+            'is_active'    => true,
+        ]
+    );
+}
+
 }

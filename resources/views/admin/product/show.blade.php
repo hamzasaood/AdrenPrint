@@ -37,14 +37,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($product->variants as $variant)
-                                    <tr>
-                                        <td>{{ $variant->variant_name }}</td>
-                                        <td>${{ $variant->price ?? '-' }}</td>
-                                        <td>{{ $variant->stock }}</td>
-                                        <td>{{ $variant->is_active ? 'Active' : 'Inactive' }}</td>
+                               @php
+                                    // Group variants by color
+                                    $grouped = $product->variants->groupBy('color');
+                                @endphp
+
+                                @foreach($grouped as $color => $colorVariants)
+                                    <tr class="table-primary">
+                                        <td colspan="4">
+                                            <strong>{{ $color ?: 'No Color' }}</strong>
+                                        </td>
                                     </tr>
+
+                                    @foreach($colorVariants->sortBy('size') as $variant)
+                                        <tr>
+                                            <td>{{ $variant->size ?? '-' }}</td>
+                                            <td>${{ number_format($variant->price, 2) }}</td>
+                                            <td>{{ $variant->stock }}</td>
+                                            <td>{{ $variant->is_active ? 'Active' : 'Inactive' }}</td>
+                                        </tr>
+                                    @endforeach
                                 @endforeach
+
                             </tbody>
                         </table>
                     @else

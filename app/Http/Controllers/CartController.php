@@ -121,14 +121,35 @@ public function saveToCart(Request $request)
 
     $cart = session()->get('cart', []);
 
+    //dd($request->all());
+
+    if($request->variant_price_value)
+    {
+        $price = floatval(str_replace('$','',$request->variant_price_value));
+    }
+    else
+    {
+        $price = $product->price;
+    }
+    if($product->image)
+    {
+        $image = $product->image;
+    }
+    else
+    {
+        $image = 'https://www.ssactivewear.com/'.$product->main_image;
+    }
+
     $cartItem = [
         'product_id'   => $product->id,
+        'size'         => $request->size ?? null,
+        'color'        => $request->color ?? null,
         'name'         => $product->name,
-        'price'        => $product->price,
+        'price'        => $price,
         'quantity'     => $request->quantity ?? 1,
         'design_json'  => $request->design_json,
-        'design_preview' => $request->preview, // optional image
-        'image'        => $product->image ?? null, // fallback for simple product
+        'design_preview' => $request->preview ?? $image ?? null, // optional image
+        'image'        => $image,
         'added_at'     => now()->toDateTimeString(),
     ];
 
@@ -267,7 +288,7 @@ public function deleteCart($index)
                 'quantity'    => $c['quantity'],
             ]);
         } 
-        else if($c['type'] ==='dtf' || $c['type'] === 'dtf-gangsheet-upload')
+        else if(($c['type'] ?? '') ==='dtf' || ($c['type'] ?? '') === 'dtf-gangsheet-upload')
         {
             OrderProduct::create([
                 'order_id'    => $order->id,
@@ -285,14 +306,66 @@ public function deleteCart($index)
         }
         
         else {
+
+            if($c['type'] ?? '' === 'pod')
+            {
+               // $c['product_id'] = null;
+                if (!empty($c['design_preview'])) {
+                
+                    $folder = public_path('pods');
+                    if (!file_exists($folder)) {
+                        mkdir($folder, 0777, true);
+                    }
+                    $filename = uniqid('pod_') . '.png';
+                    file_put_contents($folder . '/' . $filename, file_get_contents($c['design_preview']));
+                    $image = 'pods/' . $filename;
+                
+            }
+                
+                //$image = $c['design_preview'] ?? null;
+                //$c['design_preview'] = $image;
+            }
+            else {
+                    $image = $c['design_preview']; // already local path
+                }
+
             OrderProduct::create([
                 'order_id'     => $order->id,
                 'product_id'   => $c['product_id'],
                 'product_name' => $c['name'] ?? null,
-                'product_image'=> $c['image'] ?? null,
+                'product_image'=> $image ?? null,
+                'size'         => $c['size'] ?? null,
+                'color'        => $c['color'] ?? null,
                 'price'        => $c['price'],
                 'quantity'     => $c['quantity'],
             ]);
+
+            //minus stock
+            if($c['product_id'] && $c['size'] && $c['color'])
+            {
+                $product = Product::find($c['product_id']);
+                if($product)
+                {
+                    $variant = $product->variants()->where('size', $c['size'])->where('color', $c['color'])->first();
+                    if($variant && $variant->stock >= $c['quantity'])
+                    {
+                        $variant->stock -= $c['quantity'];
+                        $variant->save();
+                    }
+                }
+            }
+            else if($c['product_id'])
+            {
+                $product = Product::find($c['product_id']);
+                if($product && $product->stock >= $c['quantity'])
+                {
+                    $product->stock -= $c['quantity'];
+                    $product->save();
+                }
+            }
+                //minus stock
+
+
         }
     }
 

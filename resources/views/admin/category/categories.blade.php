@@ -49,10 +49,10 @@
                                         <tr>
                                             <td>{{ $c->name }}</td>
                                             <td>
-                                                @if($c->image)
-                                                    <img src="{{ asset('images/' . $c->image) }}" width="50" height="50">
-                                                @else
-                                                    <span class="text-muted">No image</span>
+                                                @if(str_starts_with($c->image, 'Images'))
+                                                    <img src="https://www.ssactivewear.com/{{ $c->image }}" style="height: 100px;" alt="">
+                                                    @else
+                                                    <img src="{{ asset('images/'.$c->image )}}" style="height: 100px;" alt="">
                                                 @endif
                                             </td>
                                             <td>{{ $c->is_active ? 'Active' : 'Inactive' }}</td>

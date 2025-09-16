@@ -45,13 +45,21 @@
                                             <a href="#"><img src="assets/media/products/nav-image-1.png" alt=""></a>
                                         </div>
                                         <div style="width:140px">
+                                            
                                             @if(!empty($item['design_preview']))
                                             <img src="{{ $item['design_preview'] }}" alt="Design"
                                                 style="max-width:120px; border:1px solid #ddd;">
+
+                                            @else
+                                            <img src="{{ $item['image'] }}" alt="Design"
+                                                style="max-width:120px; border:1px solid #ddd;">
+
                                             @endif
                                         </div>
                                         <div class="d-block text-start">
                                             <h6><a href="#" class="medium-black">{{ $item['name'] }}</a></h6>
+                                            <small class="text-muted">Size: {{ $item['size'] ?? 'N/A' }}</small>
+                                            <small class="text-muted">Color: {{ $item['color'] ?? 'N/A' }}</small>
                                         </div>
 
                                     </div>
@@ -251,25 +259,51 @@
                                                             <img src="{{ $item['preview'] }}" alt="Gangsheet Design"
                                                                 style="max-width:120px; border:1px solid #ddd; cursor:pointer;"
                                                                 onclick="openModal('{{ $item['preview'] }}')">
+                                                        
                                                         @elseif(!empty($item['image']))
-                                                            <img src="{{ asset('images/' . $item['image']) }}" alt="{{ $item['name'] }}">
-                                                        @elseif($item['type'] ?? '' === 'dtf' && !empty($item['artwork']))
+                                                           
+                                                            @if (Illuminate\Support\Str::startsWith($item['image'], 'http'))
+                                                                <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" style="max-width:120px; border:1px solid #ddd; cursor:pointer;"
+                                                                onclick="openModal('{{ $item['image'] }}')">
+                                                            @else
+                                                            <img src="{{ asset('images/' . $item['image']) }}" alt="{{ $item['name'] }}" style="max-width:120px; border:1px solid #ddd; cursor:pointer;"
+                                                                onclick="openModal('{{ $item['image'] }}')">
+                                                            @endif
+
+                                                        @elseif($item['type'] === 'dtf' || !empty($item['artwork']))
                                                             <img src="{{ asset($item['artwork']) }}" alt=""
                                                                 style="max-width:120px; border:1px solid #ddd; cursor:pointer;"
                                                                 onclick="openModal('{{ asset($item['artwork']) }}')">
+                                                       @elseif($item['design_preview'] ?? '')
+                                             <img src="{{ $item['design_preview'] }}" alt="Gangsheet Design"
+                                                    style="max-width:120px; border:1px solid #ddd; cursor:pointer;"
+                                                    onclick="openModal('{{ $item['design_preview'] }}')">
+                                                        @else
+                                                            <img src="https://via.placeholder.com/120x120?text=No+Image"
+                                                                alt="No Image" style="max-width:120px; border:1px solid #ddd;"> 
+
+                                                        
 
                                                         @endif
                                                     </div>
 
                                                     <!-- Item Name -->
                                                     <div class="d-block text-start">
-                                                        @if(($item['type'] ?? '') === 'gangsheet')
+                                                        @if($item['title']?? false )
                                                             <h6 class="medium-black">{{ $item['design_name'] ?? 'Gang Sheet' }}</h6>
                                                             <small class="text-muted">
                                                                 Size: {{ $item['title'] ?? ($item['width'] . 'x' . $item['height'] . ' in') }}
                                                             </small>
+
+                                                        @elseif($item['size_title'] ?? false)
+                                                            <h6 class="medium-black">{{ $item['name'] ?? 'Gang Sheet' }}</h6>
+                                                            <small class="text-muted">
+                                                                Size: {{ $item['size_title'] ?? ($item['width'] . 'x' . $item['height'] . ' in') }}
+                                                            </small>
                                                         @else
                                                             <h6 class="medium-black">{{ $item['name'] }}</h6>
+                                                            <small class="text-muted">Size: {{ $item['size'] ?? 'N/A' }}</small>
+                                                            <small class="text-muted">Color: {{ $item['color'] ?? 'N/A' }}</small>
                                                         @endif
                                                     </div>
                                                 </div>
