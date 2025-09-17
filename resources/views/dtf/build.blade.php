@@ -41,7 +41,7 @@
                 {{-- RIGHT SIDE: Product Options --}}
                 <div class="col-lg-6">
                     <div>
-                        <h2 class="product-title d-flex align-items-center text-dark">DTF Transfers — Gang Sheet Upload
+                        <h2 class="product-title d-flex align-items-center text-dark">DTF Transfers — Gang Sheet Builder
                         </h2>
                         <p class="text-muted mb-4 text-dark">Upload your artwork, then choose color, size & quantity to get
                             live

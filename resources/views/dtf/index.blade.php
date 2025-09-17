@@ -4,13 +4,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <section>
-        <div class="hero-img d-flex align-items-center">
-            <div class="text-center site-container my-5">
-                <h1 class="font-jost fw-bold text-dark">DTF Transfers</h1>
-            </div>
-        </div>
-    </section>
+    
     <section class="site-container">
         <div class=" py-5">
             <div class="row g-5">
@@ -364,7 +358,7 @@
         <div class="my-5">
             <div class="row gap-5 flex-column align-items-center justify-content-center">
                 <!-- Left Column -->
-                <div class="col-lg-8 mb-4">
+                <div class="col-lg-12  mb-4">
                     <h3 class="fw-bold brand-yellow mb-2 text-center">Arden’s Print – DTF Transfers Built for Impact</h3>
                     <p class="text-center">
                         At Arden’s Print, we specialize in premium Direct-to-Film (DTF) Transfers made for creators who
@@ -374,7 +368,7 @@
                 </div>
 
                 <!-- Right Column -->
-                <div class="col-lg-7">
+                <div class="col-lg-12">
                     <div class="accordion accordion-flush" id="productAccordion">
 
                         <!-- Features (open by default) -->
@@ -751,13 +745,13 @@
             </div>
         </div> --}}
 
-        <section class="site-container py-5">
-            <div class="" style="padding-top: 1%;padding-bottom:1%;padding-left:7%;padding-right:7%;">
+        <section class="py-5 bg-light">
+            <div class="" style="">
                 <h2 class="section-title text-center">What Our Customers Say</h2>
                 <div class="row g-4">
-
+                    <div class="col-lg-12">
                     <script defer async src='https://cdn.trustindex.io/loader.js?bee03e45460d278af256ac8441b'></script>
-
+        </div>
                 </div>
                 <div class="mt-5">
                     <img src="assets/media/about-2.png" alt="" class="img-fluid w-100 rounded-3 shadow-sm">

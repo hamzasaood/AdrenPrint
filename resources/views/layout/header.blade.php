@@ -269,13 +269,12 @@
                         <ul class="dropdown-menu list-unstyled">
                             <li><a class="dropdown-item" href="{{url('/dtf/transfer_by_size')}}">DTF Transfer By
                                     Size</a></li>
-                            <li><a class="dropdown-item" href="{{url('/gangsheet')}}">DTF Gangsheet Builder</a></li>
+                            <li><a class="dropdown-item" href="{{url('/dtf/build-a-gangsheet')}}">DTF Gangsheet Builder</a></li>
                             <li><a class="dropdown-item" href="{{url('/dtf/upload-gangsheet')}}">DTF Transfer - Upload
                                     Gang
                                     Sheet</a></li>
                         </ul>
                     </li>
-                    <a href="#" class="text-dark text-decoration-none">UV DTF TRANSFERS</a>
                     <a href="{{url('/shop')}}" class="text-dark text-decoration-none">BLANKS</a>
                 </div>
 
@@ -513,7 +512,7 @@
                                 <li><a class="dropdown-item" href="{{url('/dtf/transfer_by_size')}}">DTF Transfer By
                                         Size</a>
                                 </li>
-                                 <li><a class="dropdown-item" href="{{url('/gangsheet')}}">DTF Gangsheet Builder</a>
+                                 <li><a class="dropdown-item" href="{{url('/dtf/build-a-gangsheet')}}">DTF Gangsheet Builder</a>
                                 </li>
                                 <li><a class="dropdown-item" href="{{url('/dtf/upload-gangsheet')}}">DTF Transfer -
                                         Upload

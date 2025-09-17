@@ -11,6 +11,9 @@ use App\Http\Controllers\DtfController;
 use App\Http\Controllers\DTFuploadController;
 use App\Http\Controllers\ProductSyncController;
 use App\Http\Controllers\ShopController;
+use App\Models\DtfImage;
+use App\Models\DtfColor;
+use App\Models\DtfSize;
 
 
 
@@ -102,6 +105,14 @@ Route::get('/product-detail', function () {
 */
 Route::get('/wishlist', function () {
     return view('wishlist');
+});
+
+Route::get('/dtf/build-a-gangsheet', function () {
+    $images = DtfImage::get();
+        $colors = DtfColor::where('is_active',1)->orderBy('id')->get();
+        $sizes  = DtfSize::where('is_active',1)->orderBy('id')->get();
+
+        return view('dtf.upload', compact('images','colors','sizes'));
 });
 
 Auth::routes();
