@@ -1,8 +1,8 @@
 @extends('layout.default')
 
 @section('content')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <section>
         <div class="hero-img d-flex align-items-center">
@@ -18,32 +18,32 @@
                 {{-- LEFT SIDE: Product Gallery --}}
                 <div class="col-lg-6">
                     <div class="product-gallery">
-    <!-- Main Slider -->
-    <div class="swiper mySwiper2 mb-3">
-        <div class="swiper-wrapper">
-            @foreach($images as $img)
-                <div class="swiper-slide">
-                    <img src="{{ asset('dtf-transfer/'.$img->path) }}" class="img-fluid rounded shadow-sm">
-                </div>
-            @endforeach
-        </div>
-        <!-- Navigation -->
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-    </div>
+                        <!-- Main Slider -->
+                        <div class="swiper mySwiper2 mb-3">
+                            <div class="swiper-wrapper">
+                                @foreach($images as $img)
+                                    <div class="swiper-slide">
+                                        <img src="{{ asset('dtf-transfer/' . $img->path) }}"
+                                            class="img-fluid rounded shadow-sm">
+                                    </div>
+                                @endforeach
+                            </div>
+                            <!-- Navigation -->
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
 
-    <!-- Thumbs Slider -->
-    <div class="swiper mySwiper mt-2">
-        <div class="swiper-wrapper">
-            @foreach($images as $img)
-                <div class="swiper-slide">
-                    <img src="{{ asset('dtf-transfer/'.$img->path) }}" class="img-thumbnail">
-                </div>
-            @endforeach
-        </div>
-    </div>
-</div>
-
+                        <!-- Thumbs Slider -->
+                        <div class="swiper mySwiper mt-2">
+                            <div class="swiper-wrapper">
+                                @foreach($images as $img)
+                                    <div class="swiper-slide">
+                                        <img src="{{ asset('dtf-transfer/' . $img->path) }}" class="img-thumbnail">
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {{-- RIGHT SIDE: Product Options --}}
@@ -141,6 +141,19 @@
                 </div>
             </div>
         </div>
+        {{-- <section class="site-container">
+            <div class="my-3">
+                <h2 class="section-title text-center">Arden’s Print – DTF Transfers Built for Impact</h2>
+                <p class="text-dark mb-5 text-center fs-5">
+                    At <strong>Arden’s Print,</strong> we specialize in premium <strong>Direct-to-Film (DTF)
+                        Transfers</strong>
+                    made for creators who demand
+                    high-quality, long-lasting results. Whether you're decorating a single tee or managing bulk production,
+                    our
+                    transfers offer unmatched versatility, color depth, and ease of use.
+                </p>
+            </div>
+        </section>
         <h2 class="section-title">Key Features</h2>
         <div class="row g-4 mb-5" id="featuresAccordion">
             <div class="col-md-6 col-lg-4">
@@ -149,7 +162,7 @@
                     <div class="card-body d-flex gap-3 align-items-start">
                         <i class="bi bi-palette-fill feature-icon"></i>
                         <div>
-                            <h5 class="card-title">Print On Virtually Any Fabric</h5>
+                            <h5 class="card-title fw-semibold fs-4">Print On Virtually Any Fabric</h5>
                             <div class="collapse" id="feature1" data-bs-parent="#featuresAccordion">
                                 From 100% cotton to poly blends, nylon, and even leather — our transfers bond seamlessly
                                 with almost any material. No more limitations on fabric type or garment color.
@@ -165,7 +178,7 @@
                     <div class="card-body d-flex gap-3 align-items-start">
                         <i class="bi bi-droplet feature-icon"></i>
                         <div>
-                            <h5 class="card-title">Crisp Detail, Vibrant Color</h5>
+                            <h5 class="card-title fw-semibold fs-4">Crisp Detail, Vibrant Color</h5>
                             <div class="collapse" id="feature2" data-bs-parent="#featuresAccordion">
                                 Expect exceptional clarity and vivid saturation in every print. Our DTF process captures
                                 fine lines, gradients, and intricate artwork with stunning precision.
@@ -181,7 +194,7 @@
                     <div class="card-body d-flex gap-3 align-items-start">
                         <i class="bi bi-lightning-charge feature-icon"></i>
                         <div>
-                            <h5 class="card-title">Fast & Simple Application</h5>
+                            <h5 class="card-title fw-semibold fs-4">Fast & Simple Application</h5>
                             <div class="collapse" id="feature3" data-bs-parent="#featuresAccordion">
                                 No pretreatment, no weeding — just press and peel. Get pro-level results in minutes
                                 using your heat press, with minimal effort and setup.
@@ -197,7 +210,7 @@
                     <div class="card-body d-flex gap-3 align-items-start">
                         <i class="bi bi-cloud-sun feature-icon"></i>
                         <div>
-                            <h5 class="card-title">Lightweight & Soft Finish</h5>
+                            <h5 class="card-title fw-semibold fs-4">Lightweight & Soft Finish</h5>
                             <div class="collapse" id="feature4" data-bs-parent="#featuresAccordion">
                                 Unlike vinyl or other print methods, our DTF transfers leave a smooth, breathable finish
                                 that moves with the garment and feels great against the skin.
@@ -213,7 +226,7 @@
                     <div class="card-body d-flex gap-3 align-items-start">
                         <i class="bi bi-shield-check feature-icon"></i>
                         <div>
-                            <h5 class="card-title">Wash-Resistant Durability</h5>
+                            <h5 class="card-title fw-semibold fs-4">Wash-Resistant Durability</h5>
                             <div class="collapse" id="feature5" data-bs-parent="#featuresAccordion">
                                 Our transfers hold up to 100+ wash cycles, resisting cracks, fading, or peeling. Built
                                 to last through everyday wear and laundering.
@@ -243,7 +256,7 @@
         <p>Follow these four steps for professional-grade results:</p>
         <div class="accordion mb-5" id="pressingAccordion">
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse"
                         data-bs-target="#step1" aria-expanded="true" aria-controls="step1">
                         Position the Transfer
@@ -256,7 +269,7 @@
                 </div>
             </div>
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
                         data-bs-target="#step2" aria-expanded="false" aria-controls="step2">
                         Press the Design
@@ -274,7 +287,7 @@
                 </div>
             </div>
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
                         data-bs-target="#step3" aria-expanded="false" aria-controls="step3">
                         Peel the Film
@@ -288,7 +301,7 @@
                 </div>
             </div>
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
                         data-bs-target="#step4" aria-expanded="false" aria-controls="step4">
                         Final Press
@@ -346,9 +359,267 @@
         <p class="lead mb-5">
             We stand by our work. If your transfer doesn't perform due to print quality or adhesion,
             we'll reprint it at no cost with a new or corrected file. Your satisfaction is our priority.
-        </p>
+        </p> --}}
 
-        <!-- Customer Reviews -->
+        <div class="my-5">
+            <div class="row gap-5 flex-column align-items-center justify-content-center">
+                <!-- Left Column -->
+                <div class="col-lg-8 mb-4">
+                    <h3 class="fw-bold brand-yellow mb-2 text-center">Arden’s Print – DTF Transfers Built for Impact</h3>
+                    <p class="text-center">
+                        At Arden’s Print, we specialize in premium Direct-to-Film (DTF) Transfers made for creators who
+                        demand high-quality, long-lasting results. Whether you're decorating a single tee or managing bulk
+                        production, our transfers offer unmatched versatility, color depth, and ease of use.
+                    </p>
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-lg-7">
+                    <div class="accordion accordion-flush" id="productAccordion">
+
+                        <!-- Features (open by default) -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFeatures">
+                                <button class="accordion-button lh-90" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseFeatures" aria-expanded="true"
+                                    aria-controls="collapseFeatures">
+                                    Key Features
+                                </button>
+                            </h2>
+                            <div id="collapseFeatures" class="accordion-collapse collapse show"
+                                aria-labelledby="headingFeatures" data-bs-parent="#productAccordion">
+                                <div class="accordion-body">
+                                    <ul>
+                                        <li class="mb-1"><strong>Print On Virtually Any Fabric:</strong> From 100% cotton to
+                                            poly blends,
+                                            nylon, and even leather — our
+                                            transfers bond seamlessly with almost any material. No more limitations on
+                                            fabric type or garment color.
+                                        </li>
+                                        <li class="mb-1"><strong>Crisp Detail, Vibrant Color:</strong>Expect exceptional
+                                            clarity and
+                                            vivid saturation in every print. Our DTF process captures fine lines, gradients,
+                                            and intricate artwork with stunning precision.</li>
+                                        <li class="mb-1"><strong> Fast & Simple Application:</strong> No pretreatment, no
+                                            weeding — just
+                                            press and peel. Get pro-level results in minutes using your heat press, with
+                                            minimal effort and setup.
+                                        </li>
+                                        <li class="mb-1"><strong>Lightweight & Soft Finish
+                                                :</strong>Unlike vinyl or other print methods, our DTF transfers leave a
+                                            smooth, breathable finish that moves with the garment and feels great against
+                                            the skin.
+                                        </li>
+                                        <li class="mb-1"><strong>Wash-Resistant Durability
+                                                :</strong> Our transfers hold up to 100+ wash cycles, resisting cracks,
+                                            fading, or peeling. Built to last through everyday wear and laundering.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Satisfaction Guarantee -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingGuarantee">
+                                <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseGuarantee" aria-expanded="false"
+                                    aria-controls="collapseGuarantee">
+                                    Specialty DTF Film Options – (Coming Soon)
+                                </button>
+                            </h2>
+                            <div id="collapseGuarantee" class="accordion-collapse collapse"
+                                aria-labelledby="headingGuarantee" data-bs-parent="#productAccordion">
+                                <div class="accordion-body">
+                                    <div class="mb-1">
+                                        <strong>1. Glow in the Dark</strong>
+                                        <p>Bring your designs to life — even in the dark. Our glow film activates in lighter
+                                            design areas, delivering a bold green illumination at night while preserving
+                                            contrast in darker elements. A great choice for standout pieces or night events.
+                                        </p>
+                                    </div>
+                                    <div class="mb-1">
+                                        <strong>2. Full Cover Glitter Film</strong>
+                                        <p>Infuse your designs with sparkle. This specialty film adds a shimmering overlay
+                                            across your entire artwork, delivering a premium, high-visibility effect perfect
+                                            for statement pieces and fashion items.
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <strong>3. Metallic Foil (Gold & Silver)</strong>
+                                        <p>Create eye-catching finishes with our metallic DTF transfers. Ideal for logos,
+                                            outlines, or bold text, these foil designs offer a long-lasting chrome look on
+                                            all fabric types—no special steps required.
+                                            Specialty transfers use the same artwork setup as standard DTF. You just select
+                                            the desired effect, and we handle the rest.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pressing Instructions -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingPressing">
+                                <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapsePressing" aria-expanded="false"
+                                    aria-controls="collapsePressing">
+                                    Pressing Instructions (Standard DTF)
+                                </button>
+                            </h2>
+                            <div id="collapsePressing" class="accordion-collapse collapse" aria-labelledby="headingPressing"
+                                data-bs-parent="#productAccordion">
+                                <div class="accordion-body">
+                                    <p class="mb-1">Follow these four steps for professional-grade results:
+                                    </p>
+                                    <p><strong>1. Position the Transfer</strong></p>
+                                    <p class="mb-1">
+                                        Align your artwork flat on the garment. Use heat-resistant tape for hats or textured
+                                        items.
+                                    </p>
+
+                                    <p><strong>2. Press the Design</strong></p>
+                                    <p>
+                                        Follow these settings when pressing the design:
+                                    </p>
+                                    <ul>
+                                        <li><strong>Temp:</strong> 310°F (155°C)</li>
+                                        <li><strong>Time:</strong> 13 seconds</li>
+                                        <li><strong>Pressure:</strong> Medium to High</li>
+                                    </ul>
+                                    <p class="mb-1">
+                                        Use a silicone pad or Teflon cover if needed for protection.
+                                    </p>
+
+                                    <p><strong>3. Peel the Film</strong></p>
+                                    <p class="mb-1">
+                                        Wait a few seconds, then peel warm or hot. If any parts don’t stick, lay the film
+                                        back down and press again
+                                        with a bit more pressure and heat.
+                                    </p>
+
+                                    <p><strong>4. Final Press (Important!)</strong></p>
+                                    <p>
+                                        Place parchment paper or a soft fabric layer over the print and press for another 15
+                                        seconds. This boosts adhesion,
+                                        reduces shine, and softens the final feel.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Shipping & Returns -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingShipping">
+                                <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseShipping" aria-expanded="false"
+                                    aria-controls="collapseShipping">
+                                    Care Instructions
+                                </button>
+                            </h2>
+                            <div id="collapseShipping" class="accordion-collapse collapse" aria-labelledby="headingShipping"
+                                data-bs-parent="#productAccordion">
+                                <div class="accordion-body">
+                                    <ul class="mb-0">
+                                        <li>Wash inside out in cold water</li>
+                                        <li>Tumble dry low or hang to dry</li>
+                                        <li>Avoid bleach and ironing directly on design</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Art Upload Recommendations -->
+                        <!-- Shipping & Returns -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingShippingReturns">
+                                <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseShippingReturns" aria-expanded="false"
+                                    aria-controls="collapseShippingReturns">
+                                    Shipping & Returns
+                                </button>
+                            </h2>
+                            <div id="collapseShippingReturns" class="accordion-collapse collapse"
+                                aria-labelledby="headingShippingReturns" data-bs-parent="#productAccordion">
+                                <div class="accordion-body">
+                                    <ul>
+                                        <li><strong>Free shipping</strong> on orders over $75</li>
+                                        <li><strong>1–2 day express shipping</strong> options available</li>
+                                        <li>Contact us within <strong>45 days</strong> for reprint or support requests</li>
+                                        <li>We offer free reprints for print quality issues — but not for low-res files</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingArtwork">
+                                <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseArtwork" aria-expanded="false" aria-controls="collapseArtwork">
+                                    Artwork Setup
+                                </button>
+                            </h2>
+                            <div id="collapseArtwork" class="accordion-collapse collapse" aria-labelledby="headingArtwork"
+                                data-bs-parent="#productAccordion">
+                                <div class="accordion-body">
+                                    <ul class="">
+                                        <li><strong>All file types accepted:</strong> PNG, PDF, SVG, AI, PSD</li>
+                                        <li><strong>Minimum 300 DPI</strong> recommended</li>
+                                        <li><strong>Vector files</strong> preferred for sharpest results</li>
+                                        <li><strong>Canva/Procreate users:</strong> export as high-res PDF</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingGang">
+                                <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseGang" aria-expanded="false" aria-controls="collapseGang">
+                                    Gang Sheet Templates (Downloads Available)
+                                </button>
+                            </h2>
+                            <div id="collapseGang" class="accordion-collapse collapse" aria-labelledby="headingGang"
+                                data-bs-parent="#productAccordion">
+                                <div class="accordion-body">
+                                    <ul class="mb-0">
+                                        <li>22" x 2 ft</li>
+                                        <li>22" x 5 ft</li>
+                                        <li>22" x 10 ft</li>
+                                        <li>22" x 15 ft</li>
+                                        <li>22" x 20 ft</li>
+                                    </ul>
+                                    <p class="mt-2">
+                                        You can build your gang sheets directly using our <strong>Arden’s Print Gang Sheet
+                                            Builder</strong>.
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Build Your Own DTF Transfer -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingBuild">
+                                <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseBuild" aria-expanded="false" aria-controls="collapseBuild">
+                                    Satisfaction Guaranteed
+                                </button>
+                            </h2>
+                            <div id="collapseBuild" class="accordion-collapse collapse" aria-labelledby="headingBuild"
+                                data-bs-parent="#productAccordion">
+                                <div class="accordion-body">We stand by our work. If your transfer doesn’t perform due to
+                                    print quality or adhesion, we’ll reprint it at no cost using a new or corrected file.
+                                    Your satisfaction is always our priority.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- <!-- Customer Reviews -->
         <div class="text-center mb-5">
             <h2 class="section-title">Customer Reviews</h2>
             <div class="site- mt-5 mb-5">
@@ -478,14 +749,28 @@
 
                 </div>
             </div>
-        </div>
+        </div> --}}
+
+        <section class="site-container py-5">
+            <div class="" style="padding-top: 1%;padding-bottom:1%;padding-left:7%;padding-right:7%;">
+                <h2 class="section-title text-center">What Our Customers Say</h2>
+                <div class="row g-4">
+
+                    <script defer async src='https://cdn.trustindex.io/loader.js?bee03e45460d278af256ac8441b'></script>
+
+                </div>
+                <div class="mt-5">
+                    <img src="assets/media/about-2.png" alt="" class="img-fluid w-100 rounded-3 shadow-sm">
+                </div>
+            </div>
+        </section>
 
         <!-- FAQs Accordion -->
-        <h2 class="section-title">Frequently Asked Questions</h2>
+        <h2 class="section-title text-center">Frequently Asked Questions</h2>
         <div class="accordion mb-5" id="faqAccordion">
-
+            <h4 class="section-title pb-3 pt-1">DTF Sizing & Gang Sheet FAQs</h4>
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70 lh-70">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1"
                         aria-expanded="true" aria-controls="faq1">
                         Q1: How many 3.5" x 3.5" designs fit on a 22" x 24" gang sheet?
@@ -497,7 +782,7 @@
             </div>
 
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
                         Q2: What size gang sheet do I need for three 13" x 22" designs?
@@ -509,7 +794,7 @@
             </div>
 
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
                         Q3: How many 2.5" x 3" designs fit on a 22" x 24" gang sheet?
@@ -521,7 +806,7 @@
             </div>
 
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
                         Q4: Are gang sheets delivered as one continuous piece or pre-cut?
@@ -531,9 +816,12 @@
                     <div class="accordion-body">Gang sheets are delivered as one continuous piece.</div>
                 </div>
             </div>
-
+        </div>
+        <h4 class="section-title pb-3 pt-1">Material & Application FAQs
+        </h4>
+        <div class="accordion mb-5" id="faqAccordion">
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq5" aria-expanded="false" aria-controls="faq5">
                         Q5: Can DTF transfers be applied to clear acrylic surfaces?
@@ -545,7 +833,7 @@
             </div>
 
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq6" aria-expanded="false" aria-controls="faq6">
                         Q6: Is it possible to apply DTF transfers to leather?
@@ -557,7 +845,7 @@
             </div>
 
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq7" aria-expanded="false" aria-controls="faq7">
                         Q7: What fabrics are compatible with DTF transfers?
@@ -569,7 +857,7 @@
             </div>
 
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq8" aria-expanded="false" aria-controls="faq8">
                         Q8: Can DTF transfers be applied to dark garments?
@@ -579,9 +867,12 @@
                     <div class="accordion-body">Yes! The white ink base keeps colors vibrant.</div>
                 </div>
             </div>
+        </div>
 
+        <h4 class="section-title pb-3 pt-1">General DTF FAQs</h4>
+        <div class="accordion mb-5" id="faqAccordion">
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq9" aria-expanded="false" aria-controls="faq9">
                         Q9: What equipment is needed to apply DTF transfers?
@@ -594,7 +885,7 @@
             </div>
 
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq10" aria-expanded="false" aria-controls="faq10">
                         Q10: How durable are DTF transfers after washing?
@@ -606,7 +897,7 @@
             </div>
 
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq11" aria-expanded="false" aria-controls="faq11">
                         Q11: What are the recommended care instructions?
@@ -619,7 +910,7 @@
             </div>
 
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq12" aria-expanded="false" aria-controls="faq12">
                         Q12: What file formats are accepted for custom DTF designs?
@@ -631,7 +922,7 @@
             </div>
 
             <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h2 class="accordion-header lh-70">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         data-bs-target="#faq13" aria-expanded="false" aria-controls="faq13">
                         Q13: Do you offer assistance with creating gang sheets?
@@ -648,25 +939,25 @@
     <script>
 
 
-        
-    var swiper = new Swiper(".mySwiper", {
-        loop: true,
-        spaceBetween: 10,
-        slidesPerView: 4,
-        freeMode: true,
-        watchSlidesProgress: true,
-    });
-    var swiper2 = new Swiper(".mySwiper2", {
-        loop: true,
-        spaceBetween: 10,
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-        thumbs: {
-            swiper: swiper,
-        },
-    });
+
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,
+            spaceBetween: 10,
+            slidesPerView: 4,
+            freeMode: true,
+            watchSlidesProgress: true,
+        });
+        var swiper2 = new Swiper(".mySwiper2", {
+            loop: true,
+            spaceBetween: 10,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            thumbs: {
+                swiper: swiper,
+            },
+        });
 
 
         document.addEventListener("DOMContentLoaded", function () {

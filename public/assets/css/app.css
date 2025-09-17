@@ -343,6 +343,14 @@ h6,
   }
 }
 
+.lh-70 {
+  line-height: 70%;
+}
+
+.lh-90 {
+  line-height: 90%;
+}
+
 select {
   font-family: var(--font-family);
 }

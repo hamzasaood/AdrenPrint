@@ -1,6 +1,8 @@
 @extends('layout.default')
 
 @section('content')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <section>
         <div class="hero-img d-flex align-items-center">
             <div class="text-center site-container my-5">
@@ -14,17 +16,30 @@
                 {{-- LEFT SIDE: Product Gallery --}}
                 <div class="col-lg-6">
                     <div class="product-gallery">
-                        <div class="main-image mb-3">
-                            <img id="mainProductImg" src="{{ asset('assets/media/gangSheet.png') }}"
-                                class="img-fluid rounded shadow-sm object-fit-cover"
-                                style="max-height: 800px; width: 100%; object-fit: cover;" alt="DTF Transfers">
+                        <!-- Main Slider -->
+                        <div class="swiper mySwiper2 mb-3">
+                            <div class="swiper-wrapper">
+                                @foreach($images as $img)
+                                    <div class="swiper-slide">
+                                        <img src="{{ asset('dtf-transfer/' . $img->path) }}"
+                                            class="img-fluid rounded shadow-sm">
+                                    </div>
+                                @endforeach
+                            </div>
+                            <!-- Navigation -->
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
                         </div>
 
-                        <div class="thumbs d-flex gap-2 flex-wrap">
-                            @foreach($images as $img)
-                                <img src="{{ asset('assets/media/gangSheet.png') }}"
-                                    class="thumb-img img-thumbnail {{ $loop->first ? 'active' : '' }}" width="80">
-                            @endforeach
+                        <!-- Thumbs Slider -->
+                        <div class="swiper mySwiper mt-2">
+                            <div class="swiper-wrapper">
+                                @foreach($images as $img)
+                                    <div class="swiper-slide">
+                                        <img src="{{ asset('dtf-transfer/' . $img->path) }}" class="img-thumbnail">
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -153,6 +168,22 @@
                     </div>
                 </div>
             </div>
+            {{-- <section class="site-container">
+                <div class="my-3">
+                    <h2 class="section-title text-center">DTF Gang Sheet – Upload a Print-Ready File</h2>
+                    <h5 class="section-title text-center text-dark">Perfect for Advanced Users with Pre-Arranged Designs
+                    </h5>
+                    <p class="text-dark fs-5 mb-5 text-center">
+                        Already have your gang sheet laid out? Upload your <strong>print-ready file</strong> and let us
+                        handle the
+                        rest.
+                        This option
+                        is perfect for experienced users who want full control over their design layout and need fast,
+                        reliable
+                        printing.
+                    </p>
+                </div>
+            </section>
 
             <div class=" my-5">
                 <h4 class="mb-4 text-dark fw-semibold">Features You'll Love</h4>
@@ -267,9 +298,114 @@
                         </div>
                     </div>
                 </div>
+            </div> --}}
+            <div class="my-5">
+                <div class="row gap-5 flex-column align-items-center justify-content-center">
+                    <!-- Left Column -->
+                    <div class="col-lg-8 mb-4">
+                        <h3 class="fw-bold brand-yellow mb-2 text-center">DTF Gang Sheet – Upload a Print-Ready File
+                        </h3>
+                        <p class="text-center"><strong>Perfect for Advanced Users with Pre-Arranged Designs</strong></p>
+                        <p class="text-center">
+                            Already have your gang sheet laid out? Upload your print-ready file and let us handle the rest.
+                            This option is perfect for experienced users who want full control over their design layout and
+                            need fast, reliable printing.
+                        </p>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="col-lg-7">
+                        <div class="accordion accordion-flush" id="productAccordion">
+
+                            <!-- Features (open by default) -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingShippingReturns">
+                                    <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseShippingReturns" aria-expanded="true"
+                                        aria-controls="collapseShippingReturns">
+                                        What We Accept
+                                    </button>
+                                </h2>
+                                <div id="collapseShippingReturns" class="accordion-collapse collapse show"
+                                    aria-labelledby="headingShippingReturns" data-bs-parent="#productAccordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li><strong>Accepted File Types:</strong> PNG, AI, PDF</li>
+                                            <li><strong>Max File Size:</strong> 5GB</li>
+                                            <li><strong>Sheet Width:</strong> All sizes are 22" wide</li>
+                                            <li><strong>No Setup or Art Fees</strong> – Ever</li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFeatures">
+                                    <button class="accordion-button lh-90" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseFeatures" aria-expanded="false"
+                                        aria-controls="collapseFeatures">
+                                        Features You'll Love
+                                    </button>
+                                </h2>
+                                <div id="collapseFeatures" class="accordion-collapse collapse"
+                                    aria-labelledby="headingFeatures" data-bs-parent="#productAccordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Easy Peel Technology – Peel hot, cold, fast, or slow</li>
+                                            <li>Vibrant Full-Color Prints – Ultra-fine detail and rich saturation</li>
+                                            <li>Works on Any Fabric or Color – Cotton, polyester, blends, leather & more
+                                            </li>
+                                            <li>Certified for 100+ Washes – Intertek tested for long-lasting durability</li>
+                                            <li>No Minimums – Order just what you need</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Satisfaction Guarantee -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingGuarantee">
+                                    <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseGuarantee" aria-expanded="false"
+                                        aria-controls="collapseGuarantee">
+                                        Pro Tips for Uploading
+                                    </button>
+                                </h2>
+                                <div id="collapseGuarantee" class="accordion-collapse collapse"
+                                    aria-labelledby="headingGuarantee" data-bs-parent="#productAccordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>Be sure your gang sheet is sized correctly (22" wide by your chosen length)
+                                            </li>
+                                            <li>Leave a small margin between designs if you plan to cut them manually</li>
+                                            <li>Use transparent backgrounds for PNGs for best results</li>
+                                            <li>
+                                                Download our free 22” width templates:
+                                                <a href="#">AI</a> / <a href="#">PDF</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <section class="site-container py-5">
+                <div class="" style="padding-top: 1%;padding-bottom:1%;padding-left:7%;padding-right:7%;">
+                    <h2 class="section-title text-center">What Our Customers Say</h2>
+                    <div class="row g-4">
+
+                        <script defer async src='https://cdn.trustindex.io/loader.js?bee03e45460d278af256ac8441b'></script>
+
+                    </div>
+                    <div class="mt-5">
+                        <img src="assets/media/about-2.png" alt="" class="img-fluid w-100 rounded-3 shadow-sm">
+                    </div>
+                </div>
+            </section>
             <!-- Customer Reviews -->
-            <div class="text-center mb-5">
+            {{-- <div class="text-center mb-5">
                 <h2 class="section-title">Customer Reviews</h2>
                 <div class="site- mt-5 mb-5">
 
@@ -565,10 +701,29 @@
                     </div>
 
                 </div>
-            </div>
+            </div> --}}
     </section>
 
     <script>
+        var swiper = new Swiper(".mySwiper", {
+            loop: true,
+            spaceBetween: 10,
+            slidesPerView: 4,
+            freeMode: true,
+            watchSlidesProgress: true,
+        });
+        var swiper2 = new Swiper(".mySwiper2", {
+            loop: true,
+            spaceBetween: 10,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            thumbs: {
+                swiper: swiper,
+            },
+        });
+
         document.addEventListener("DOMContentLoaded", function () {
             // STEP HANDLING
             const step2 = document.querySelector('.step-2');
