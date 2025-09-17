@@ -112,7 +112,7 @@ Route::get('/dtf/build-a-gangsheet', function () {
         $colors = DtfColor::where('is_active',1)->orderBy('id')->get();
         $sizes  = DtfSize::where('is_active',1)->orderBy('id')->get();
 
-        return view('dtf.upload', compact('images','colors','sizes'));
+        return view('dtf.build', compact('images','colors','sizes'));
 });
 
 Auth::routes();

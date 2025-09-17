@@ -3,7 +3,91 @@
 @section('content')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    
+    <style>
+        .instruction-card {
+            background-color: #222;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            color: #dea928;
+        }
+
+        .instruction-card i,
+        .instruction-card h5 {
+            color: #dea928;
+        }
+
+        .instruction-card:hover {
+            background-color: #dea928;
+            color: #222 !important;
+            transform: translateY(-5px);
+            /* subtle lift effect */
+        }
+
+        .instruction-card:hover i,
+        .instruction-card:hover h5 {
+            color: #222 !important;
+        }
+
+
+        .modal-box {
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            padding: 20px;
+            max-width: 900px;
+            background: #fff;
+        }
+
+        .modal-box h2 {
+            margin: 0 0 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .modal-box p {
+            margin: 0 0 20px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .option {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+            background: #f9f9f9;
+        }
+
+        .option img {
+            max-width: 60px;
+            margin-bottom: 12px;
+        }
+
+        .option h4 {
+            margin: 0 0 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .option p {
+            font-size: 12px;
+            color: #666;
+            margin: 0;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+
     <section class="site-container">
         <div class=" py-5">
             <div class="row g-5">
@@ -43,11 +127,11 @@
                     <div>
                         <h2 class="product-title d-flex align-items-center text-dark">DTF Transfers — Gang Sheet Builder
                         </h2>
-                        <p class="text-muted mb-4 text-dark">Upload your artwork, then choose color, size & quantity to get
+                        <p class="text-dark mb-4 text-dark">Upload your artwork, then choose color, size & quantity to get
                             live
                             pricing.
                         </p>
-                        <div class="star-rating mb-2 text-dark">★★★★★ <small class="text-muted text-dark">745
+                        <div class="star-rating mb-2 text-dark">★★★★★ <small class="text-dark text-dark">745
                                 Reviews</small></div>
                         <p class="mb-2">$0.02 per square inch</p>
                         <div class="row mb-3 fs-6 text-dark">
@@ -66,324 +150,297 @@
                         </div>
 
                         <div class="my-2">
-                            <h3 class="mb-2 text-dark">What We Accept</h3>
-                            <ul class="d-flex flex-column gap-2">
-                                <li class=" text-dark"><strong>Accepted File Types: </strong>PNG, AI, PDF
+                            <h4 class="mb-2 text-dark fw-semibold">Built-In Smart Layout Tools</h4>
+                            <ul class="d-flex flex-column gap-1">
+                                <li class=" text-dark">Upload unlimited PNG, SVG, or PDF files
                                 </li>
-                                <li class=" text-dark"><strong>Max File Size: </strong>5GB
+                                <li class=" text-dark">Resize, rotate, and arrange as needed
                                 </li>
-                                <li class=" text-dark"><strong>Sheet Width: </strong>All sizes are 22" wide
-                                </li>
-                                <li class=" text-dark"><strong>No Setup or Art Fees</strong> – Ever
+                                <li class=" text-dark">Preview in real-time before printing
                                 </li>
                             </ul>
                         </div>
 
-                        <p class="my-2 text-dark">Don’t have a gang sheet ready? Try Our <a href="">Gang Sheet Builder</a>
-                        </p>
-
-                        <h3 class=" text-dark">Get Started</h3>
-                        <ul class="nav nav-tabs mb-3" id="startTabs" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="upload-tab" data-bs-toggle="tab"
-                                    data-bs-target="#upload-tab-pane" type="button" role="tab"
-                                    aria-controls="upload-tab-pane" aria-selected="true">Upload Your Gang Sheet</button>
-                            </li>
-                        </ul>
-
-                        <form id="dtfForm" method="POST" action="{{ route('dtf-gangsheet.addToCart') }}"
-                            enctype="multipart/form-data">
-                            @csrf
-
-                            {{-- Step 1: Upload Artwork --}}
-                            <div class="mb-4 step step-1">
-                                <h5 class="fw-bold">1. Upload Artwork</h5>
-                                <div
-                                    class="upload-box border border-dashed rounded p-4 text-center bg-light cursor-pointer">
-                                    <input type="file" name="artwork" id="artworkInput" class="d-none" required>
-                                    <label for="artworkInput" class="d-block">
-                                        <img src="https://via.placeholder.com/100?text=Upload" id="artPreview" class="mb-2">
-                                        <p class="text-muted">Drag & drop or click to upload</p>
-                                    </label>
+                        <section class="p-4">
+                            <div class="mb-4">
+                                <label class="form-label fw-bold text-dark">Select size <small class="text-muted">(all sizes
+                                        are 22
+                                        inches wide)</small></label>
+                                <div class="d-flex flex-wrap gap-2 mb-2">
+                                    <button type="button" class="btn btn-outline-dark active" aria-pressed="true">2
+                                        Feet</button>
+                                    <button type="button" class="btn btn-outline-dark">5 Feet</button>
+                                    <button type="button" class="btn btn-outline-dark">7 Feet</button>
+                                    <button type="button" class="btn btn-outline-dark">10 Feet</button>
+                                    <button type="button" class="btn btn-outline-dark">15 Feet</button>
+                                    <button type="button" class="btn btn-outline-dark">20 Feet</button>
+                                    <button type="button" class="btn btn-outline-dark">30 Feet</button>
+                                </div>
+                                {{-- <div class="d-flex flex-wrap gap-4 text-success" style="font-size: 0.9rem;">
+                                    <span>37% off</span>
+                                    <span>37% off</span>
+                                    <span>37% off</span>
+                                    <span>43% off</span>
+                                    <span>54% off</span>
+                                    <span>59% off</span>
+                                    <span>62% off</span>
+                                </div> --}}
+                                <div class="mt-2 small text-dark">
+                                    <i class="bi bi-info-circle"></i> Unlock our lowest rate of <strong>0.02</strong> per
+                                    sq. inch when you build 30-feet or more.
                                 </div>
                             </div>
 
-                            {{-- Step 2: Choose Color --}}
-                            <div class="mb-4 step step-2 d-none">
-                                <h5 class="fw-bold">2. Choose Color Option</h5>
-                                <div class="d-flex gap-3 flex-wrap">
-                                    @foreach($colors as $c)
-                                        <label class="color-option border rounded p-3 cursor-pointer">
-                                            <input type="radio" name="color_id" value="{{ $c->id }}" class="d-none">
-                                            {{ $c->label }}
-                                            @if($c->surcharge > 0)
-                                                <small class="text-muted">(+${{ number_format($c->surcharge, 2) }})</small>
-                                            @endif
-                                        </label>
-                                    @endforeach
+                            <div class="mb-4">
+                                <label class="form-label fw-bold text-dark">Select film style <small
+                                        class="text-muted">Choose from our
+                                        professional-grade finishes:
+                                    </small></label>
+                                <div class="btn-group" role="group" aria-label="Film style selection">
+                                    <input type="radio" class="btn-check" name="filmStyle" id="styleStandard"
+                                        autocomplete="off" checked>
+                                    <label class="btn btn-outline-dark" for="styleStandard">Standard</label>
+
+                                    <input type="radio" class="btn-check" name="filmStyle" id="styleGlitter"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="styleGlitter">Glitter</label>
+
+                                    <input type="radio" class="btn-check" name="filmStyle" id="styleGlow"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="styleGlow">Glow in the Dark</label>
+
+                                    <input type="radio" class="btn-check" name="filmStyle" id="styleGold"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="styleGold">Gold Foil</label>
+
+                                    <input type="radio" class="btn-check" name="filmStyle" id="styleSilver"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="styleSilver">Silver Foil</label>
                                 </div>
                             </div>
 
-                            {{-- Step 3: Select Size --}}
-                            <div class="mb-4 step step-3 d-none">
-                                <h5 class="fw-bold">3. Select Size</h5>
-                                <div class="row g-3">
-                                    @foreach($sizes as $s)
-                                        <div class="col-2 col-md-2">
-                                            <label class="size-card border rounded p-3 text-center cursor-pointer h-100">
-                                                <input type="radio" name="size_id" value="{{ $s->id }}" class="d-none">
-                                                <h6 class="fw-bold mb-1">{{ $s->title }}</h6>
-                                                
-                                            </label>
-                                        </div>
-                                    @endforeach
-                                </div>
+                            <div class="mb-4">
+                                <a href="{{url('/gangsheet')}}" class="instruction-card text-decoration-none d-block p-4 h-100 text-center">
+                                    BUILD YOUR OWN GANG SHEET
+                                </a>
                             </div>
 
-                            {{-- Step 4: Quantity & Price --}}
-                            <div class="mb-4 step step-4 d-none">
-                                <h5 class="fw-bold">4. Quantity</h5>
-                                <div class="d-flex align-items-center gap-4">
-                                    <input type="number" name="quantity" id="qtyInput" class="form-control w-25" value="1"
-                                        min="1">
-                                    <div>
-                                        <h6>Unit Price: $<span id="unitPrice">0.00</span></h6>
-                                        <h5 class="fw-bold">Subtotal: $<span id="subtotal">0.00</span></h5>
-                                        <p class="text-muted">Shipping & taxes calculated at checkout</p>
-                                    </div>
-                                </div>
+                            <div class="border p-3 rounded text-center">
+                                <p class="mb-1 fw-bold">Already have a print-ready gang sheet?</p>
+                                <p class="mb-3 text-dark">Easily upload your gang sheet in just a few clicks!</p>
+                                <a href="#" class="text-decoration-none fw-semibold">Upload a Gang Sheet &rarr;</a>
                             </div>
-                            <input type="hidden" name="unitprice" id="price" />
-                            <input type="hidden" name="subtotal" id="subtotal" />
-                            <button type="submit" class="btn btn-success btn-lg w-100 d-none" id="addToCartBtn">Add to
-                                Cart</button>
-                        </form>
+                        </section>
                     </div>
                 </div>
             </div>
-            {{-- <section class="site-container">
-                <div class="my-3">
-                    <h2 class="section-title text-center">DTF Gang Sheet – Upload a Print-Ready File</h2>
-                    <h5 class="section-title text-center text-dark">Perfect for Advanced Users with Pre-Arranged Designs
-                    </h5>
-                    <p class="text-dark fs-5 mb-5 text-center">
-                        Already have your gang sheet laid out? Upload your <strong>print-ready file</strong> and let us
-                        handle the
-                        rest.
-                        This option
-                        is perfect for experienced users who want full control over their design layout and need fast,
-                        reliable
-                        printing.
-                    </p>
-                </div>
-            </section>
-
-            <div class=" my-5">
-                <h4 class="mb-4 text-dark fw-semibold">Features You'll Love</h4>
-                <div class="row g-4">
-                    <div class="col-md-6 col-lg-4">
-                        <div class="feature-card p-3 border rounded shadow-sm h-100 d-flex align-items-start">
-                            <div class="me-3 fs-3 text-primary"><i class="fa-solid fa-print"></i></div>
-                            <div>
-                                <h6 class=" text-dark">Easy Peel Technology</h6>
-                                <p class="mb-0">Peel hot, cold, fast, or slow</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="feature-card p-3 border rounded shadow-sm h-100 d-flex align-items-start">
-                            <div class="me-3 fs-3 text-success"><i class="fa-solid fa-palette"></i></div>
-                            <div>
-                                <h6 class=" text-dark">Vibrant Full-Color Prints</h6>
-                                <p class="mb-0">Ultra-fine detail and rich saturation</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="feature-card p-3 border rounded shadow-sm h-100 d-flex align-items-start">
-                            <div class="me-3 fs-3 text-warning"><i class="fa-solid fa-shirt"></i></div>
-                            <div>
-                                <h6 class=" text-dark">Works on Any Fabric or Color</h6>
-                                <p class="mb-0">Cotton, polyester, blends, leather &amp; more</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="feature-card p-3 border rounded shadow-sm h-100 d-flex align-items-start">
-                            <div class="me-3 fs-3 text-info"><i class="fa-solid fa-soap"></i></div>
-                            <div>
-                                <h6 class=" text-dark">Certified for 100+ Washes</h6>
-                                <p class="mb-0">Intertek tested for long-lasting durability</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="feature-card p-3 border rounded shadow-sm h-100 d-flex align-items-start">
-                            <div class="me-3 fs-3 text-danger"><i class="fa-solid fa-face-smile"></i></div>
-                            <div>
-                                <h6 class=" text-dark">No Minimums</h6>
-                                <p class="mb-0">Order just what you need</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pro Tips Accordion Section -->
-            <div class=" my-5">
-                <h4 class="mb-4">Pro Tips for Uploading</h4>
-                <div class="accordion" id="proTipsAccordion">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                Gang Sheet Sizing
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                            data-bs-parent="#proTipsAccordion">
-                            <div class="accordion-body">
-                                Be sure your gang sheet is sized correctly (22" wide by your chosen length)
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Design Margins
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                            data-bs-parent="#proTipsAccordion">
-                            <div class="accordion-body">
-                                Leave a small margin between designs if you plan to cut manually
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Backgrounds
-                            </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                            data-bs-parent="#proTipsAccordion">
-                            <div class="accordion-body">
-                                Use transparent backgrounds for PNGs for best results
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingFour">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                Templates
-                            </button>
-                        </h2>
-                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
-                            data-bs-parent="#proTipsAccordion">
-                            <div class="accordion-body">
-                                Download our free 22” width templates: <a href="#" class="link-primary">AI</a> / <a href="#"
-                                    class="link-primary">PDF</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
             <div class="my-5">
                 <div class="row gap-5 flex-column align-items-center justify-content-center">
-                    <!-- Left Column -->
+                    <!-- Title -->
                     <div class="col-lg-12 mb-4">
-                        <h3 class="fw-bold brand-yellow mb-2 text-center">DTF Gang Sheet – Upload a Print-Ready File
-                        </h3>
-                        <p class="text-center"><strong>Perfect for Advanced Users with Pre-Arranged Designs</strong></p>
-                        <p class="text-center">
-                            Already have your gang sheet laid out? Upload your print-ready file and let us handle the rest.
-                            This option is perfect for experienced users who want full control over their design layout and
-                            need fast, reliable printing.
+                        <h3 class="fw-bold brand-yellow mb-2 text-center">DTF Gang Sheet Builder</h3>
+                        <p class="text-center mb-3 text-dark"><strong>Everything you need to know before you start
+                                building</strong></p>
+                        <p class="text-dark text-center">Welcome to the <strong>Arden’s Print Gang Sheet Builder,</strong>
+                            the fastest way to maximize space, minimize
+                            cost, and bring your designs to life. Whether you’re uploading logos, characters, tags, or
+                            full-size artwork, our intuitive tool makes gang sheet creation quick and seamless.
                         </p>
                     </div>
 
-                    <!-- Right Column -->
+                    <!-- Accordion -->
                     <div class="col-lg-12">
                         <div class="accordion accordion-flush" id="productAccordion">
 
-                            <!-- Features (open by default) -->
+                            <!-- Built-In Smart Layout Tools -->
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingShippingReturns">
-                                    <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseShippingReturns" aria-expanded="true"
-                                        aria-controls="collapseShippingReturns">
-                                        What We Accept
-                                    </button>
-                                </h2>
-                                <div id="collapseShippingReturns" class="accordion-collapse collapse show"
-                                    aria-labelledby="headingShippingReturns" data-bs-parent="#productAccordion">
-                                    <div class="accordion-body">
-                                        <ul>
-                                            <li><strong>Accepted File Types:</strong> PNG, AI, PDF</li>
-                                            <li><strong>Max File Size:</strong> 5GB</li>
-                                            <li><strong>Sheet Width:</strong> All sizes are 22" wide</li>
-                                            <li><strong>No Setup or Art Fees</strong> – Ever</li>
-                                        </ul>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingFeatures">
+                                <h2 class="accordion-header" id="headingLayout">
                                     <button class="accordion-button lh-90" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseFeatures" aria-expanded="false"
-                                        aria-controls="collapseFeatures">
-                                        Features You'll Love
+                                        data-bs-target="#collapseLayout" aria-expanded="true"
+                                        aria-controls="collapseLayout">
+                                        Built-In Smart Layout Tools
                                     </button>
                                 </h2>
-                                <div id="collapseFeatures" class="accordion-collapse collapse"
-                                    aria-labelledby="headingFeatures" data-bs-parent="#productAccordion">
+                                <div id="collapseLayout" class="accordion-collapse collapse show"
+                                    aria-labelledby="headingLayout" data-bs-parent="#productAccordion">
                                     <div class="accordion-body">
                                         <ul>
-                                            <li>Easy Peel Technology – Peel hot, cold, fast, or slow</li>
-                                            <li>Vibrant Full-Color Prints – Ultra-fine detail and rich saturation</li>
-                                            <li>Works on Any Fabric or Color – Cotton, polyester, blends, leather & more
-                                            </li>
-                                            <li>Certified for 100+ Washes – Intertek tested for long-lasting durability</li>
-                                            <li>No Minimums – Order just what you need</li>
+                                            <p><strong>Simply drag and drop your files — our system auto-optimizes placement
+                                                    to fit
+                                                    the most into your selected size.</strong></p>
+                                            <li>Upload unlimited PNG, SVG, or PDF files</li>
+                                            <li>Resize, rotate, and arrange as needed</li>
+                                            <li>Preview in real-time before printing</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Satisfaction Guarantee -->
+                            <!-- Product Highlights -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingHighlights">
+                                    <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseHighlights" aria-expanded="false"
+                                        aria-controls="collapseHighlights">
+                                        Product Highlights
+                                    </button>
+                                </h2>
+                                <div id="collapseHighlights" class="accordion-collapse collapse"
+                                    aria-labelledby="headingHighlights" data-bs-parent="#productAccordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li><strong>Standard Size:</strong> 22" wide — Choose from lengths of 2 ft to 30
+                                                ft</li>
+                                            <li><strong>Fast Turnaround</strong> — Rush orders available</li>
+                                            <li><strong>Peel Options</strong> — Hot, warm, or cold peel compatible</li>
+                                            <li><strong>No Setup Fees</strong> — You only pay for what you print</li>
+                                            <li><strong>Works on Any Fabric or Color</strong> — Cotton, polyester, blends,
+                                                leather, and more
+                                            </li>
+                                            <li><strong>Print in Full Color</strong> — Sharp detail, vibrant color,
+                                                ultra-durable finish</li>
+                                            <li><strong>Certified for 100+ Washes</strong> — Intertek-tested for longevity
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Film Options -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFilm">
+                                    <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseFilm" aria-expanded="false" aria-controls="collapseFilm">
+                                        Film Options
+                                    </button>
+                                </h2>
+                                <div id="collapseFilm" class="accordion-collapse collapse" aria-labelledby="headingFilm"
+                                    data-bs-parent="#productAccordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li><strong>Standard Film</strong> – Smooth, soft-touch, perfect for everyday
+                                                use</li>
+                                            <li><strong>Glitter Film</strong> – Add sparkle to your designs</li>
+                                            <li><strong>Glow-in-the-Dark</strong> – For bold nighttime visibility</li>
+                                            <li><strong>Gold & Silver Foil</strong> – Luxury finish for standout details
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Simple Pricing -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingPricing">
+                                    <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapsePricing" aria-expanded="false"
+                                        aria-controls="collapsePricing">
+                                        Simple Pricing
+                                    </button>
+                                </h2>
+                                <div id="collapsePricing" class="accordion-collapse collapse"
+                                    aria-labelledby="headingPricing" data-bs-parent="#productAccordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li><strong>Starts at $19.99</strong></li>
+                                            <li><strong>Up to 62% Off</strong> when you order 30 feet or more</li>
+                                            <li><strong>Lowest Rate</strong> – As low as $0.02 per square inch</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Guarantee -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingGuarantee">
                                     <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseGuarantee" aria-expanded="false"
                                         aria-controls="collapseGuarantee">
-                                        Pro Tips for Uploading
+                                        100% Satisfaction Guarantee
                                     </button>
                                 </h2>
                                 <div id="collapseGuarantee" class="accordion-collapse collapse"
                                     aria-labelledby="headingGuarantee" data-bs-parent="#productAccordion">
                                     <div class="accordion-body">
-                                        <ul>
-                                            <li>Be sure your gang sheet is sized correctly (22" wide by your chosen length)
-                                            </li>
-                                            <li>Leave a small margin between designs if you plan to cut them manually</li>
-                                            <li>Use transparent backgrounds for PNGs for best results</li>
-                                            <li>
-                                                Download our free 22” width templates:
-                                                <a href="#">AI</a> / <a href="#">PDF</a>
-                                            </li>
-                                        </ul>
+                                        <p>We stand by our prints. If you’re not completely happy with your sheet, we’ll
+                                            reprint it — no hassle.</p>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Start Building -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingStart">
+                                    <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseStart" aria-expanded="false" aria-controls="collapseStart">
+                                        Start Building Your Sheet Now
+                                    </button>
+                                </h2>
+                                <div id="collapseStart" class="accordion-collapse collapse" aria-labelledby="headingStart"
+                                    data-bs-parent="#productAccordion">
+                                    <div class="accordion-body">
+                                        <p>Whether you're printing for yourself or your brand, our Gang Sheet Builder gives
+                                            you the flexibility to <strong>create exactly what you need, when you need
+                                                it.</strong></p>
+                                        <ul>
+                                            <li><a href="#">Launch Builder</a></li>
+                                            <li><a href="#">Contact Us for Help</a></li>
+                                            <li><a href="#">FAQs</a></li>
+                                        </ul>
+                                        <div class="my-2">
+                                            <h3>START BUILDING:</h3>
+
+                                            <div class="modal-box">
+                                                <h2>Welcome to Build a Gang Sheet</h2>
+                                                <p>
+                                                    Welcome to our store! We are glad to have you here. If you have any
+                                                    questions or need
+                                                    assistance,
+                                                    feel free to reach out to us. Happy shopping!
+                                                </p>
+
+                                                <div class="options">
+                                                    <div class="option">
+                                                        <img src="https://img.icons8.com/ios/100/add-image.png"
+                                                            alt="Auto Build">
+                                                        <h4>Auto Build - Upload Multiple Images at Once</h4>
+                                                        <p></p>
+                                                    </div>
+
+                                                    <div class="option">
+                                                        <img src="https://img.icons8.com/ios/100/plus.png" alt="Start New">
+                                                        <h4>Start New</h4>
+                                                    </div>
+
+                                                    <div class="option">
+                                                        <img src="https://img.icons8.com/ios/100/return.png"
+                                                            alt="Edit Previous Order">
+                                                        <h4>Edit Previous Order</h4>
+                                                    </div>
+
+                                                    <div class="option">
+                                                        <img src="https://img.icons8.com/ios/100/numbers.png"
+                                                            alt="Names and Numbers">
+                                                        <h4>Names and Numbers</h4>
+                                                    </div>
+                                                </div>
+
+                                                <p class="note">
+                                                    It appears that there is an unsaved working design, but it has been
+                                                    automatically saved.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
+
             </div>
+
             <section class="bg-light py-5">
                 <div class="" style="">
                     <h2 class="section-title text-center">What Our Customers Say</h2>
