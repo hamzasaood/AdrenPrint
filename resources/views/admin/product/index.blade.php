@@ -159,13 +159,14 @@ document.getElementById("fetchProducts").addEventListener("click", function() {
             }
 
             currentStyleIndex = data.style_index;
-            productsDone = data.products_done ?? productsDone;
-            productsTotal = data.products_total ?? productsTotal;
+            productsDone = data.products_done; // from backend
 
-            let percent = 0;
-            if (productsTotal > 0) {
-                percent = Math.round((productsDone / productsTotal) * 100);
-            }
+            // Progress based on styles completed
+            let percent = Math.round((currentStyleIndex / totalStyles) * 100);
+
+            updateProgress(percent);
+            logMessage("🔄 " + data.message + " | Total synced products: " + productsDone);
+
 
             updateProgress(percent);
             logMessage("🔄 " + data.message);

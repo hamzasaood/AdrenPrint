@@ -464,7 +464,7 @@ section:first-of-type h1 {
                 </div>
 
                 <div class="col-12 col-md-4">
-                    <a href="/gangsheet" class="text-decoration-none text-dark">
+                    <a href="{{ url('/dtf/build-a-gangsheet') }}" class="text-decoration-none text-dark">
                         <div class="card shadow h-100 border-0 hover-card">
                             <img src="{{asset('/create-gang.webp')}}" class="card-img-top img-fluid"
                                 alt="DTF Gang Sheet Builder">
@@ -472,7 +472,7 @@ section:first-of-type h1 {
                                 <h5 class="card-title fw-bold">DTF Gang Sheet Builder</h5>
                                 <p class="card-text text-muted mb-2">Create your custom gang sheet directly in our online
                                     builder.</p>
-                                <a href="{{ url('/gangsheet') }}" class="btn-primary-custom">Explore Now</a>
+                                <a href="{{ url('/dtf/build-a-gangsheet') }}" class="btn-primary-custom">Explore Now</a>
                             </div>
                         </div>
                     </a>

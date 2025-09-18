@@ -114,6 +114,12 @@ Route::get('/dtf/build-a-gangsheet', function () {
 
         return view('dtf.build', compact('images','colors','sizes'));
 });
+Route::get('/dtf/upload-gangsheet', [DTFuploadController::class, 'index'])->name('dtf-gangsheet.index');
+Route::post('/dtf/upload-gangsheet/calculate', [DtfuploadController::class, 'calculate'])->name('dtf-gangsheet.calculate');
+
+Route::get('/dtf/transfer_by_size', [DtfController::class, 'index'])->name('dtf.index');
+
+Route::post('/dtf/calculate', [DtfController::class, 'calculate'])->name('dtf.calculate');
 
 Auth::routes();
 
@@ -171,13 +177,11 @@ Route::post('/custom/gangsheet/save', [\App\Http\Controllers\CustomGangsheetCont
     ->name('custom.gangsheet.cart.save');
 
 
-    Route::get('/dtf/upload-gangsheet', [DTFuploadController::class, 'index'])->name('dtf-gangsheet.index');
-Route::post('/dtf/upload-gangsheet/calculate', [DtfuploadController::class, 'calculate'])->name('dtf-gangsheet.calculate');
+    
+
 Route::post('/dtf/upload-gangsheet/add-to-cart', [DtfuploadController::class, 'addToCart'])->name('dtf-gangsheet.addToCart');
 
 
-Route::get('/dtf/transfer_by_size', [DtfController::class, 'index'])->name('dtf.index');
-Route::post('/dtf/calculate', [DtfController::class, 'calculate'])->name('dtf.calculate');
 Route::post('/dtf/add-to-cart', [DtfController::class, 'addToCart'])->name('dtf.addToCart');
 
 

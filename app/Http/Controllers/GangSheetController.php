@@ -124,14 +124,14 @@ public function filter(Request $request)
                     ($product->sale_price && $product->sale_price < $product->price
                         ? '<span class="sale-label subtitle fw-400 white">Sale</span>' : ''
                     ).
-                    '<a href="'.url('/product/').$product->slug.'">
+                    '<a href="'.url('/product/'.$product->slug).'">
                         <img src="'.$imagePath.'" class="product-image" alt="" style="height: 230px;">
                     </a>
                     
                 </div>
                 <div class="product-desc">
                     <div>
-                        <a href="'.url('/product/').$product->slug.'" class="product-title h6 fw-500 mb-12">'.$product->name.'</a>
+                        <a href="'.url('/product/'.$product->slug).'" class="product-title h6 fw-500 mb-12">'.$product->name.'</a>
                         <p class="black fw-600">'.
                             ($product->sale_price && $product->sale_price < $product->price
                                 ? '<span class="subtitle text-decoration-line-through fw-400 light-gray">$'.$product->price.'</span>&nbsp; $'.$product->sale_price
@@ -139,7 +139,7 @@ public function filter(Request $request)
                             ).
                         '</p>
                     </div>
-                    <a href="'.url('/gang-sheet/').$product->id.'" class="btn-primary-custom w-100" data-product-id="'.$product->id.'">
+                    <a href="'.url('/gang-sheet/'.$product->id).'" class="btn-primary-custom w-100" data-product-id="'.$product->id.'">
                         Design & Buy
                     </a>
                 </div>

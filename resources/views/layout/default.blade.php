@@ -543,13 +543,27 @@
 
                     });
                 } else {
+                    
                     Swal.fire({
                         title: "❌ Error!",
                         text: response.message || "Something went wrong!",
                         icon: "error"
                     });
                 }
-            }).fail(function () {
+            }).fail(function (xhr) {
+                // Laravel returns JSON {message: "Unauthenticated."} with 401 status
+                if (xhr.status === 401 || (xhr.responseJSON && xhr.responseJSON.message === "Unauthenticated.")) {
+                    Swal.fire({
+                        title: "❌",
+                        text: "Please login to continue!",
+                        icon: "error",
+                        confirmButtonText: "Login"
+                    }).then(() => {
+                        window.location.href = "{{ route('login') }}"; // 👈 redirect to login
+                    });
+                    return;
+                }
+
                 Swal.fire({
                     title: "❌ Error!",
                     text: "Failed to add to cart. Please try again.",

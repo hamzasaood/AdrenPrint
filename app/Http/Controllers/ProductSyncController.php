@@ -33,9 +33,9 @@ class ProductSyncController extends Controller
                 return $res->json();
             });
 
-            // Reset indexes
             Cache::put('ss_style_index', 0);
             Cache::put('ss_product_offset', 0);
+            Cache::put('ss_total_processed', 0); // 👈 new
 
             return response()->json([
                 'message' => '✅ Sync initialized',
@@ -70,6 +70,7 @@ class ProductSyncController extends Controller
             $styleId   = $style['styleID'];
             $brand     = $style['brandName'];
             $styleName = $style['styleName'];
+            $description = $style['description'];
 
             // Ensure category exists
             $category = Category::updateOrCreate(
@@ -132,7 +133,7 @@ $totalProducts = count($allProducts);
             $batch = array_slice($allProducts, $offset, $take);
 
             foreach ($batch as $p) {
-                $this->processProduct($p, $styleId, $brand, $styleName, $category);
+                $this->processProduct($p, $styleId, $brand, $styleName, $category, $description);
             }
 
             $processedCount += count($batch);
@@ -152,14 +153,19 @@ $totalProducts = count($allProducts);
             Cache::put('ss_product_offset', $offset);
         }
 
+        $totalProcessed = Cache::get('ss_total_processed', 0);
+        $totalProcessed += $processedCount;
+        Cache::put('ss_total_processed', $totalProcessed);
+
         return response()->json([
             'message'        => implode(" | ", $messages) ?: "Processed {$processedCount} products",
             'style_index'    => $styleIdx,
             'total_styles'   => count($styles),
             'batch_size'     => $processedCount,
-            'products_done'  => $processedCount,
+            'products_done'  => $totalProcessed,   // 👈 cumulative products
             'done'           => false,
         ]);
+
     } catch (\Throwable $e) {
         Log::error("SS Sync batch failed: " . $e->getMessage());
         return response()->json(['error' => '❌ Batch failed'.$e->getMessage()]);
@@ -170,7 +176,7 @@ $totalProducts = count($allProducts);
 /**
  * Process and save a single product safely
  */
-protected function processProduct(array $p, $styleId, $brand, $styleName, $category)
+protected function processProduct(array $p, $styleId, $brand, $styleName, $category , $description)
 {
     // Parent product
     $possibleImages = [
@@ -202,6 +208,7 @@ protected function processProduct(array $p, $styleId, $brand, $styleName, $categ
             'main_image'   => $mainImage,
             'price'        => (float)($p['customerPrice'] ?? 0),
             'stock'        => (int)($p['qty'] ?? 0),
+            'description'  => $description,
         ]
     );
 

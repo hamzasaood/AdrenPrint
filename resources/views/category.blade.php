@@ -7,17 +7,7 @@
     </div>
 
     <!-- Sort Dropdown -->
-    <div class="d-flex justify-content-end mb-4">
-        <div class="drop- shop-dropdown">
-            <div class="wrapper-dropdown" id="dropdownSort">
-                <span class="selected-display" id="selectedSort">High to Low</span>
-                <ul class="topbar-dropdown bg-lightest-gray" id="sortOptions">
-                    <li class="item" data-sort="high_to_low">High to Low</li>
-                    <li class="item" data-sort="low_to_high">Low to High</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Products Grid -->
     <div class="row row-gap-4 all-products">
@@ -34,7 +24,7 @@
                     @endif
                 </div>
                 <div class="product-desc">
-                    <a href="{{url('/product/').$product->slug}}" class="product-title h6 fw-500 mb-12">{{ $product->name }}</a>
+                    <a href="{{url('/product/'.$product->slug)}}" class="product-title h6 fw-500 mb-12">{{ $product->name }}</a>
                     <p class="black fw-600">
                         @if($product->sale_price && $product->sale_price < $product->price)
                             <span class="subtitle text-decoration-line-through fw-400 light-gray">${{ $product->price }}</span> ${{ $product->sale_price }}
