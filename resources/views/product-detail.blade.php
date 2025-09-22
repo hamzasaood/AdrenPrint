@@ -244,7 +244,7 @@
                             </div>
 
                             {{-- Description --}}
-                            <p class="quick-view-text mb-3">{{ $product->description }}</p>
+                            <p class="quick-view-text mb-3">{!! $product->description !!}</p>
 
                             {{-- Colors --}}
                             @if($product->variants->pluck('color')->filter()->unique()->count() > 0)
@@ -284,9 +284,9 @@
                                 <p class="mb-2">Quantity:</p>
                                 <div class="quantity border-0">
                                     <div class="quantity-wrap">
-                                        <button class="decrement" type="button">-</button>
+                                        <button class="m" type="button">-</button>
                                         <input type="text" name="quantity" value="1" maxlength="2" size="1" class="number">
-                                        <button class="increment" type="button">+</button>
+                                        <button class="p" type="button">+</button>
                                     </div>
                                 </div>
                             </div>
@@ -343,7 +343,7 @@
                     <h3 class="fw-bold brand-yellow mb-2 text-center">Description
                     </h3>
                     <p class="text-center">
-                        {{ $product->description }}
+                        {!! $product->description !!}
                     </p>
                 </div>
 
@@ -412,7 +412,7 @@
         </div>
         {{-- Trending Products --}}
         <section class="product-sec py-40">
-            <div class="container">
+            <div class="" style="">
                 <div class="heading-container text-center mb-4">
                     <div class="eyebrow mb-2">Products</div>
                     <h2 class="fw-500">Trending Picks for You</h2>
@@ -501,12 +501,12 @@
         });
 
         // Quantity handling
-        document.querySelector('.increment').addEventListener('click', () => {
+        document.querySelector('.p').addEventListener('click', () => {
             let qty = document.querySelector('.number');
             qty.value = parseInt(qty.value) + 1;
             document.getElementById('cart_quantity').value = qty.value;
         });
-        document.querySelector('.decrement').addEventListener('click', () => {
+        document.querySelector('.m').addEventListener('click', () => {
             let qty = document.querySelector('.number');
             if (qty.value > 1) qty.value = parseInt(qty.value) - 1;
             document.getElementById('cart_quantity').value = qty.value;

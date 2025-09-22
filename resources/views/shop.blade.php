@@ -196,27 +196,7 @@
                                     of {{ $products->total() }} Results
                                 </p>
                                 </div>
-                                <div class="col-xl-4 col-lg-7 col-md-7 d-sm-block d-none">
-                                    <div class="d-flex align-items-center gap-16 justify-content-end">
-                                        <div class="d-flex align-items-center gap-8">
-                                            <p class="dark-gray">Short by:</p>
-                                            <div class="drop- shop-dropdown">
-                                                <div class="wrapper-dropdown" id="dropdown8">
-                                                    <span class="selected-display" id="destination8">high to low</span>
-                                                    <svg id="drp-arrow8" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="arrow transition-all ml-auto rotate-180">
-                                                        <path d="M7 14.5l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                    </svg>
-                                                    <ul class="topbar-dropdown bg-lightest-gray" id="sortOptions">
-                                                        <li class="item dark-black" data-sort="high_to_low">High to Low</li>
-                                                        <li class="item dark-black" data-sort="low_to_high">Low to High</li>
-                                                        <li class="item dark-black" data-sort="discounted">Discounted</li>
-                                                    </ul>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
 
                           <div class="row row-gap-4 all-products">
@@ -298,7 +278,7 @@
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
-$(document).on('click', '#inStock, #outStock, .category-filter, .size-filter, .color-filter, .range-input input', function () {
+$(document).on('click', '#inStock, #outStock, .category-filter, .brand-filter , .size-filter, .color-filter, .range-input input', function () {
     console.log("Clicked:", this);
     applyFilters();
 });
@@ -330,6 +310,13 @@ function applyFilters() {
     }).get();
     if (categories.length > 0) {
         data.categories = categories;
+    }
+
+    let brands = $('.brand-filter:checked').map(function () {
+        return $(this).val();
+    }).get();
+    if (brands.length > 0) {
+        data.brands = brands;
     }
 
     // ✅ Sizes (multiple allowed)
