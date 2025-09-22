@@ -27,7 +27,7 @@
 
         /* Hero */
         .hero {
-            background: url('../assets/media/hero.png') center/cover no-repeat;
+           
             min-height: 70vh;
             position: relative;
         }
@@ -44,7 +44,7 @@
         }
 
         .hero img {
-            border-radius: 20px;
+           
             
         }
 
@@ -250,50 +250,49 @@ section:first-of-type h1 {
 
 
     <!-- HERO -->
-   <section class="hero d-flex align-items-center" style="background-color: #dea928; ">
-  <div class="container" style="    padding-top: 1%;padding-bottom:1%;padding-left:7%;padding-right:7%;">
-    <div class="row align-items-center justify-content-between">
+   <section class="hero d-flex align-items-center" style="background-color: beige; padding-top: 5%; padding-bottom: 5%;">
+  <div class="container">
+    <div class="row justify-content-center g-4">
       
-      <!-- Left Text Content -->
-      <div class="col-lg-6 col-md-6">
-        <h1 class="fw-bold mb-3" style="color:#111;  line-height:1.2;">
-          DTF Transfers: Create <br> Custom Apparel Instantly
-        </h1>
-        <p class="mb-3" style="color:#222; font-size:1.1rem;">
-          Effortlessly apply your designs on any t-shirt, sweatshirt or fabric with outstanding durability! 
-          Best custom DTF transfers for small businesses and store owners.
-        </p>
-        <p class="fw-bold mb-3" style="color:#111; font-size:1.05rem;">
-          No Minimum Order, No Setup Fees, Same-Day Shipping!
-        </p>
-        <p class="mb-4 " style="color:#fff;font-size:17px;font-weight: 400;">
-         <strong> Upload your design, get your DTF transfer, apply it in seconds.</strong> <br>
-          <strong>Get started and get your DTF Transfer sheets</strong><br> <strong>or DTF Gang Sheets now ⬇️ </strong>
-        </p>
-
-        <!-- Buttons -->
-        <div class="d-flex flex-column flex-sm-row gap-3">
-          <a href="{{url('/dtf/transfer_by_size/')}}" class="btn btn-light border px-4 py-3 fw-semibold d-flex align-items-center justify-content-center">
-            Order DTF Transfers by Size
-            <svg xmlns="http://www.w3.org/2000/svg" class="ms-2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="16 16 12 12 8 16"></polyline>
-              <line x1="12" y1="12" x2="12" y2="21"></line>
-            </svg>
-          </a>
-          <a href="#" class="btn btn-dark px-4 py-3 fw-semibold">Create a DTF Gang Sheet</a>
+      <div class="col-lg-3 col-md-6 d-flex">
+        <div class="card border-0 rounded-3 shadow-sm w-100 overflow-hidden" style="background-color:#fbaf1c; height: fit-content;">
+          <div class="card-header text-center fw-bold" style="background:#fbaf1c; color:#111; border:0; font-size:1.2rem;">
+            DTF TRANSFERS
+          </div>
+          <img src="{{url('/images/dtf.png')}}" class="w-100" alt="DTF Transfers">
         </div>
       </div>
-
-      <!-- Right Image -->
-      <div class="col-lg-6 col-md-6 text-center mt-4 mt-md-0">
-        <img src="https://cdn.shopify.com/s/files/1/0651/6300/2098/files/homepage-banner-image-collage-min.webp?v=1751918319" 
-             alt="DTF Products" class="img-fluid">
+      
+      <div class="col-lg-3 col-md-6 d-flex">
+        <div class="card border-0 rounded-3 shadow-sm w-100 overflow-hidden" style="background-color:#fbaf1c; height: fit-content;">
+          <div class="card-header text-center fw-bold" style="background:#fbaf1c; color:#111; border:0; font-size:1.2rem;">
+            BLANK APPAREL
+          </div>
+          <img src="{{url('/images/blank.png')}}"  class="w-100" alt="Blank Apparel">
+        </div>
+      </div>
+      
+      <div class="col-lg-3 col-md-6 d-flex">
+        <div class="card border-0 rounded-3 shadow-sm w-100 overflow-hidden" style="background-color:#fbaf1c; height: fit-content;">
+          <div class="card-header text-center fw-bold" style="background:#fbaf1c; color:#111; border:0; font-size:1.2rem;">
+            CUSTOM PRINT
+          </div>
+          <img src="{{url('/images/custom2.png')}}"  class="w-100" alt="Custom Print">
+        </div>
+      </div>
+      
+      <div class="col-lg-3 col-md-6 d-flex">
+        <div class="card border-0 rounded-3 shadow-sm w-100 overflow-hidden" style="background-color:#fbaf1c; height: fit-content;">
+          <div class="card-header text-center fw-bold" style="background:#fbaf1c; color:#111; border:0; font-size:1.2rem;">
+            PRINT ON DEMAND
+          </div>
+          <img src="{{url('/images/pod.png')}}"  class="w-100" alt="Print On Demand">
+        </div>
       </div>
 
     </div>
   </div>
 </section>
-
 
 
 
