@@ -66,9 +66,15 @@
       color: #222;
     }
 
-    */ @media (max-width: 767px) {
+    @media (max-width: 767px) {
       .hero-card-body {
         min-height: 120px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero-card-body {
+        margin-bottom: 20px
       }
     }
 
@@ -81,7 +87,7 @@
     .banner-content {
       position: relative;
       z-index: 2;
-      padding: 2rem 1rem;
+      padding: 7rem 4rem;
     }
 
     .banner-btn {
@@ -142,20 +148,19 @@
     }
 
     .product-thumb {
-      width: 95px;
-      height: 95px;
+      width: 130px;
+      height: 130px;
       object-fit: contain;
-      border-radius: 50%;
     }
 
     .promo-img {
       object-fit: cover;
       width: 100%;
-      height: 327px;
+      height: 392px;
     }
 
     .bg-custom-gold {
-      background: #FBBF24;
+      background: #dea928;
     }
 
     .bg-custom-dark {
@@ -199,6 +204,67 @@
       line-height: 1;
       display: block;
       margin-bottom: 0.4rem;
+    }
+
+    .tier-box {
+      min-width: 100px;
+      height: 200px;
+      border-radius: 0.8rem;
+    }
+
+    .tier-gold {
+      background-color: #dfb13d;
+      color: #fff;
+    }
+
+    .tier-dark {
+      background-color: #2c2c2d;
+      color: #fff;
+    }
+
+    .tier-label {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+    }
+
+    .bg-color-tp {
+      background-color: #FEFAF2
+    }
+
+    .bg-yellow-brand {
+      background-color: #dea928;
+    }
+
+    .shop-btn:hover {
+      background-color: #dea928;
+    }
+
+    .tier-title {
+      font-size: 0.99rem;
+      opacity: 0.78;
+      margin-bottom: 1rem;
+      letter-spacing: 0.04em;
+    }
+
+    .tier-price {
+      font-weight: 700;
+      font-size: 1.5rem;
+      line-height: 1.1;
+    }
+
+    .tier-month {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-top: 0.12rem;
+      letter-spacing: 0.04em;
+    }
+
+    .btn-full-width {
+      width: 220px;
+      margin: 25px auto 0 auto;
+      border-radius: 50px;
+      font-weight: 700;
     }
 
     @media (max-width: 768px) {
@@ -291,11 +357,13 @@
   </div>
   <section class="container my-4 bg-light py-5">
     <div class="px-0">
-      <div class="row g-0">
-        <div class="col-md-6 d-flex banner-bg d-flex align-items-center">
+      <div class="row g-0" style="background-image: url('{{ asset('assets/media/background.jpeg') }}'); background-size: cover; background-position: center;">
+        <div class="col-md-6 d-flex  d-flex align-items-center">
           <div class="banner-content">
-            <div class="fs-2 text-dark fw-bold mb-2">Need Custom Printing Done Right?</div>
-            <div class="fs-6 text-dark mb-2">
+            <div class="">
+              <h2 class="fs-1 text-dark fw-bold mb-2">Need Custom Printing Done Right?</h2>
+            </div>
+            <div class="fs-5 text-dark mb-2">
               From DTF transfers to full print-on-demand services — we’ve got you covered with top quality, fast
               turnaround, and no minimums.
             </div>
@@ -304,7 +372,7 @@
         </div>
         <!-- Right Banner Image -->
         <div class="col-md-6 banner-image">
-          <img src="{{asset('assets/media/customPrint.png')}}" alt="Custom printing equipment" />
+          
         </div>
       </div>
     </div>
@@ -325,7 +393,7 @@
               <p class="card-text small text-muted mb-1">
                 Print transfers in your exact size. Perfect for custom fits and unique projects.
               </p>
-              <a href="#" class="btn btn-warning fw-bold px-3">Get Started</a>
+              <a href="{{url('/dtf/transfer_by_size')}}" class="btn btn-warning fw-bold px-3">Get Started</a>
             </div>
           </div>
         </div>
@@ -338,7 +406,7 @@
               <p class="card-text small text-muted mb-1">
                 Design your gang sheet online. Add multiple designs to maximize your sheet.
               </p>
-              <a href="#" class="btn btn-warning fw-bold px-3">Get Started</a>
+              <a href="{{url('/dtf/build-a-gangsheet')}}" class="btn btn-warning fw-bold px-3">Get Started</a>
             </div>
           </div>
         </div>
@@ -351,7 +419,7 @@
               <p class="card-text small text-muted mb-1">
                 Upload and print instantly. Fast, high-quality results with no hassle.
               </p>
-              <a href="#" class="btn custom-btn-yellow">Upload your Gang Sheet</a>
+              <a href="{{url('/dtf/upload-gangsheet')}}" class="btn custom-btn-yellow">Upload your Gang Sheet</a>
             </div>
           </div>
         </div>
@@ -364,7 +432,7 @@
               <p class="card-text small text-muted mb-1">
                 Heat-press ready designs. Apply easily to any fabric in minutes.
               </p>
-              <a href="#" class="btn custom-btn-yellow">Shop Now!</a>
+              <a href="{{url('/dtf/transfer_by_size')}}" class="btn custom-btn-yellow">Shop Now!</a>
             </div>
           </div>
         </div>
@@ -372,156 +440,213 @@
     </div>
   </section>
   <section class="my-5">
-    <div class="position-relative text-center mb-4 shopping">
+    <div class="position-relative text-center mb-4 shopping container">
       <img src="{{asset('assets/media/shopping-banner.png')}}" alt="Blank Shirts Banner" class="img-fluid w-100" />
       <div class="overlay-content">
         <h1 class="text-dark opacity-75 fw-bold">BLANK SHIRTS</h1>
-        <a href="#" class="btn btn-warning fw-bold px-4 py-2">SHOP NOW</a>
+        <a href="{{url('/shop')}}" class="btn btn-warning fw-bold px-4 py-2">SHOP NOW</a>
       </div>
     </div>
 
     <!-- Bestseller Section -->
-    <section class="text-center mb-5">
-      <h3 class="text-dark fw-bold mb-3">Your next bestseller awaits</h3>
-      <div class="d-flex justify-content-center gap-3 flex-wrap">
-        <img src="{{asset('assets/media/mockup.jpeg')}}" alt="Shirt" class="product-thumb" />
-        <img src="{{asset('assets/media/mockup.jpeg')}}" alt="Sweatshirt" class="product-thumb" />
-        <img src="{{asset('assets/media/mockup.jpeg')}}" alt="Mug" class="product-thumb" />
-        <img src="{{asset('assets/media/mockup.jpeg')}}" alt="Hoodie" class="product-thumb" />
-        <img src="{{asset('assets/media/mockup.jpeg')}}" alt="Tshirt" class="product-thumb" />
-        <img src="{{asset('assets/media/mockup.jpeg')}}" alt="Phone" class="product-thumb" />
-      </div>
-    </section>
+    <section class="text-center container py-5">
+    <h3 class="text-dark fw-bold mb-3">Your next bestseller awaits</h3>
+    <div class="row g-4 justify-content-center">
+        @foreach($bestSelling as $product)
+            <div class="col-xl-4 col-lg-4 col-md-4 col-6">
+                <div class="latest-product-card p-2 h-100">
+                    <div class="image-box mb-2">
+                        <a href="{{ url('/product/' . $product->product->slug) }}">
+                            @if($product->product->image)
+                                <img src="{{ asset('/images/' . $product->image) }}" 
+                                     class="product-image w-100 product-thumb" 
+                                     alt="{{ $product->name }}">
+                            @else
+                                <img src="https://www.ssactivewear.com/{{ $product->product->main_image }}" 
+                                     class="product-image w-100 product-thumb" 
+                                     alt="{{ $product->name }}">
+                            @endif
+                        </a>
+                    </div>
+                    <div class="product-desc text-center">
+                        <a href="{{ url('/product/' . $product->slug) }}" 
+                           class="product-title h6 fw-500 d-block mb-1">
+                            {{ $product->product->name }}
+                        </a>
+                        <p class="fw-600 mb-1">${{ $product->product->price }}</p>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+</section>
+
 
     <!-- Promo Collection Section -->
     <div class="container">
       <div class="row align-items-center g-0">
-        <div class="col-md-6 px-4 py-3 bg-light text-center text-md-start">
-          <small class="text-uppercase text-muted fw-semibold">Summer Collection</small>
-          <h3 class="fw-bold mb-3 mt-2">Risus commodo viverrra maecenas accumsan.</h3>
-          <p class="mb-4 text-muted">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt labore magna aliqua.
-          </p>
-          <a href="#" class="btn btn-outline-danger px-4 py-2">Shop Now &rarr;</a>
+        <div class="col-md-6 p-5  text-center text-md-start ">
+          <div class="d-flex flex-column align-items-center">
+            <small class="text-uppercase text-muted fw-semibold">Shop Now</small>
+            <h3 class="fw-semibold mb-3 mt-2 text-dark text-left">Ready-to-Press & Custom Apparel Designs</h3>
+            <p class="mb-4 text-muted text-left">
+              Discover our collection of ready-to-press designs and bring your vision to life in minutes! Whether
+               you’re looking for trendy graphics, seasonal themes, or everyday essentials, 
+               we’ve got a wide selection of high-quality DTF transfers and apparel designs to choose from.
+            </p>
+            <p class="mb-4 text-muted text-left">
+               ✨ Pick a Ready Design – Browse our curated selection of bold, vibrant prints made to stand out. Perfect for t-shirts, hoodies, totes, and more.
+ 
+            </p>
+            <p class="mb-4 text-muted text-left">
+🎨 Customize Your Own – Want something truly unique? Personalize your design with names, logos, or artwork. Great for gifts, teams, events, or your own clothing brand.
+            </p>
+            <a href="{{url('/shop')}}" class="banner-btn text-light shop-btn text-center">Shop Now &rarr;</a>
+          </div>
         </div>
         <div class="col-md-6">
-          <img src="{{asset('assets/media/man.jpg')}}" alt="Collection" class="promo-img" />
+          <img src="{{asset('assets/media/man2.png')}}" alt="Collection" class="promo-img" />
         </div>
       </div>
     </div>
 
   </section>
-  <div class="container-fluid px-0">
-    <div class="row flex-column g-0">
-      <div class="col-lg-6 col-12 bg-custom-gold py-4 px-4 d-flex justify-content-between">
-        <div>
-          <h2 class="fw-bold display-5 mb-3">No Designer?<br>No Problem.</h2>
-          <h5 class="fw-semibold mb-4">Design &amp; Preview Your <br>CustomGear Online &mdash; Instantly</h5>
-        </div>
-        <div>
-          <h3 class="fw-bold mb-3">How It Works:</h3>
-          <ul class="list-unstyled fs-5 mb-4">
-            <li class="mb-1">
-              <span class="fw-bold">1.</span>
-              Go to ardensprint.com
-              <br><span class="ms-4">&rarr; Click <span class="fw-bold">"Design Studio"</span></span>
-            </li>
-            <li class="mb-1">
-              <span class="fw-bold">2.</span>
-              Create Your Design
-            </li>
-            <li class="mb-1">
-              <span class="fw-bold">3.</span>
-              Place Your Order
-            </li>
-          </ul>
-        </div>
-      </div>
-      <!-- Dark Column (Feature List & Image) -->
-      <div class="col-lg-6 col-12 bg-custom-dark py-4 px-4 d-flex flex-column justify-content-between align-items-center">
-        <div class="mb-4">
-          <h4 class="fw-bold text-white mb-3">What You Can Do:</h4>
-          <ul class="list-unstyled">
-            <li class="mb-2">
-              <span class="icon-arrow">&#8593;</span>
-              <span class="fw-bold text-white">Upload Your Artwork</span>
-              <span class="text-white-50"> Logo or image &mdash; or use our <span class="text-custom-gold fw-bold">Design
-                  Library</span></span>
-            </li>
-            <li class="mb-2">
-              <span class="icon-check">&#10003;</span>
-              <span class="fw-bold text-white">See It on a Mockup</span>
-              <span class="text-white-50"> Easy product preview for t-shirts, hoodies, totes & more</span>
-            </li>
-            <li>
-              <span class="icon-check">&#10003;</span>
-              <span class="fw-bold text-white">Works Great for..</span>
-              <span class="text-white-50"> Schools, fundraisers, businesses, events</span>
-            </li>
-          </ul>
-        </div>
-        <div class="w-100 d-flex flex-column align-items-center">
-          <img src="https://via.placeholder.com/300x180?text=Design+Mockup" alt="Design Studio Preview"
-            class="image-laptop mb-2" />
-          <div class="logo-ardens text-custom-gold">
-            ARDEN'S <span class="text-white">PRINT</span>
-          </div>
-        </div>
-      </div>
+
+  <style>
+  .bg-custom-gold {
+    background-color: #fbaf1c;
+  }
+  .bg-custom-dark {
+    background-color: #111;
+  }
+  .icon-arrow {
+    color: #fbaf1c;
+    font-size: 1.2rem;
+    margin-right: 5px;
+  }
+  .icon-check {
+    color: #fbaf1c;
+    font-size: 1.2rem;
+    margin-right: 5px;
+  }
+  .image-laptop {
+    max-width: 450px;
+    height: auto;
+  }
+</style>
+
+<div class="container py-4">
+  <!-- Top Section (Gold Background) -->
+  <div class="row bg-custom-gold py-5 px-5 d-flex align-items-center">
+    <div class="col-lg-6 text-start">
+      <h2 class="fw-bold display-5 mb-3 text-dark">No Designer?<br>No Problem.</h2>
+      <h5 class="fw-semibold mb-0 text-dark">
+        Design &amp; Preview Your <br>
+        CustomGear Online &mdash; Instantly
+      </h5>
+    </div>
+    <div class="col-lg-6 text-start">
+      <h3 class="fw-bold mb-3 text-dark">How It Works:</h3>
+      <ul class="list-unstyled fs-5 mb-0" style="color: #000;">
+        <li class="mb-2">
+          <span class="fw-bold text-dark">1.</span> Go to ardensprint.com <br>
+          <span class="ms-4">&rarr; Click <span class="fw-bold">"Design Studio"</span></span>
+        </li>
+        <li class="mb-2">
+          <span class="fw-bold text-dark">2.</span> Create Your Design
+        </li>
+        <li>
+          <span class="fw-bold text-dark">3.</span> Place Your Order
+        </li>
+      </ul>
     </div>
   </div>
+
+  <!-- Bottom Section (Dark Background) -->
+  <div class="row bg-custom-dark py-5 px-5 d-flex align-items-center">
+    <div class="col-lg-6 text-start text-white">
+      <h4 class="fw-bold mb-4">What You Can Do:</h4>
+      <ul class="list-unstyled fs-5" style="color : #fff !important;">
+        <li class="mb-3">
+          <span class="icon-arrow">&#8593;</span>
+          <span class="fw-bold" >Upload Your Artwork</span>
+          <span class="text-white-50" style="color : #fff !important;">
+            Logo or image &mdash; or use our 
+            <span class="text-custom-gold fw-bold" style="color:#fbaf1c;">Design Library</span>
+          </span>
+        </li>
+        <li class="mb-3">
+          <span class="icon-check">&#10003;</span>
+          <span class="fw-bold">See It on a Mockup</span>
+          <span class="text-white-50" style="color : #fff !important; "> Easy product preview for t-shirts, hoodies, totes & more</span>
+        </li>
+        <li>
+          <span class="icon-check">&#10003;</span>
+          <span class="fw-bold">Works Great for..</span>
+          <span class="text-white-50" style="color : #fff !important;"> Schools, fundraisers, businesses, events</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-6 text-center">
+      <img src="{{asset('assets/media/laptop.png')}}" alt="Design Studio Preview" class="image-laptop">
+    </div>
+  </div>
+</div>
+
   <section class="container py-5">
-    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 text-center">
-      <div class="col">
+    <div class="row row-cols-1 row-cols-md-4 row-cols-lg-4 g-4 text-center">
+      <div class="col mb-2">
         <span class="feature-emoji">🎨</span>
         <div class="fw-bold fs-4 lh-1">Custom<br>Design</div>
         <div class="mt-2 fs-6 text-muted">Create tees,<br>bags &amp; more.</div>
       </div>
-      <div class="col">
+      <div class="col mb-2">
         <span class="feature-emoji">⚡</span>
         <div class="fw-bold fs-4 lh-1">Fast<br>Shipping</div>
         <div class="mt-2 fs-6 text-muted">Ships in<br>a few days.</div>
       </div>
-      <div class="col">
+      <div class="col mb-2">
         <span class="feature-emoji">👕</span>
         <div class="fw-bold fs-4 lh-1">Premium<br>Quality</div>
         <div class="mt-2 fs-6 text-muted">Built to last,<br>feel great.</div>
       </div>
-      <div class="col">
+      <div class="col mb-2">
         <span class="feature-emoji">👜</span>
         <div class="fw-bold fs-4 lh-1">Wide<br>Range</div>
         <div class="mt-2 fs-6 text-muted">From tees<br>to tote bags.</div>
       </div>
     </div>
     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-3 g-4 text-center mt-3">
-      <div class="col">
+      <div class="col mb-2">
         <span class="feature-emoji">🚀</span>
         <div class="fw-bold fs-4 lh-1">Easy Ordering</div>
         <div class="mt-2 fs-6 text-muted">From t tees<br>to tote bags.</div>
       </div>
-      <div class="col">
+      <div class="col mb-2">
         <span class="feature-emoji">🛒</span>
         <div class="fw-bold fs-4 lh-1">Checkout</div>
         <div class="mt-2 fs-6 text-muted">From checkout,<br>no minimum.</div>
       </div>
-      <div class="col">
+      <div class="col mb-2">
         <span class="feature-emoji">🌐</span>
         <div class="fw-bold fs-4 lh-1">One-Stop Shop</div>
         <div class="mt-2 fs-6 text-muted">All you need<br>in one place.</div>
       </div>
     </div>
   </section>
-  <section class="container-fluid bg-warning text-dark py-5">
+  <section class="container-fluid text-dark py-5">
     <div class="container">
-      <div class="row justify-content-center align-items-center">
+      <div class="container py-4 bg-yellow-brand row justify-content-center align-items-center">
         <!-- Left Text -->
         <div class="col-lg-6 col-12 mb-4 mb-lg-0">
-          <h1 class="fw-bold mb-3">
-            <div>Browse</div>
-            <div>DESIGN</div>
-            <div>LIBRARY</div>
-          </h1>
-          <p class="fs-5">Find graphics by categories<br>for your custom gear</p>
+          <div class="d-flex align-items-center flex-column">
+            <h1 class="fw-bold mb-3">
+              <div>Browse</div>
+              <div>DESIGN</div>
+              <div>LIBRARY</div>
+            </h1>
+            <p class="fs-5">Find graphics by categories<br>for your custom gear</p>
+          </div>
         </div>
         <!-- Design Library Card -->
         <div class="col-lg-6 col-12 d-flex justify-content-center">
@@ -529,11 +654,11 @@
             <h5 class="fw-bold mb-3">Design Library</h5>
             <div class="mb-3 d-flex gap-2">
               <span class="badge bg-light text-dark">Graphics</span>
-              <span class="badge bg-warning text-dark fw-semibold">Categories</span>
+              <span class="badge bg-yellow-brand text-dark fw-semibold">Categories</span>
             </div>
             <div class="d-flex gap-3 mb-3">
               <div
-                class="bg-warning text-dark fw-bold d-flex flex-column justify-content-center align-items-center rounded-2 p-2"
+                class="bg-yellow-brand text-dark fw-bold d-flex flex-column justify-content-center align-items-center rounded-2 p-2"
                 style="width: 60px; height: 60px; font-size: 0.75rem; line-height: 1;">
                 GOOD<br>VIBES
               </div>
@@ -549,6 +674,65 @@
             <a href="#" class="text-dark fw-semibold text-decoration-none d-block text-end">LEARN MORE</a>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+  <section class="container py-5">
+    <div class="row justify-content-center align-items-center">
+      <!-- Left video and guide -->
+      <div class="col-lg-6 d-flex align-items-center mb-4 mb-lg-0" style="background-color:#FEFAF2">
+        <div class="d-flex gap-4 align-items-center w-100 justify-content-center">
+          <img src="{{asset('assets/media/watch.png')}}" alt="Guide Video" class="rounded shadow"
+            style="max-width: 270px;">
+          <div>
+            <div class="fw-bold fs-4 text-end">WATCH<br>FOR GUIDE</div>
+            <button class="btn btn-outline-dark btn-sm mt-2 float-end">WATCH FOR GUIDE</button>
+          </div>
+        </div>
+      </div>
+      <!-- Right tier pricing -->
+      <div class="col-lg-5 p-4 bg-color-tp">
+        <div class="text-center">
+          <h4 class="fw-bold mb-4">BECOME A KNIGHT<br>OF SAVINGS!</h4>
+          <p class="text-muted mb-5">
+            Join our membership program to unlock magical savings and exclusive discounts.
+          </p>
+          <div class="d-flex justify-content-center gap-3">
+            <div class="tier-box tier-gold d-flex flex-column justify-content-center align-items-center p-3">
+              <div class="tier-label">WARRIOR</div>
+              <div class="tier-title">TIER</div>
+              <div class="tier-price">$14.99</div>
+              <div class="tier-month">/MONTH</div>
+            </div>
+            <div class="tier-box tier-dark d-flex flex-column justify-content-center align-items-center p-3">
+              <div class="tier-label">ELITE</div>
+              <div class="tier-title">TIER</div>
+              <div class="tier-price">$39.99</div>
+              <div class="tier-month">/MONTH</div>
+            </div>
+            <div class="tier-box tier-gold d-flex flex-column justify-content-center align-items-center p-3">
+              <div class="tier-label">ROYAL</div>
+              <div class="tier-title">TIER</div>
+              <div class="tier-price">$89.99</div>
+              <div class="tier-month">/MONTH</div>
+            </div>
+          </div>
+          <a href="{{url('/login')}}" class="btn btn-dark btn-lg btn-full-width mt-4">BECOME A MEMBER</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="container mt-5">
+    <div class="container bg-yellow-brand p-5 d-flex justify-content-center align-items-center">
+      <div class="d-flex flex-column align-items-center">
+        <div class="d-flex gap-4 align-items-center">
+          <i class="fa-solid fa-message text-white fs-1"></i>
+          <h2 class="text-center text-dark fw-bold">Easy Ordering</h2>
+          <i class="fa-solid fa-phone-volume text-white fs-1"></i>
+        </div>
+        <p class="text-muted text-center fs-4">Text or Call 24/7</p>
+        <a href="{{url('/shop')}}" class="btn btn-dark btn-lg btn-full-width mb-3">Shop Now</a>
+        <h4 class="text-white fw-semibold text-center">(234) 567-8901</h4>
       </div>
     </div>
   </section>

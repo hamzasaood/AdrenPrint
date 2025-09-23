@@ -33,7 +33,18 @@ Route::get('/', function () {
     $products = \App\Models\Product::with('category')->where('stock', '>', 0)->where('category_id','15')->take(30)->get();
     $blanks = \App\Models\Product::with('category')->where('stock', '>', 0)->where('category_id','15')->take(4)->get();
 
-    return view('home', compact('categories', 'products','blanks'));
+    $bestSelling = \App\Models\OrderProduct::select('product_id', DB::raw('COUNT(product_id) as total_sold'))
+    ->whereNotNull('product_id') // <-- exclude non-product rows
+    ->groupBy('product_id')
+    ->orderByDesc('total_sold')
+    ->take(5)
+    ->with('product.category') // eager load product + category
+    ->get();
+    
+
+
+
+    return view('home', compact('categories', 'products','blanks','bestSelling'));
 });
     
 
