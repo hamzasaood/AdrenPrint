@@ -88,7 +88,7 @@
         }
     </style>
 
-    <section class="site-container">
+    <section class="site-container" data-aos="fade-up">
         <div class=" py-5">
             <div class="row g-5">
                 {{-- LEFT SIDE: Product Gallery --}}
@@ -235,13 +235,13 @@
                 </div>
             </div>
             <div class="my-5">
-                <div class="row gap-5 flex-column align-items-center justify-content-center">
+                <div class="row ">
                     <!-- Title -->
-                    <div class="col-lg-12 mb-4">
-                        <h3 class="fw-bold brand-yellow mb-2 text-center">DTF Gang Sheet Builder</h3>
-                        <p class="text-center mb-3 text-dark"><strong>Everything you need to know before you start
+                    <div class="col-lg-6 mb-4 col-md-6">
+                        <h3 class="fw-bold text-dark mb-2 text-left">DTF Gang Sheet Builder</h3>
+                        <p class="text-left mb-3 text-dark"><strong>Everything you need to know before you start
                                 building</strong></p>
-                        <p class="text-dark text-center">Welcome to the <strong>Arden’s Print Gang Sheet Builder,</strong>
+                        <p class="text-dark text-left">Welcome to the <strong>Arden’s Print Gang Sheet Builder,</strong>
                             the fastest way to maximize space, minimize
                             cost, and bring your designs to life. Whether you’re uploading logos, characters, tags, or
                             full-size artwork, our intuitive tool makes gang sheet creation quick and seamless.
@@ -249,7 +249,7 @@
                     </div>
 
                     <!-- Accordion -->
-                    <div class="col-lg-12">
+                    <div class="col-lg-6 col-md-6">
                         <div class="accordion accordion-flush" id="productAccordion">
 
                             <!-- Built-In Smart Layout Tools -->
@@ -275,7 +275,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                    
                             <!-- Product Highlights -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingHighlights">
@@ -437,13 +437,16 @@
 
                         </div>
                     </div>
+
+
+
                 </div>
 
             </div>
 
-            <section class="bg-light py-5">
+            <section class="bg-light py-5" data-aos="fade-up">
                 <div class="" style="">
-                    <h2 class="section-title text-center">What Our Customers Say</h2>
+                    <h2 class="text-dark text-center">What Our Customers Say</h2>
                     <div class="row g-4">
 
                         <script defer async src='https://cdn.trustindex.io/loader.js?bee03e45460d278af256ac8441b'></script>

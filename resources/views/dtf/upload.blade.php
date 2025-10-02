@@ -4,7 +4,67 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
-    <section class="site-container">
+    <style>
+
+    .product-section .features-list i {
+    font-size: 1rem;
+}
+.product-section .border-dashed {
+    border-style: dashed !important;
+}
+.product-gallery .badge {
+    font-size: 0.9rem;
+}
+.product-section .upload-box {
+    border: 2px dashed #0d6efd;
+    background: #f8fbff;
+    transition: 0.3s;
+}
+.product-section .upload-box:hover {
+    background: #e9f3ff;
+}
+
+.instruction-card {
+    background-color: #222;
+    border-radius: 8px;
+    transition: all 0.3s 
+ease-in-out;
+    color: #dea928;
+}
+
+
+@media (min-width: 768px) {
+    .delivery-block.print-ready-box {
+        justify-content: space-between;
+        display: flex
+;
+        text-align: left;
+        align-items: center;
+    }
+}
+
+.delivery-block.print-ready-box {
+    margin-top: 24px;
+    margin-bottom: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.delivery-block {
+    border: solid 1px #DADADA;
+    padding: 8px 16px;
+    color: #000;
+    background: #F4F4F4;
+    text-align: center;
+    border-radius: 8px;
+    line-height: 30px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+    </style>
+    <section class="site-container" data-aos="fade-up">
         <div class=" py-5">
             <div class="row g-5">
                 {{-- LEFT SIDE: Product Gallery --}}
@@ -79,38 +139,46 @@
                             </ul>
                         </div>
 
-                        <p class="my-2 text-dark">Don’t have a gang sheet ready? Try Our <a href="">Gang Sheet Builder</a>
-                        </p>
+                        
 
-                        <h3 class=" text-dark">Get Started</h3>
-                        <ul class="nav nav-tabs mb-3" id="startTabs" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="upload-tab" data-bs-toggle="tab"
-                                    data-bs-target="#upload-tab-pane" type="button" role="tab"
-                                    aria-controls="upload-tab-pane" aria-selected="true">Upload Your Gang Sheet</button>
-                            </li>
-                        </ul>
+                        
 
                         <form id="dtfForm" method="POST" action="{{ route('dtf-gangsheet.addToCart') }}"
                             enctype="multipart/form-data">
                             @csrf
 
                             {{-- Step 1: Upload Artwork --}}
-                            <div class="mb-4 step step-1">
-                                <h5 class="fw-bold">1. Upload Artwork</h5>
-                                <div
-                                    class="upload-box border border-dashed rounded p-4 text-center bg-light cursor-pointer">
-                                    <input type="file" name="artwork" id="artworkInput" class="d-none" required>
-                                    <label for="artworkInput" class="d-block">
-                                        <img src="https://via.placeholder.com/100?text=Upload" id="artPreview" class="mb-2">
-                                        <p class="text-muted">Drag & drop or click to upload</p>
-                                    </label>
-                                </div>
+
+                            <div class="border border-primary rounded bg-light p-4 text-center mb-4" style="border-style:dashed !important;border-color:#fbaf1c !important;">
+                                <input type="file" name="artwork" id="artworkInput" class="d-none" required>
+                                <label for="artworkInput" class="d-block cursor-pointer mt-4">
+                                    <a class="mb-4 instruction-card text-decoration-none d-block px-2 text-center btn btn-warning">Choose image to get started ⬆</a>
+                                    <p class="mb-4 text-muted small">or drag and drop image here</p>
+                                    <p class="mb-4 text-muted small">or <a href="{{url('/login')}}" style="color:#fbaf1c;">Login</a> to see previous designs</p>
+                                </label>
                             </div>
+
+
+                            <div class="delivery-block print-ready-box w3_bg">
+              <div class="del-sh-text w3_bg">
+                <h5 class="head-title">Don’t have a print-ready Gang Sheet?</h5>
+                <div class="subline w3_bg">Try our easy to use Gang Sheet Builder</div>
+              </div>
+              <div class="ctabox w3_bg">
+                <a href="{{url('/dtf/build-a-gangsheet/')}}" class="d-inline-cta">
+                  <span>Build a Gang Sheet</span>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13.3333 5L20 12M20 12L13.3333 19M20 12L4 12" stroke="#171717" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+                            
 
                             {{-- Step 2: Choose Color --}}
                             <div class="mb-4 step step-2 d-none">
-                                <h5 class="fw-bold">2. Choose Color Option</h5>
+                                <h5 class="fw-bold">Choose Color Option</h5>
                                 <div class="d-flex gap-3 flex-wrap">
                                     @foreach($colors as $c)
                                         <label class="color-option border rounded p-3 cursor-pointer">
@@ -126,7 +194,7 @@
 
                             {{-- Step 3: Select Size --}}
                             <div class="mb-4 step step-3 d-none">
-                                <h5 class="fw-bold">3. Select Size</h5>
+                                <h5 class="fw-bold">Select Size</h5>
                                 <div class="row g-3">
                                     @foreach($sizes as $s)
                                         <div class="col-2 col-md-2">
@@ -142,7 +210,7 @@
 
                             {{-- Step 4: Quantity & Price --}}
                             <div class="mb-4 step step-4 d-none">
-                                <h5 class="fw-bold">4. Quantity</h5>
+                                <h5 class="fw-bold">Quantity</h5>
                                 <div class="d-flex align-items-center gap-4">
                                     <input type="number" name="quantity" id="qtyInput" class="form-control w-25" value="1"
                                         min="1">
@@ -155,7 +223,7 @@
                             </div>
                             <input type="hidden" name="unitprice" id="price" />
                             <input type="hidden" name="subtotal" id="subtotal" />
-                            <button type="submit" class="btn btn-success btn-lg w-100 d-none" id="addToCartBtn">Add to
+                            <button type="submit" class="btn btn-warning btn-lg w-100 d-none" id="addToCartBtn">Add to
                                 Cart</button>
                         </form>
                     </div>
@@ -292,14 +360,14 @@
                     </div>
                 </div>
             </div> --}}
-            <div class="my-5">
-                <div class="row gap-5 flex-column align-items-center justify-content-center">
+            <div class="my-5" data-aos="fade-up">
+                <div class="row">
                     <!-- Left Column -->
-                    <div class="col-lg-12 mb-4">
-                        <h3 class="fw-bold brand-yellow mb-2 text-center">DTF Gang Sheet – Upload a Print-Ready File
+                    <div class="col-lg-6 col-md-6 mb-4">
+                        <h3 class="fw-bold text-dark mb-2 text-left">DTF Gang Sheet – Upload a Print-Ready File
                         </h3>
-                        <p class="text-center"><strong>Perfect for Advanced Users with Pre-Arranged Designs</strong></p>
-                        <p class="text-center">
+                        <p class="text-left"><strong>Perfect for Advanced Users with Pre-Arranged Designs</strong></p>
+                        <p class="text-left">
                             Already have your gang sheet laid out? Upload your print-ready file and let us handle the rest.
                             This option is perfect for experienced users who want full control over their design layout and
                             need fast, reliable printing.
@@ -307,8 +375,8 @@
                     </div>
 
                     <!-- Right Column -->
-                    <div class="col-lg-12">
-                        <div class="accordion accordion-flush" id="productAccordion">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="accordion accordion-flush" id="productAccordion" style="border-style: dashed;">
 
                             <!-- Features (open by default) -->
                             <div class="accordion-item">
@@ -316,7 +384,7 @@
                                     <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseShippingReturns" aria-expanded="true"
                                         aria-controls="collapseShippingReturns">
-                                        What We Accept
+                                        ✅ What We Accept
                                     </button>
                                 </h2>
                                 <div id="collapseShippingReturns" class="accordion-collapse collapse show"
@@ -337,7 +405,7 @@
                                     <button class="accordion-button lh-90" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseFeatures" aria-expanded="false"
                                         aria-controls="collapseFeatures">
-                                        Features You'll Love
+                                        ⚡Features You'll Love
                                     </button>
                                 </h2>
                                 <div id="collapseFeatures" class="accordion-collapse collapse"
@@ -361,7 +429,7 @@
                                     <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseGuarantee" aria-expanded="false"
                                         aria-controls="collapseGuarantee">
-                                        Pro Tips for Uploading
+                                        💡Pro Tips for Uploading
                                     </button>
                                 </h2>
                                 <div id="collapseGuarantee" class="accordion-collapse collapse"
@@ -380,11 +448,119 @@
                                     </div>
                                 </div>
                             </div>
+
+
+
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingsize">
+                                    <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapsesize" aria-expanded="false"
+                                        aria-controls="collapseGuarantee">
+                                        📦 Sizes & Pricing
+                                    </button>
+                                </h2>
+                                <div id="collapsesize" class="accordion-collapse collapse"
+                                    aria-labelledby="headingsize" data-bs-parent="#productAccordion">
+                                    <div class="accordion-body">
+                                        <table class="table table-bordered">
+                        <tr>
+
+                        <th>Length</th>
+                        <th>Discount</th>
+                        </tr>
+
+                        <tr>
+
+                        <td>2 Feet</td>
+                        <td>37% Off</td>
+                        </tr>
+
+                        <tr>
+
+                        <td>5 Feet</td>
+                        <td>37% Off</td>
+                        </tr>
+
+                        <tr>
+
+                        <td>7 Feet</td>
+                        <td>37% Off</td>
+                        </tr>
+
+
+                        <tr>
+
+                        <td>10 Feet</td>
+                        <td>43% Off</td>
+                        </tr>
+                        <tr>
+
+                        <td>15 Feet</td>
+                        <td>54% Off</td>
+                        </tr>
+
+                        <tr>
+
+                        <td>20 Feet</td>
+                        <td>59% Off</td>
+                        </tr>
+
+                        <tr>
+
+                        <td>30 Feet</td>
+                        <td>62% Off (Lowest Rate: $0.02/sq in)</td>
+                        </tr>
+
+                        
+
+
+                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingcta">
+                                    <button class="accordion-button collapsed lh-90" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapsecta" aria-expanded="false"
+                                        aria-controls="collapsecta">
+                                        🚀 Ready to Upload?
+                                    </button>
+                                </h2>
+                                <div id="collapsecta" class="accordion-collapse collapse"
+                                    aria-labelledby="headingcta" data-bs-parent="#productAccordion">
+                                    <div class="accordion-body">
+                                        <ul>
+                                            <li>[Choose File to Start] or simply drag and drop your print-ready gang sheet.
+                                                Don’t have a gang sheet ready? 👉 [Try Our Gang Sheet Builder]
+
+                                            </li>
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
             </div>
-            <section class="bg-light py-5">
+
+
+            
+
+
+
+
+
+
+            <section class="bg-light py-5" data-aos="fade-up">
                 <div class="" style="">
                     <h2 class="section-title text-center">What Our Customers Say</h2>
                     <div class="row g-4">

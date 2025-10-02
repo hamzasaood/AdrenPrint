@@ -290,10 +290,90 @@
         min-height: 150px;
       }
     }
+
+     @media screen and (max-width: 768px) {
+    .image-laptop {
+      width :100%;
+      height: auto;
+    
+    }
+    .bgty{
+
+      background-image: url('{{ asset('assets/media/background.jpeg') }}');
+       background-size: cover;
+        background-position: left !important;
+
+    }
+    .feature-text {
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: #222;
+    text-align: left;
+}
+.feature-icon {
+    max-width: 25px;
+    margin-bottom: 8px;
+    width: 100px;
+}
+.banner-content {
+    position: relative;
+    z-index: 2;
+    padding: 6rem 1rem;
+}
+.guide{
+
+  max-width: 100px !important;
+}
+
+
+.tier-label {
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+}
+
+.tier-title {
+    font-size: 12px;
+    opacity: 0.78;
+    margin-bottom: 1rem;
+    letter-spacing: 0.04em;
+}
+
+.tier-price {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 1.1;
+}
+
+.tier-month {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-top: 0.12rem;
+    letter-spacing: 0.04em;
+}
+.btn-full-width {
+    
+    font-size: 12px;
+}
+.con{
+
+  padding-left: 10%;
+    padding-right: 20%;
+}
+
+.tier-box {
+    min-width: auto;
+    height: 200px;
+    border-radius: 0.8rem;
+}
+
+
+  }
   </style>
   </style>
 
-  <div class="container-fluid hero-bg">
+  <div class="container-fluid hero-bg" >
     <div class="container py-5">
       <div class="row g-4 justify-content-center">
         <!-- Card 1 -->
@@ -335,7 +415,7 @@
       </div>
     </div>
   </div>
-  <div class="container my-5">
+  <div class="container my-5" data-aos="fade-up">
     <div class="row text-center justify-content-between">
       <div class="col-6 col-sm-3 d-flex align-items-center gap-2 justify-content-center">
         <img src="{{asset('assets/media/palette.svg')}}" alt="Perfect for any fabric icon" class="feature-icon" />
@@ -355,9 +435,9 @@
       </div>
     </div>
   </div>
-  <section class="container my-4 bg-light py-5">
+  <section class="container my-4 bg-light py-5" data-aos="fade-up">
     <div class="px-0">
-      <div class="row g-0" style="background-image: url('{{ asset('assets/media/background.jpeg') }}'); background-size: cover; background-position: center;">
+      <div class="row g-0 bgty" style="background-image: url('{{ asset('assets/media/background.jpeg') }}'); background-size: cover; background-position: center;">
         <div class="col-md-6 d-flex  d-flex align-items-center">
           <div class="banner-content">
             <div class="">
@@ -377,7 +457,7 @@
       </div>
     </div>
   </section>
-  <section>
+  <section data-aos="fade-up">
     <div class="container py-5">
       <h2 class="text-center fw-bold mb-1 text-dark">Your DTF Printing HUB</h2>
       <p class="text-center text-muted mb-4">
@@ -439,7 +519,7 @@
       </div>
     </div>
   </section>
-  <section class="my-5">
+  <section class="my-5" data-aos="fade-up">
     <div class="position-relative text-center mb-4 shopping container">
       <img src="{{asset('assets/media/shopping-banner.png')}}" alt="Blank Shirts Banner" class="img-fluid w-100" />
       <div class="overlay-content">
@@ -449,7 +529,7 @@
     </div>
 
     <!-- Bestseller Section -->
-    <section class="text-center container py-5">
+    <section class="text-center container py-5" data-aos="fade-up">
     <h3 class="text-dark fw-bold mb-3">Your next bestseller awaits</h3>
     <div class="row g-4 justify-content-center">
         @foreach($bestSelling as $product)
@@ -483,7 +563,7 @@
 
 
     <!-- Promo Collection Section -->
-    <div class="container">
+    <div class="container" data-aos="fade-up">
       <div class="row align-items-center g-0">
         <div class="col-md-6 p-5  text-center text-md-start ">
           <div class="d-flex flex-column align-items-center">
@@ -533,9 +613,11 @@
     max-width: 450px;
     height: auto;
   }
+
+ 
 </style>
 
-<div class="container py-4">
+<div class="container py-4" data-aos="fade-up">
   <!-- Top Section (Gold Background) -->
   <div class="row bg-custom-gold py-5 px-5 d-flex align-items-center">
     <div class="col-lg-6 text-start">
@@ -563,7 +645,7 @@
   </div>
 
   <!-- Bottom Section (Dark Background) -->
-  <div class="row bg-custom-dark py-5 px-5 d-flex align-items-center">
+  <div class="row bg-custom-dark py-5 px-5 d-flex align-items-center" data-aos="fade-up">
     <div class="col-lg-6 text-start text-white">
       <h4 class="fw-bold mb-4">What You Can Do:</h4>
       <ul class="list-unstyled fs-5" style="color : #fff !important;">
@@ -593,7 +675,7 @@
   </div>
 </div>
 
-  <section class="container py-5">
+  <section class="container py-5" data-aos="fade-up">
     <div class="row row-cols-1 row-cols-md-4 row-cols-lg-4 g-4 text-center">
       <div class="col mb-2">
         <span class="feature-emoji">🎨</span>
@@ -634,7 +716,7 @@
       </div>
     </div>
   </section>
-  <section class="container-fluid text-dark py-5">
+  <section class="container-fluid text-dark py-5" data-aos="fade-up">
     <div class="container">
       <div class="container py-4 bg-yellow-brand row justify-content-center align-items-center">
         <!-- Left Text -->
@@ -677,12 +759,12 @@
       </div>
     </div>
   </section>
-  <section class="container py-5">
+  <section class="container py-5" data-aos="fade-up">
     <div class="row justify-content-center align-items-center">
       <!-- Left video and guide -->
       <div class="col-lg-6 d-flex align-items-center mb-4 mb-lg-0" style="background-color:#FEFAF2">
         <div class="d-flex gap-4 align-items-center w-100 justify-content-center">
-          <img src="{{asset('assets/media/watch.png')}}" alt="Guide Video" class="rounded shadow"
+          <img src="{{asset('assets/media/watch.png')}}" alt="Guide Video" class="rounded shadow guide"
             style="max-width: 270px;">
           <div>
             <div class="fw-bold fs-4 text-end">WATCH<br>FOR GUIDE</div>
@@ -697,7 +779,7 @@
           <p class="text-muted mb-5">
             Join our membership program to unlock magical savings and exclusive discounts.
           </p>
-          <div class="d-flex justify-content-center gap-3">
+          <div class="d-flex justify-content-center gap-3 con">
             <div class="tier-box tier-gold d-flex flex-column justify-content-center align-items-center p-3">
               <div class="tier-label">WARRIOR</div>
               <div class="tier-title">TIER</div>
@@ -722,7 +804,7 @@
       </div>
     </div>
   </section>
-  <section class="container mt-5">
+  <section class="container mt-5" data-aos="fade-up">
     <div class="container bg-yellow-brand p-5 d-flex justify-content-center align-items-center">
       <div class="d-flex flex-column align-items-center">
         <div class="d-flex gap-4 align-items-center">

@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="PrintHive">
+    <meta name="description" content="ArdensPrint">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
@@ -33,9 +33,21 @@
     <link rel="stylesheet" href="{{asset('assets/css/custom-style.css')}}">
 
 
+    
     <style>
         .bg-color-primary {
             background: #1f993d;
+        }
+    
+
+        h2{
+            font-size: 32px !important;
+        }
+        h4{
+                font-size: 24px;
+        }
+        h3{
+            font-size:28px;
         }
 
 

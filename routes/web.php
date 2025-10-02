@@ -48,6 +48,9 @@ Route::get('/', function () {
 });
     
 
+Route::get('/pod', function () {
+    return view('pod');
+});
 Route::get('/about', function () {
     return view('about');
 });

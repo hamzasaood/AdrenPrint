@@ -13,7 +13,7 @@
 
             <div class="mb-3">
                 <label class="form-label">Current Image</label><br>
-                <img src="{{ asset('storage/'.$dtf_image->path) }}" width="150" class="rounded border mb-2">
+                <img src="{{ asset('dtf-transfer/'.$dtf_image->path) }}" width="150" class="rounded border mb-2">
             </div>
 
             <div class="mb-3">
