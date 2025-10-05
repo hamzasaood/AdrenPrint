@@ -275,7 +275,7 @@
                                     Sheet</a></li>
                         </ul>
                     </li>
-                    <a href="{{url('/shop')}}" class="text-dark text-decoration-none">BLANKS</a>
+                    <a href="{{url('/blanks')}}" class="text-dark text-decoration-none">BLANKS</a>
                 </div>
 
             </div>
@@ -520,7 +520,7 @@
                             </ul>
                         </li>
                         
-                        <li><a href="{{url('/shop')}}" style="text-decoration:none; color:black; display:block;">Blanks</a></li>
+                        <li><a href="{{url('/blanks')}}" style="text-decoration:none; color:black; display:block;">Blanks</a></li>
                         
                         <li class=""><a href="{{url('/shop')}}" style="text-decoration:none; color:black; display:block;">Shop</a>
                         </li>

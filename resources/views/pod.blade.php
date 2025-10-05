@@ -395,7 +395,54 @@
         border-radius: 0.8rem;
       }
     }
-  </style>
+
+
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right, black var(--value, 50%), #ddd var(--value, 50%));
+}
+
+/* Thumb (dot) for Webkit browsers */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #000;  /* default blue dot */
+  cursor: pointer;
+  border: none;
+  margin-top: -6px; /* center thumb */
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: #ddd;
+}
+
+input[type="range"]::-moz-range-progress {
+  background: black; /* filled part */
+  height: 6px;
+  border-radius: 3px;
+}
+
+.btn-dark:hover {
+  background-color: #fbaf1c !important;
+  border-color: #fbaf1c !important;
+  color: #fff !important; /* text white rakho */
+}
+
+img:hover {
+  transform: scale(1.1); /* zoom effect */
+}
+img {
+  transition: transform 0.5s ease; /* smooth ease */
+}
+  
   </style>
 
   <div class="container-fluid hero-bg">
@@ -416,7 +463,7 @@
               Free to use - No inventory needed.
             </h3>
 
-            <a href="{{url('/login')}}" class="btn btn-success fw-bold px-4 py-3">
+            <a href="https://dashboard.k8s.customhub.io/register?cid=b35af2d2-ae6e-4eb0-80f0-cd1cf630ced8" class="btn btn-success fw-bold px-4 py-3">
               Get Started For Free
             </a>
           </div>
@@ -581,7 +628,7 @@
         <div class="col-md-6 mb-4 mb-md-0">
           <h2 class="fw-bold text-dark">Start with $0 investment</h2>
           <p class="mb-3 fs-5 text-dark">Choose to start different, upload your design</p>
-          <a href="{{url('/design')}}" class="btn btn-dark fw-bold px-5 py-3 mb-2">Start designing</a>
+          <a href="https://dashboard.k8s.customhub.io/register?cid=b35af2d2-ae6e-4eb0-80f0-cd1cf630ced8" class="btn btn-dark fw-bold px-5 py-3 mb-2">Start designing</a>
           <p class="small text-dark">No credit card?</p>
         </div>
 
@@ -781,13 +828,13 @@
       </div>
 
       <div class="text-center mt-5">
-        <a href="#" class="btn btn-dark btn-lg fw-bold">Get started</a>
+        <a href="https://dashboard.k8s.customhub.io/register?cid=b35af2d2-ae6e-4eb0-80f0-cd1cf630ced8" class="btn btn-dark btn-lg fw-bold">Get started</a>
       </div>
     </div>
   </section>
 
   <div class="container py-5 bg-tp">
-    <h1 class="fw-bold text-center mb-5 text-dark">Explore Product Inspiration</h1>
+    <h2 class="fw-bold text-center mb-5 text-dark">Explore Product Inspiration</h2>
     <div class="row mb-4 justify-content-center">
       <div class="col-md-3 col-sm-6">
         <div class="border-0 h-100 text-center">
@@ -829,17 +876,17 @@
     </div>
   </div>
   <div class="container py-5 bg-grid-grey">
-    <h1 class="text-center mb-2 text-dark">Inspiration for Your Custom Creations</h1>
+    <h2 class="text-center mb-2 text-dark">Inspiration for Your Custom Creations</h2>
     <p class="text-center text-dark fs-5 mb-5">
       Find creative ideas and showcase your unique products with custom designs.
     </p>
     <div class="masonry">
-      <img src="{{asset('assets/media/exp-1.png')}}" class="masonry-item tall">
-      <img src="{{asset('assets/media/exp-1.png')}}" class="masonry-item">
-      <img src="{{asset('assets/media/exp-2.png')}}" class="masonry-item tall">
-      <img src="{{asset('assets/media/exp-1.png')}}" class="masonry-item tall">
-      <img src="{{asset('assets/media/exp-3.png')}}" class="masonry-item">
-      <img src="{{asset('assets/media/exp-1.png')}}" class="masonry-item">
+      <img src="{{asset('nt.png')}}" class="masonry-item tall">
+      <img src="{{asset('pt.png')}}" class="masonry-item">
+      <img src="{{asset('tt.png')}}" class="masonry-item tall">
+      <img src="{{asset('mt.png')}}" class="masonry-item tall">
+      <img src="{{asset('st.png')}}" class="masonry-item">
+      <img src="{{asset('ht.png')}}" class="masonry-item">
     </div>
   </div>
   <div class="container py-5 bg-dark-brown">
@@ -849,7 +896,7 @@
     <div class="row bg-tp rounded-lg overflow-hidden shadow">
       <!-- Left Image Section -->
       <div class="col-md-5 bg-light2 d-flex flex-column justify-content-center p-0">
-        <img src="{{asset('calc.png')}}" alt="Product Model" class="img-fluid w-100 border-bottom"
+        <img src="{{asset('ct.png')}}" alt="Product Model" class="img-fluid w-100 border-bottom"
           style="height: 576px" />
         <div class="p-4 py-2"><span class="fw-bold text-dark">See what you can create with Arden's Print custom printable
             products</span></div>
@@ -871,33 +918,35 @@
             <span class="fw-bold d-block mb-1 text-dark">Quantity and price</span>
             <label class="form-label small text-dark">Sell it for:</label>
             <div class="d-flex align-items-center gap-2">
-              <input type="range" class="form-range" min="10" max="50" value="20" />
-              <input type="text" class="form-control text-center" style="width:70px;" value="$20" />
+              <input type="range" class="form-range" min="10" max="50" value="30" />
+              <input type="text" class="form-control text-center" style="width:70px;" value="$30" />
             </div>
           </div>
           <div class="mb-2">
             <label class="form-label small text-dark">Daily sales:</label>
             <div class="d-flex align-items-center gap-2">
-              <input type="range" class="form-range" min="1" max="100" value="1" />
-              <input type="number" class="form-control text-center" style="width:60px;" value="1" min="1" />
+              <input type="range" class="form-range" min="1" max="100" value="50" />
+              <input type="number" class="form-control text-center" style="width:60px;" value="50" min="1" />
             </div>
           </div>
         </div>
         <div class="bg-green-light mt-4 p-5 text-start">
           <div class="fw-bold mb-4 text-dark">Your monthly earnings:</div>
           <div class="fw-700 fs-1 mb-4 text-dark">$430.59</div>
-          <button class="btn btn-dark fw-semibold px-4 py-2">Start designing</button>
+          <a href="https://dashboard.k8s.customhub.io/register?cid=b35af2d2-ae6e-4eb0-80f0-cd1cf630ced8" class="btn btn-dark fw-semibold px-4 py-2">Start designing</a>
         </div>
       </div>
     </div>
   </div>
   <div class="container py-5 bg-grid-grey">
-    <h1 class="text-center text-dark mb-5">Success Stories</h1>
+    <h2 class="text-center text-dark mb-5">Success Stories</h2>
     <div class="row align-items-center">
       <div class="col-md-6 position-relative d-flex justify-content-center">
-        <img src="{{asset('assets/media/exp-1.png')}}" alt="Success Story" class="story-img">
+        <img src="{{asset('wt.png')}}" alt="Success Story" class="story-img">
         <span class="play-btn">
-          <span class="play-icon"></span>
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="16,12 40,24 16,36" />
+          </svg>
         </span>
       </div>
       <div class="col-md-6">
@@ -914,7 +963,7 @@
     <div class="row rounded overflow-hidden shadow justify-content-center" style="min-height: 420px;">
       <!-- Left Column with image and play button -->
       <div class="col-md-6 position-relative bg-dark d-flex justify-content-center align-items-center p-0">
-        <img src="https://randomuser.me/api/portraits/women/95.jpg" alt="Sarah, Lisbon"
+        <img src="{{asset('wt2.png')}}" alt="Sarah, Lisbon"
           class="img-fluid h-100 w-100 object-fit-cover" />
         <div class="play-btn">
           <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -947,46 +996,46 @@
       <div class="col-md-6">
         <div class="row g-3 text-center">
           <div class="col-6 col-md-3">
-            <div class="p-3 bg-white rounded shadow-sm h-100">
+            <div class="p-3 bg-white rounded  h-100">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf6rTHYkrDdgrpM8txBs_eHEXRmO8oUU30DQ&s"
-                class="mb-2" style="height:40px;" alt="Hats">
+                class="mb-2" style="height:auto;" alt="Hats">
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div class="p-3 bg-white rounded shadow-sm h-100">
+            <div class="p-3 bg-white rounded  h-100">
               <img src="https://cdnmp.plentymarkets.com/22204/meta/images/icon_plugin_sm.png" class="mb-2"
-                style="height:40px;" alt="Mugs">
+                style="height:auto;" alt="Mugs">
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div class="p-3 bg-white rounded shadow-sm h-100">
+            <div class="p-3 bg-white rounded  h-100">
               <img src="https://outviocmsassets.s3.eu-central-1.amazonaws.com/ckyyctkm000057b9ge2hde98e.jpg" class="mb-2"
-                style="height:40px;" alt="T-Shirts">
+                style="height:auto;" alt="T-Shirts">
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div class="p-3 bg-white rounded shadow-sm h-100">
+            <div class="p-3 bg-white rounded  h-100">
               <img
                 src="https://static.vecteezy.com/system/resources/previews/018/930/574/non_2x/tiktok-logo-tikok-icon-transparent-tikok-app-logo-free-png.png"
-                class="mb-2" style="height:40px;" alt="Bags">
+                class="mb-2" style="height:auto;" alt="Bags">
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div class="p-3 bg-white rounded shadow-sm h-100">
+            <div class="p-3 bg-white rounded  h-100">
               <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Etsy_logo.svg/1200px-Etsy_logo.svg.png"
-                class="mb-2" style="height:40px;" alt="Promotions">
+                class="mb-2" style="height:auto;" alt="Promotions">
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div class="p-3 bg-white rounded shadow-sm h-100">
+            <div class="p-3 bg-white rounded  h-100">
               <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/EBay_logo.svg/1200px-EBay_logo.svg.png"
-                class="mb-2" style="height:40px;" alt="Stickers">
+                class="mb-2" style="height:auto;" alt="Stickers">
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div class="p-3 bg-white rounded shadow-sm h-100">
+            <div class="p-3 bg-white rounded  h-100">
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIXW8Fux0KZdblet3W6c7nhHx_SYUdP4GTfA&s"
-                class="mb-2" style="height:40px;" alt="Bottles">
+                class="mb-2" style="height:auto;" alt="Bottles">
             </div>
           </div>
         </div>
@@ -1023,10 +1072,10 @@
         <div class="col-md-4">
           <div class="how-icon">
             <!-- Product SVG -->
-            <svg width="70" height="70" viewBox="0 0 70 70">
-              <rect x="14" y="15" width="43" height="35" rx="8" fill="#f5e19b" stroke="#ffd241" stroke-width="2" />
-              <text x="20" y="39" font-size="13" fill="#735c00" font-weight="bold">&#128085;</text>
-            </svg>
+             
+              <img src="{{asset('chooseprd.png')}}"
+
+                alt="Choose Product" >
           </div>
           <div class="fw-bold mb-1 text-dark">Pick a product</div>
           <div class="small text-dark">300+ on-demand products</div>
@@ -1034,11 +1083,9 @@
         <div class="col-md-4">
           <div class="how-icon">
             <!-- Design SVG -->
-            <svg width="70" height="70" viewBox="0 0 70 70">
-              <circle cx="35" cy="35" r="28" fill="#f8f8f8" stroke="#bcbcbc" stroke-width="2" />
-              <text x="16" y="38" font-size="13" fill="#333">&#128395;</text>
-              <rect x="44" y="34" width="14" height="12" fill="#e5e5e5" stroke="#bcbcbc" stroke-width="1" />
-            </svg>
+            <img src="{{asset('dsn.png')}}"
+              alt="Design Product" >
+            
           </div>
           <div class="fw-bold mb-1 text-dark">Make it your own</div>
           <div class="small text-dark">Simple design tools and templates</div>
@@ -1046,10 +1093,10 @@
         <div class="col-md-4">
           <div class="how-icon">
             <!-- Order SVG -->
-            <svg width="70" height="70" viewBox="0 0 70 70">
-              <ellipse cx="35" cy="35" rx="26" ry="17" fill="#f8f8f8" stroke="#bcbcbc" stroke-width="2" />
-              <text x="30" y="40" font-size="24" fill="#e3d134">&#129353;</text>
-            </svg>
+
+            
+            <img src="{{asset('3t.png')}}"
+              alt="Order Product" >
           </div>
           <div class="fw-bold mb-1 text-dark">Pick a size</div>
           <div class="small text-dark">We fulfill your orders</div>
@@ -1070,7 +1117,12 @@
     <div class="payment-icons d-flex justify-content-center align-items-center flex-wrap gap-3">
       <!-- Brand Payment Icons -->
       <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Mastercard Logo.svg" alt="Mastercard">
+      <svg xmlns="http://www.w3.org/2000/svg" width="60px" height="60px" viewBox="0 -11 70 70" fill="none">
+<rect x="0.5" y="0.5" width="69" height="47" rx="5.5" fill="white" stroke="#D9D9D9"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M35.3945 34.7619C33.0114 36.8184 29.92 38.0599 26.5421 38.0599C19.0047 38.0599 12.8945 31.8788 12.8945 24.254C12.8945 16.6291 19.0047 10.448 26.5421 10.448C29.92 10.448 33.0114 11.6895 35.3945 13.7461C37.7777 11.6895 40.869 10.448 44.247 10.448C51.7843 10.448 57.8945 16.6291 57.8945 24.254C57.8945 31.8788 51.7843 38.0599 44.247 38.0599C40.869 38.0599 37.7777 36.8184 35.3945 34.7619Z" fill="#ED0006"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M35.3945 34.7619C38.3289 32.2296 40.1896 28.4616 40.1896 24.254C40.1896 20.0463 38.3289 16.2783 35.3945 13.7461C37.7777 11.6895 40.869 10.448 44.247 10.448C51.7843 10.448 57.8945 16.6291 57.8945 24.254C57.8945 31.8788 51.7843 38.0599 44.247 38.0599C40.869 38.0599 37.7777 36.8184 35.3945 34.7619Z" fill="#F9A000"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M35.3946 13.7461C38.329 16.2784 40.1897 20.0463 40.1897 24.254C40.1897 28.4616 38.329 32.2295 35.3946 34.7618C32.4603 32.2295 30.5996 28.4616 30.5996 24.254C30.5996 20.0463 32.4603 16.2784 35.3946 13.7461Z" fill="#FF5E00"/>
+</svg>
       <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg" alt="Amex">
       <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
     </div>
@@ -1307,9 +1359,9 @@
     <div class="bg-green-light d-flex flex-column flex-md-row align-items-center justify-content-between px-5 py-5">
       <div>
         <div class="fw-bold display-5 mb-4 text-dark">Connect, sell, earn</div>
-        <button type="button" class="btn btn-dark btn-lg fs-5">
+        <a href="https://dashboard.k8s.customhub.io/register?cid=b35af2d2-ae6e-4eb0-80f0-cd1cf630ced8"  class="btn btn-dark btn-lg fs-5">
           Connect now
-        </button>
+</a>
       </div>
       <div>
         <!-- Coffee mug -->
@@ -1342,7 +1394,7 @@
       border-radius: 12px;
       object-fit: cover;
       width: 100%;
-      height: 340px;
+      
       display: block;
       position: relative;
     }
@@ -1389,7 +1441,7 @@
 
     .play-icon {
       border-style: solid;
-      border-width: 21px 0 18px 48px;
+      border-width: 15px 0 20px 28px;
       border-color: transparent transparent transparent #000000;
       display: inline-block;
       margin-left: 7px;

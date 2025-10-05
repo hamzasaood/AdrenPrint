@@ -369,8 +369,18 @@
 }
 
 
+
   }
-  </style>
+
+
+
+
+  img:hover {
+  transform: scale(1.1); /* zoom effect */
+}
+img {
+  transition: transform 0.5s ease; /* smooth ease */
+}
   </style>
 
   <div class="container-fluid hero-bg" >
@@ -378,7 +388,7 @@
       <div class="row g-4 justify-content-center">
         <!-- Card 1 -->
         <div class="col-12 col-sm-6 col-lg-3">
-          <a href="#" class="hero-card d-block h-100">
+          <a href="{{url('/dtf/transfer_by_size')}}" class="hero-card d-block h-100">
             <div class="hero-card-header">DTF TRANSFERS</div>
             <div class="hero-card-body">
               <img src="{{asset('assets/media/hero-1.png')}}" alt="DTF Transfers" class="img-fluid">
@@ -387,7 +397,7 @@
         </div>
         <!-- Card 2 -->
         <div class="col-12 col-sm-6 col-lg-3">
-          <a href="#" class="hero-card d-block h-100">
+          <a href="{{url('/blanks')}}" class="hero-card d-block h-100">
             <div class="hero-card-header">BLANK APPAREL</div>
             <div class="hero-card-body">
               <img src="{{asset('assets/media/hero-2.png')}}" alt="Blank Apparel">
@@ -405,7 +415,7 @@
         </div>
         <!-- Card 4 -->
         <div class="col-12 col-sm-6 col-lg-3">
-          <a href="#" class="hero-card d-block h-100">
+          <a href="{{url('/pod')}}" class="hero-card d-block h-100">
             <div class="hero-card-header">PRINT ON DEMAND</div>
             <div class="hero-card-body">
               <img src="{{asset('assets/media/hero-4.png')}}" alt="Print On Demand">
@@ -524,7 +534,7 @@
       <img src="{{asset('assets/media/shopping-banner.png')}}" alt="Blank Shirts Banner" class="img-fluid w-100" />
       <div class="overlay-content">
         <h1 class="text-dark opacity-75 fw-bold">BLANK SHIRTS</h1>
-        <a href="{{url('/shop')}}" class="btn btn-warning fw-bold px-4 py-2">SHOP NOW</a>
+        <a href="{{url('/blanks')}}" class="btn btn-warning fw-bold px-4 py-2">SHOP NOW</a>
       </div>
     </div>
 

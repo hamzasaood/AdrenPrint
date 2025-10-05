@@ -78,6 +78,28 @@
 
 
 
+<li class>
+<a class="{{ request()->routeIs('admin.collections.index') ? 'active' : '' }}" href="{{ route('admin.collections.index') }}" aria-expanded="false">
+<div class="nav_icon_small">
+<img src="{!! asset('admin/assets/img/menu-icon/14.svg') !!}" alt>
+</div>
+<div class="nav_title">
+<span>Collections </span>
+</div>
+</a>
+
+
+       
+        
+
+
+
+</li>
+
+
+
+
+
 
 
 

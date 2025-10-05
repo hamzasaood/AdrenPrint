@@ -11,6 +11,9 @@ use App\Http\Controllers\DtfController;
 use App\Http\Controllers\DTFuploadController;
 use App\Http\Controllers\ProductSyncController;
 use App\Http\Controllers\ShopController;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\CollectionsController;
 use App\Models\DtfImage;
 use App\Models\DtfColor;
 use App\Models\DtfSize;
@@ -190,7 +193,7 @@ Route::post('/custom/gangsheet/save', [\App\Http\Controllers\CustomGangsheetCont
     Route::post('/gangsheet/save-to-cart', [\App\Http\Controllers\GangSheetController::class, 'saveGangsheetToCart'])
     ->name('custom.gangsheet.cart.save');
 
-
+//admin collections routes
     
 
 Route::post('/dtf/upload-gangsheet/add-to-cart', [DtfuploadController::class, 'addToCart'])->name('dtf-gangsheet.addToCart');
@@ -204,6 +207,14 @@ Route::post('/dtf/add-to-cart', [DtfController::class, 'addToCart'])->name('dtf.
 // routes/web.php
 
 
+// Show all collections
+Route::get('/blanks', [CollectionsController::class, 'index'])->name('collections.index');
+
+// Show single collection with its categories
+Route::get('/collection/{slug}', [CollectionsController::class, 'show'])->name('collections.show');
+
+// Show single category products (within collection)
+Route::get('/collection/{collectionSlug}/{categorySlug}', [CollectionsController::class, 'categoryProducts'])->name('collections.category.products');
 
 
 
@@ -253,10 +264,12 @@ Route::get('/order/{order}/download-item/{item}', [OrderController::class, 'down
 
          //Route::get('//admin/latest/order', [App\Http\Controllers\Admin\OrderController::class, 'settings'])->name('admin.settings');
 
-
+//collections routes
 
     
 
+
+Route::resource('collections', CollectionController::class);
 
 
 

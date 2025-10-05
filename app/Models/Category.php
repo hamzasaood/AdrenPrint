@@ -15,7 +15,12 @@ class Category extends Model
         'image',
     ];
     public function products()
-{
-    return $this->hasMany(\App\Models\Product::class, 'category_id', 'id');
-}
+    {
+        return $this->hasMany(\App\Models\Product::class, 'category_id', 'id');
+    }
+    public function collections()
+    {
+        return $this->belongsToMany(Collection::class, 'collection_category');
+    }
+
 }
