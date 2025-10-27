@@ -254,6 +254,8 @@
                                                             class="fal fa-times"></i></a>
 
                                                     <!-- Product / Design Preview -->
+                                                    
+                                                    {{--
                                                     <div class="img-block" style="width:140px">
                                                         @if(($item['type'] ?? '') === 'gangsheet' && !empty($item['preview']))
                                                             <img src="{{ $item['preview'] }}" alt="Gangsheet Design"
@@ -286,9 +288,82 @@
 
                                                         @endif
                                                     </div>
+                                                --}}
+
+
+                                                <div class="img-block" style="">
+    @if(($item['type'] ?? '') === 'gangsheet' && !empty($item['preview']))
+        @php
+            $ext = strtolower(pathinfo($item['preview'], PATHINFO_EXTENSION));
+        @endphp
+
+        @if($ext === 'pdf')
+            
+                    <div id="clickOverlay" onclick="openModal('{{ $item['preview'] }}')"
+         style="top:0;left:0;width:100%;height:100%;cursor:pointer;background:transparent;">Click to view</div>
+        @else
+            <img src="{{ $item['preview'] }}" alt="Gangsheet Design"
+                style=" border:1px solid #ddd; cursor:pointer;"
+                onclick="openModal('{{ $item['preview'] }}')">
+        @endif
+
+    @elseif(!empty($item['image']))
+        @php
+            $imageUrl = Illuminate\Support\Str::startsWith($item['image'], 'http') 
+                ? $item['image'] 
+                : asset('images/' . $item['image']);
+            $ext = strtolower(pathinfo($item['image'], PATHINFO_EXTENSION));
+        @endphp
+
+        @if($ext === 'pdf')
+           
+                    <div id="clickOverlay" onclick="openModal('{{ $imageUrl }}')"
+         style="top:0;left:0;width:100%;height:100%;cursor:pointer;background:transparent;">Click to view</div>
+        @else
+            <img src="{{ $imageUrl }}" alt="{{ $item['name'] }}" 
+                style=" border:1px solid #ddd; cursor:pointer;"
+                onclick="openModal('{{ $imageUrl }}')">
+        @endif
+
+    @elseif($item['type'] === 'dtf' || !empty($item['artwork']))
+        @php
+            $ext = strtolower(pathinfo($item['artwork'], PATHINFO_EXTENSION));
+        @endphp
+
+        @if($ext === 'pdf')
+            
+                    <div id="clickOverlay" onclick="openModal('{{ $item['artwork'] }}')"
+         style="top:0;left:0;width:100%;height:100%;cursor:pointer;background:transparent;">Click to view</div>
+        @else
+            <img src="{{ asset($item['artwork']) }}" alt=""
+                style=" border:1px solid #ddd; cursor:pointer;"
+                onclick="openModal('{{ asset($item['artwork']) }}')">
+        @endif
+
+    @elseif($item['design_preview'] ?? '')
+        @php
+            $ext = strtolower(pathinfo($item['design_preview'], PATHINFO_EXTENSION));
+        @endphp
+
+        @if($ext === 'pdf')
+           
+                    <div id="clickOverlay" onclick="openModal('{{ $item['design_preview'] }}')"
+         style="top:0;left:0;width:100%;height:100%;cursor:pointer;background:transparent;">Click to view</div>
+        @else
+            <img src="{{ $item['design_preview'] }}" alt="Gangsheet Design"
+                style=" border:1px solid #ddd; cursor:pointer;"
+                onclick="openModal('{{ $item['design_preview'] }}')">
+        @endif
+
+    @else
+        <img src="https://via.placeholder.com/120x120?text=No+Image"
+            alt="No Image" style="max-width:120px; border:1px solid #ddd;"> 
+    @endif
+</div>
+
 
                                                     <!-- Item Name -->
-                                                    <div class="d-block text-start">
+                                                    <div class="d-block text-center">
                                                         @if($item['title']?? false )
                                                             <h6 class="medium-black">{{ $item['design_name'] ?? 'Gang Sheet' }}</h6>
                                                             <small class="text-muted">
@@ -416,7 +491,19 @@
 
     <script>
         function openModal(src) {
-            document.getElementById("modalImage").src = src;
+            iframeExt = src.split('.').pop().toLowerCase();
+            if (iframeExt === 'pdf') {
+document.getElementById("modalImageContainer").innerHTML = `
+    <embed 
+        src="${src}#toolbar=0&navpanes=0&scrollbar=0&zoom=page-fit" 
+        type="application/pdf" 
+        style="width:100%; height:100vh; border:none; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.2);">
+`;
+
+            } else {
+                document.getElementById("modalImageContainer").innerHTML = '<img id="modalImage" src="' + src + '">';
+            }
+            //document.getElementById("modalImage").src = src;
             document.getElementById("imageModal").style.display = "block";
         }
         function closeModal() {

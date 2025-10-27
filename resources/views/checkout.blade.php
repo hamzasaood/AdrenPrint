@@ -116,7 +116,7 @@
                                     </div>
                                 
 
-                                    <div class="row">
+                                    <div class="row shipping-address d-none">
                                         <div class="col-md-6">
                                             <div class="input-block mb-16">
                                                 <input type="text" name="shipping_name" id="name1" class="form-control" placeholder="First Name">
@@ -290,17 +290,34 @@
                                 onclick="openModal('{{ $item['preview'] ?? asset('assets/media/products/nav-image-1.png') }}')">
 
                         @elseif(($item['type'] ?? '') === 'dtf' || ($item['type'] ?? '') === 'dtf-gangsheet-upload')
+
+                        @if(Str::endsWith($item['artwork'], '.svg'))
+                            <iframe 
+                                src="data:image/svg+xml;base64,{{ base64_encode(file_get_contents(public_path($item['artwork']))) }}" 
+                                style="width:65px; height:65px; border:1px solid #ddd; border-radius:4px; cursor:pointer;" 
+                                onclick="openModal('data:image/svg+xml;base64,{{ base64_encode(file_get_contents(public_path($item['artwork']))) }}')">
+                            </iframe>
+                        @elseif(Str::endsWith($item['artwork'], '.pdf'))
+                            <label style="cursor:pointer;" onclick="openModal('{{ asset($item['artwork']) }}')">View PDF</label>
+                                <script>
+                                    function openModal(fileUrl) {
+                                        var pdfWindow = window.open("");
+                                        pdfWindow.document.write("<iframe width='100%' height='100%' src='" + fileUrl + "'></iframe>");
+                                    }
+                                </script>
+                        @else
                             <img src="{{ isset($item['artwork']) && $item['artwork'] 
                                         ? asset($item['artwork']) 
                                         : asset('assets/media/products/nav-image-1.png') }}" 
                                 alt="Custom Product" 
-                                style="max-width:65px; border:1px solid #ddd;" 
+                                style="max-width:65px; border:1px solid #ddd; cursor:pointer;" 
                                 onclick="openModal('{{ isset($item['artwork']) && $item['artwork'] 
                                                         ? asset($item['artwork']) 
                                                         : asset('assets/media/products/nav-image-1.png') }}')">
+                        @endif
                         @elseif($item['type'] ?? '' === 'pod')
                                              <img src="{{ $item['design_preview'] }}" alt="Gangsheet Design"
-                                                    style="max-width:65px; border:1px solid #ddd; cursor:pointer;"
+                                                    style="max-width:65px; border:1px solid #ddd; cursor:pointer;cursor:pointer;"
                                                     onclick="openModal('{{ $item['design_preview'] }}')">
 
                         
@@ -409,6 +426,17 @@
 
 <script>
 
+document.getElementById('shipAddress').addEventListener('change', function() {
+    const shippingSection = document.querySelector('.shipping-address');
+    if (!shippingSection) return; // safeguard
+
+    if (this.checked) {
+        shippingSection.classList.remove('d-none');
+    } else {
+        shippingSection.classList.add('d-none');
+    }
+});
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -453,7 +481,7 @@ form.addEventListener("submit", async function(e) {
                 "X-CSRF-TOKEN": "{{ csrf_token() }}"
             },
             body: JSON.stringify({
-                amount: {{ intval(($subtotal ?? '' + 5 - 5) * 100) }},
+                amount: {{ intval(($subtotal ?? '' + 5) * 100) }},
                 billing_name: form.billing_name.value,
                 billing_email: form.billing_email.value
             })

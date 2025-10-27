@@ -62,7 +62,7 @@ public function downloadImage(Order $order, $itemId)
     // Case 1: Design image / no product
     if ($item->design_id || !$item->product_id) {
         $filePath = public_path($item->preview ?? 'assets/media/products/nav-image-1.png');
-        $fileName = "design_{$item->id}.png";
+        $fileName = basename($filePath); // ✅ keep original filename with extension
 
         return response()->download($filePath, $fileName);
     }
@@ -86,7 +86,7 @@ public function downloadImage(Order $order, $itemId)
     // Case 3: Local product image
 
     $filePath = public_path($item->product_image); // <- correct path
-    $fileName = "product_{$item->id}.jpg";
+    $fileName = basename($filePath); // keep original filename with extension
 
     if (!file_exists($filePath)) {
         abort(404, 'Local file not found.');

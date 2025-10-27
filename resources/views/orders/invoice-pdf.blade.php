@@ -54,7 +54,7 @@ $gradientBase64 = base64_encode($gradientSvg);
                 <h3>Invoice</h3>
                 <small>Order #{{ $order->id }}</small>
             </div>
-            <div style="text-align:right;">
+            <div style="text-align:center;">
                 <h5 style="margin:0;">Ardens Print</h5>
                 <small>16131 N Eldridge Pkwy, Suite 108, Tomball, TX 77377</small><br>
                 <small>info@ardensprint.com</small>

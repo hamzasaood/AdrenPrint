@@ -25,11 +25,20 @@ class DTFuploadController extends Controller
     public function calculate(Request $request)
     {
         $size  = DtfSize::findOrFail($request->size_id);
-        $color = DtfColor::findOrFail($request->color_id);
-        $qty   = (int) $request->quantity;
+        
+        if($request->has('color_id')){
+            $color = DtfColor::findOrFail($request->color_id);
+            $cp = $color->surcharge;
+        } else {
+           // $color = new DtfColor();
+            $cp = 0;
+        }
+        
 
-        $unit_price = $size->rate + $color->surcharge;
-        $subtotal   = $unit_price * $qty;
+        $qty = (int) $request->quantity;
+
+        $unit_price = $size->rate + $cp;
+        $subtotal = $unit_price * $qty;
 
         return response()->json([
             'unit_price' => $unit_price,
@@ -42,13 +51,13 @@ class DTFuploadController extends Controller
     {
         $request->validate([
             'size_id'   => 'required|exists:dtf_sizes,id',
-            'color_id'  => 'required|exists:dtf_colors,id',
+            //'color_id'  => 'required|exists:dtf_colors,id',
             'quantity'  => 'required|integer|min:1',
             'artwork'   => 'required|file|mimes:png,jpg,jpeg,pdf,svg|max:10240'
         ]);
 
         $size  = DtfSize::findOrFail($request->size_id);
-        $color = DtfColor::findOrFail($request->color_id);
+       // $color = DtfColor::findOrFail($request->color_id);
 
         /** 
          * Store file into public/dtf 
@@ -66,13 +75,7 @@ class DTFuploadController extends Controller
          * - Base price per sq.inch = size->rate
          * - Color surcharge (flat OR per sq.inch)
          */
-        $area = $size->width * $size->height;
-
-        // If your "rate" is per square inch:
-        $basePrice = $area * $size->rate;
-
-        // If your "surcharge" is also per square inch:
-        $surcharge  = $area * $color->surcharge;
+     
 
         // Final price per item
         $pricePerItem = $request->unitprice;
@@ -83,7 +86,7 @@ class DTFuploadController extends Controller
             'type'        => 'dtf-gangsheet-upload',
             'name'        => "DTF Gangsheet Upload - {$size->title}",
             'size_title'  => $size->title,
-            'color'       => $color->label,
+            //'color'       => $color->label,
             'width'       => $size->width,
             'height'      => $size->height,
             'price'       => $pricePerItem,

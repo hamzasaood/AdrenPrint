@@ -148,31 +148,18 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::post('/cart/add', [CartController::class, 'saveToCart'])->name('cart.add');
-Route::get('/cart/show', [CartController::class, 'showCart'])->name('cart.show');
-Route::post('/cart/mini/update', [CartController::class, 'updateCart'])->name('cart.update');
-Route::delete('/cart/delete/{index}', [CartController::class, 'deleteCart'])->name('cart.delete');
+ 
 
-   Route::get('/product/{id}/processed-image', [GangSheetController::class, 'getProcessedImage']);
    
-    Route::get('/gang-sheet/{product}', [GangSheetController::class, 'builder'])->name('gangsheet.builder');
-Route::post('/gang-sheet/save-to-cart', [GangSheetController::class, 'saveToCart'])->name('gangsheet.saveToCart');
-
-// Cart actions (session-based)
-Route::post('/cart/update', [CartController::class, 'update'])->name('new.cart.update');
-Route::post('/cart/remove', [CartController::class, 'remove'])->name('new.cart.remove');
 
 
 // checkout endpoint example (simple)
-Route::post('/checkout/place', [CartController::class, 'place'])->name('checkout.place');
-Route::post('/checkout/create-intent', [CartController::class, 'createIntent'])->name('checkout.createIntent');
 
-Route::get('/order/{id}', [CartController::class, 'orderDetails'])->name('order.details');
+
 
 Route::get('/orders', [CartController::class, 'orders'])->name('user.orders');
 
-Route::get('/orders/{order}/invoice', [CartController::class, 'downloadInvoice'])
-     ->name('order.invoice.download');
+
 
 
     Route::get('/profile', [ShopController::class, 'profile'])->name('user.profile');
@@ -185,25 +172,56 @@ Route::view('/thank-you', 'thankyou')->name('thankyou');
 
 
 
-Route::get('/gangsheet', [\App\Http\Controllers\CustomGangsheetController::class, 'index'])->name('custom.gangsheet');
 
 Route::post('/custom/gangsheet/save', [\App\Http\Controllers\CustomGangsheetController::class, 'save'])
     ->name('custom.gangsheet.save');
 
-    Route::post('/gangsheet/save-to-cart', [\App\Http\Controllers\GangSheetController::class, 'saveGangsheetToCart'])
-    ->name('custom.gangsheet.cart.save');
+   
 
 //admin collections routes
     
+
+
+
+
+});
+
+
+Route::get('/product/{id}/processed-image', [GangSheetController::class, 'getProcessedImage']);
+   
+    Route::get('/gang-sheet/{product}', [GangSheetController::class, 'builder'])->name('gangsheet.builder');
+Route::post('/gang-sheet/save-to-cart', [GangSheetController::class, 'saveToCart'])->name('gangsheet.saveToCart');
+
+// Cart actions (session-based)
+Route::post('/cart/update', [CartController::class, 'update'])->name('new.cart.update');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('new.cart.remove');
+
+Route::get('/orders/{order}/invoice', [CartController::class, 'downloadInvoice'])
+     ->name('order.invoice.download');
+Route::get('/order/{id}', [CartController::class, 'orderDetails'])->name('order.details');
+
+//checkout route
+Route::post('/checkout/place', [CartController::class, 'place'])->name('checkout.place');
+Route::post('/checkout/create-intent', [CartController::class, 'createIntent'])->name('checkout.createIntent');
+
+
+ Route::post('/gangsheet/save-to-cart', [\App\Http\Controllers\GangSheetController::class, 'saveGangsheetToCart'])
+    ->name('custom.gangsheet.cart.save');
+
+Route::get('/gangsheet', [\App\Http\Controllers\CustomGangsheetController::class, 'index'])->name('custom.gangsheet');
+
+
+
+   Route::post('/cart/add', [CartController::class, 'saveToCart'])->name('cart.add');
+Route::get('/cart/show', [CartController::class, 'showCart'])->name('cart.show');
+Route::post('/cart/mini/update', [CartController::class, 'updateCart'])->name('cart.update');
+Route::delete('/cart/delete/{index}', [CartController::class, 'deleteCart'])->name('cart.delete');
+
 
 Route::post('/dtf/upload-gangsheet/add-to-cart', [DtfuploadController::class, 'addToCart'])->name('dtf-gangsheet.addToCart');
 
 
 Route::post('/dtf/add-to-cart', [DtfController::class, 'addToCart'])->name('dtf.addToCart');
-
-
-});
-
 // routes/web.php
 
 

@@ -63,6 +63,28 @@ ease-in-out;
     margin-top: 40px;
     margin-bottom: 30px;
 }
+
+.upload-progress-container {
+    width: 100%;
+    background-color: #000;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    display: none;
+}
+
+.upload-progress-bar {
+    height: 25px;
+    background-color: #fab01b;
+    width: 0%;
+    transition: width 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-weight: bold;
+    font-size: 12px;
+}
     </style>
     <section class="site-container" data-aos="fade-up">
         <div class=" py-5">
@@ -156,6 +178,14 @@ ease-in-out;
                                     <p class="mb-4 text-muted small">or drag and drop image here</p>
                                     <p class="mb-4 text-muted small">or <a href="{{url('/login')}}" style="color:#fbaf1c;">Login</a> to see previous designs</p>
                                 </label>
+
+                                <div class="upload-progress-container" id="uploadProgressContainer" style="display:none;">
+                                    <div class="upload-progress-bar" id="uploadProgressBar">0%</div>
+                                </div>
+
+
+                            <img id="artPreview" src="#" alt="Artwork Preview" class="img-fluid d-none" style="max-height: 350px;">
+
                             </div>
 
 
@@ -177,6 +207,7 @@ ease-in-out;
                             
 
                             {{-- Step 2: Choose Color --}}
+                           {{--
                             <div class="mb-4 step step-2 d-none">
                                 <h5 class="fw-bold">Choose Color Option</h5>
                                 <div class="d-flex gap-3 flex-wrap">
@@ -192,19 +223,32 @@ ease-in-out;
                                 </div>
                             </div>
 
+                            --}}
+
                             {{-- Step 3: Select Size --}}
                             <div class="mb-4 step step-3 d-none">
                                 <h5 class="fw-bold">Select Size</h5>
                                 <div class="row g-3">
+                                <div class="d-flex flex-wrap gap-2 mb-2 step" id="sizeStep">
                                     @foreach($sizes as $s)
-                                        <div class="col-2 col-md-2">
-                                            <label class="size-card border rounded p-3 text-center cursor-pointer h-100">
-                                                <input type="radio" name="size_id" value="{{ $s->id }}" class="d-none">
-                                                <h6 class="fw-bold mb-1">{{ $s->title }}</h6>
-                                                
-                                            </label>
-                                        </div>
+                                    @php
+        // Replace x or X with " x " and append .jpg
+        $imagePath = preg_replace('/x/i', '×', trim(str_replace('in', '', $s->title))) . '.jpg';
+
+    @endphp
+                                        <input type="radio"
+                                            name="size_id"
+                                            id="size_{{ $s->id }}"
+                                            value="{{ $s->id }}"
+                                            class="btn-check"
+                                            autocomplete="off" data-path="{{ $imagePath }}">
+                                        <label for="size_{{ $s->id }}" 
+                                            class="btn btn-outline-dark size-card">
+                                            {{ $s->title }}
+                                        </label>
                                     @endforeach
+                                </div>
+
                                 </div>
                             </div>
 
@@ -895,7 +939,22 @@ ease-in-out;
 
         document.addEventListener("DOMContentLoaded", function () {
             // STEP HANDLING
-            const step2 = document.querySelector('.step-2');
+            
+
+             const mainImage = document.querySelector('.swiper .swiper-slide img'); // adjust selector if needed
+
+  function updateMainImage() {
+    const selected = document.querySelector('input[name="size_id"]:checked');
+    if (selected && mainImage) {
+      const imagePath = selected.getAttribute('data-path');
+      mainImage.src = `/dtf-transfer/${imagePath}`;
+    }
+  }
+
+ 
+
+  // Set correct image on page load
+  updateMainImage();
             const step3 = document.querySelector('.step-3');
             const step4 = document.querySelector('.step-4');
             const addToCartBtn = document.getElementById('addToCartBtn');
@@ -903,16 +962,134 @@ ease-in-out;
             // Artwork preview
             const artworkInput = document.getElementById("artworkInput");
             const artPreview = document.getElementById("artPreview");
+            const progressContainer = document.getElementById("uploadProgressContainer");
+            const progressBar = document.getElementById("uploadProgressBar");
             artworkInput.addEventListener("change", function () {
                 if (this.files && this.files[0]) {
-                    let reader = new FileReader();
-                    reader.onload = e => artPreview.src = e.target.result;
-                    reader.readAsDataURL(this.files[0]);
+                    const file = this.files[0];
+                    const fileName = file.name.toLowerCase();
 
-                    // Show Step 2 after upload
-                    step2.classList.remove('d-none');
+                    const allowedTypes = [
+                        'image/png', 'application/pdf', 'image/svg+xml',
+                        'application/postscript', 'image/vnd.adobe.photoshop'
+                    ];
+                    const allowedExtensions = ['.png', '.pdf', '.svg', '.ai', '.psd'];
+                    const isExtensionAllowed = allowedExtensions.some(ext => fileName.endsWith(ext));
+
+                    const oldInfo = document.getElementById('fileInfo');
+                    if (oldInfo) oldInfo.remove();
+
+                    if (!allowedTypes.includes(file.type) && !isExtensionAllowed) {
+                        const alert = document.createElement('div');
+                        alert.className = 'alert alert-danger alert-dismissible fade show mt-2';
+                        alert.role = 'alert';
+                        alert.innerHTML = `
+                            ❌ This file format is not allowed. Only PNG, PDF, SVG, AI, and PSD files are accepted.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        `;
+                        this.insertAdjacentElement('afterend', alert);
+                        this.value = '';
+                        return;
+                    }
+
+                    // Show progress bar
+                    progressContainer.style.display = 'block';
+                    artPreview.classList.add('d-none');
+
+                    let progress = 0;
+                    const progressInterval = setInterval(() => {
+                        progress += 10;
+                        progressBar.style.width = progress + '%';
+                        progressBar.textContent = progress + '%';
+                        if (progress >= 100) {
+                            clearInterval(progressInterval);
+                            setTimeout(() => {
+                                progressContainer.style.display = 'none';
+                                progressBar.style.width = '0%';
+                                progressBar.textContent = '0%';
+                            }, 500);
+                        }
+                    }, 100);
+
+                    const reader = new FileReader();
+                    reader.onload = async e => {
+                        const dataUrl = e.target.result;
+
+                        // Remove old preview
+                        const oldPreview = document.getElementById('dynamicPreview');
+                        if (oldPreview) oldPreview.remove();
+
+                        let previewEl;
+
+                        if (file.type.startsWith('image/') && !fileName.endsWith('.psd')) {
+                            // ✅ PNG, SVG, JPG → show image
+                            previewEl = document.createElement('img');
+                            previewEl.src = dataUrl; // must be DataURL
+                            previewEl.className = 'img-fluid rounded mt-2';
+                            previewEl.style.maxHeight = '400px';
+                        }
+                        else if (file.type === 'application/pdf' || fileName.endsWith('.pdf') || fileName.endsWith('.ai')) {
+                            // ✅ PDF or AI → render first page as image
+                            previewEl = document.createElement('canvas');
+                            previewEl.className = 'img-fluid rounded mt-2';
+                            previewEl.style.maxHeight = '400px';
+                            
+                            // Load PDF.js dynamically if not already loaded
+                            if (typeof pdfjsLib === 'undefined') {
+                                await loadPdfJs();
+                            }
+
+                            const pdf = await pdfjsLib.getDocument({ data: e.target.result }).promise;
+                            const page = await pdf.getPage(1);
+                            const viewport = page.getViewport({ scale: 1.5 });
+                            const context = previewEl.getContext('2d');
+                            previewEl.height = viewport.height;
+                            previewEl.width = viewport.width;
+
+                            await page.render({ canvasContext: context, viewport }).promise;
+                        } 
+                        else {
+                            // ❌ PSD or others — show filename only
+                            previewEl = document.createElement('div');
+                            previewEl.className = 'alert alert-secondary alert-dismissible fade show mt-2';
+                            previewEl.id = 'fileInfo';
+                            previewEl.role = 'alert';
+                            previewEl.innerHTML = `
+                                📁 Selected file: <strong>${file.name}</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            `;
+                        }
+
+                        previewEl.id = 'dynamicPreview';
+                        this.insertAdjacentElement('afterend', previewEl);
+                    };
+
+                    if (file.type.startsWith('image/') && !fileName.endsWith('.psd')) {
+                        reader.readAsDataURL(file); // for images
+                    } else {
+                    reader.readAsArrayBuffer(file);
+                    }
+
+                    // Show next steps
+                    document.querySelector('.step-3').classList.remove('d-none');
+                    document.querySelector('.step-4').classList.remove('d-none');
+                    document.getElementById('addToCartBtn').classList.remove('d-none');
+                    updatePrice();
                 }
             });
+
+            // Utility to load PDF.js dynamically
+            async function loadPdfJs() {
+                return new Promise(resolve => {
+                    const script = document.createElement('script');
+                    script.src = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js";
+                    script.onload = () => {
+                        pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
+                        resolve();
+                    };
+                    document.body.appendChild(script);
+                });
+            }
 
             // Gallery thumbnails
             document.querySelectorAll(".thumb-img").forEach(img => {
@@ -926,35 +1103,44 @@ ease-in-out;
             // Radio styling (Color & Size)
             document.querySelectorAll(".color-option, .size-card").forEach(label => {
                 label.addEventListener("click", function () {
-                    let input = this.querySelector("input");
-                    input.checked = true;
+                    const inputId = this.getAttribute("for");
+                    const input = document.getElementById(inputId);
 
                     // highlight selection
-                    this.closest(".step").querySelectorAll("label").forEach(l => l.classList.remove("border-success"));
-                    this.classList.add("border-success");
+                     if (input) {
+                // Select the radio
+                input.checked = true;
 
-                    if (input.name === "color_id") {
+                // Remove highlight from all and add to selected
+                document.querySelectorAll(".size-card").forEach(l => l.classList.remove("border-success"));
+                this.classList.add("border-success");
+
+                // Show next step and button
+                if (input.name === "size_id") {
+                    if (step4) step4.classList.remove('d-none');
+                    if (addToCartBtn) addToCartBtn.classList.remove('d-none');
+                    updatePrice(); // recalculate pricing
+                    updateMainImage();
+                }
+                if (input.name === "color_id") {
                         step3.classList.remove('d-none'); // Show size options after color
                     }
-                    if (input.name === "size_id") {
-                        step4.classList.remove('d-none'); // Show qty after size
-                        addToCartBtn.classList.remove('d-none');
-                        updatePrice();
-                    }
-                });
+            }
+
+        });
             });
 
             // Dynamic pricing
             function updatePrice() {
                 let sizeInput = document.querySelector("[name='size_id']:checked");
-                let colorInput = document.querySelector("[name='color_id']:checked");
+                //let colorInput = document.querySelector("[name='color_id']:checked");
                 let qtyInput = document.getElementById("qtyInput");
                 let priceinput = document.getElementById("price");
 
-                if (!sizeInput || !colorInput) return;
+                if (!sizeInput) return;
 
                 let size_id = sizeInput.value;
-                let color_id = colorInput.value;
+                //let color_id = colorInput.value;
                 let quantity = qtyInput.value;
 
                 fetch("{{ route('dtf-gangsheet.calculate') }}", {
@@ -963,7 +1149,7 @@ ease-in-out;
                         "Content-Type": "application/json",
                         "X-CSRF-TOKEN": "{{ csrf_token() }}"
                     },
-                    body: JSON.stringify({ size_id, color_id, quantity })
+                    body: JSON.stringify({ size_id, quantity })
                 })
                     .then(res => res.json())
                     .then(data => {

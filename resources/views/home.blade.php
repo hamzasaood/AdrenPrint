@@ -384,11 +384,11 @@ img {
   </style>
 
   <div class="container-fluid hero-bg" >
-    <div class="container py-5">
+    <div class="py-5">
       <div class="row g-4 justify-content-center">
         <!-- Card 1 -->
-        <div class="col-12 col-sm-6 col-lg-3">
-          <a href="{{url('/dtf/transfer_by_size')}}" class="hero-card d-block h-100">
+        <div class="col-12 col-sm-6 col-lg-2">
+          <a href="#dtf-section" class="hero-card d-block h-100">
             <div class="hero-card-header">DTF TRANSFERS</div>
             <div class="hero-card-body">
               <img src="{{asset('assets/media/hero-1.png')}}" alt="DTF Transfers" class="img-fluid">
@@ -396,7 +396,7 @@ img {
           </a>
         </div>
         <!-- Card 2 -->
-        <div class="col-12 col-sm-6 col-lg-3">
+        <div class="col-12 col-sm-6 col-lg-2">
           <a href="{{url('/blanks')}}" class="hero-card d-block h-100">
             <div class="hero-card-header">BLANK APPAREL</div>
             <div class="hero-card-body">
@@ -405,7 +405,7 @@ img {
           </a>
         </div>
         <!-- Card 3 -->
-        <div class="col-12 col-sm-6 col-lg-3">
+        <div class="col-12 col-sm-6 col-lg-2">
           <a href="#" class="hero-card d-block h-100">
             <div class="hero-card-header">CUSTOM PRINT</div>
             <div class="hero-card-body">
@@ -413,8 +413,17 @@ img {
             </div>
           </a>
         </div>
-        <!-- Card 4 -->
-        <div class="col-12 col-sm-6 col-lg-3">
+       <!-- Card 4 -->
+        <div class="col-12 col-sm-6 col-lg-2">
+          <a href="{{url('/shop')}}" class="hero-card d-block h-100">
+            <div class="hero-card-header">SHOP</div>
+            <div class="hero-card-body">
+              <img src="{{asset('assets/media/shop.png')}}" alt="Custom Print">
+            </div>
+          </a>
+        </div>
+        <!-- Card 5 -->
+        <div class="col-12 col-sm-6 col-lg-2">
           <a href="{{url('/pod')}}" class="hero-card d-block h-100">
             <div class="hero-card-header">PRINT ON DEMAND</div>
             <div class="hero-card-body">
@@ -467,7 +476,7 @@ img {
       </div>
     </div>
   </section>
-  <section data-aos="fade-up">
+  <section data-aos="fade-up" id="dtf-section">
     <div class="container py-5">
       <h2 class="text-center fw-bold mb-1 text-dark">Your DTF Printing HUB</h2>
       <p class="text-center text-muted mb-4">

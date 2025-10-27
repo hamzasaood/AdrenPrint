@@ -35,6 +35,22 @@
 
     
     <style>
+
+        .icon-hover svg path {
+  transition: fill 0.3s ease;
+}
+
+.icon-hover:hover svg path {
+  fill: #dea928;
+}
+
+
+        .navbar a:hover{
+            color: #dea928 !important;
+        }
+        html {
+  scroll-behavior: smooth !important;
+}
         .bg-color-primary {
             background: #1f993d;
         }
@@ -623,6 +639,7 @@
                     total += itemTotal;
                 }
                 else if (item.type == 'dtf') {
+                    
                     name = item.name || 'Unnamed Item';
                     imgSrc = `${item.artwork}` || 'https://via.placeholder.com/60x60?text=No+Image';
                     itemTotal = item.price * item.quantity;
@@ -662,7 +679,14 @@
             <li class="product-item mb-24">
                 <div class="d-flex align-items-center gap-12">
                     <div class="item-image">
-                        <img src="${imgSrc}" alt="${name}" width="60" style="border:1px solid #ddd; border-radius:4px;">
+                    
+                        ${
+                    imgSrc.toLowerCase().endsWith('.pdf')
+                        ? `<div style="width:60px; height:60px; border:1px solid #ddd; border-radius:4px; display:flex; align-items:center; justify-content:center; background:#f8f9fa; font-size:12px; font-weight:600; color:#555;">
+                            PDF File
+                           </div>`
+                        : `<img src="/${imgSrc}" alt="${name}" width="60" style="border:1px solid #ddd; border-radius:4px;">`
+                }
                     </div>
                     <div class="prod-title">
                         <span class="fw-600 black mb-8">${name}</span>

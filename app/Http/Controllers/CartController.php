@@ -218,10 +218,10 @@ public function deleteCart($index)
         'billing.email' => 'required|email',
         'billing.address' => 'required',
         'billing.postal_code' => 'required',
-        'shipping.name' => 'required',
-        'shipping.email' => 'required|email',
-        'shipping.address' => 'required',
-        'shipping.postal_code' => 'required',
+        'shipping.name' => 'nullable',
+        'shipping.email' => 'nullable|email',
+        'shipping.address' => 'nullable',
+        'shipping.postal_code' => 'nullable',
     ]);
 
     if ($validator->fails()) {
@@ -252,7 +252,7 @@ public function deleteCart($index)
         'subtotal' => $subtotal,
         'shipping_cost' => $shippingCost,
         'total' => $total,
-        'payment_status' => 'pending',
+        'payment_status' => 'Paid',
         'payment_method' => 'stripe',
     ]);
 
@@ -295,7 +295,7 @@ public function deleteCart($index)
                 //'design_id'   => $c['design_id'],
                 'design_name' => $c['name'],
                 'preview'     => $c['artwork'] ?? null,
-                'options'       => json_encode($c['color']) ?? null,
+                'options'       => json_encode($c['color'] ?? null) ,
 
                 'width'       => $c['width'] ?? null,
                 'height'      => $c['height'] ?? null,

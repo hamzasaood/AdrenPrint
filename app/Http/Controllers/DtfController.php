@@ -14,7 +14,7 @@ class DtfController extends Controller
     {
         $images = DtfImage::where('type', 'dtf-transfer-by-size')->get();
         $colors = DtfColor::where('is_active', 1)->orderBy('id')->get();
-        $sizes = DtfSize::where('is_active', 1)->orderBy('id')->get();
+        $sizes = DtfSize::where('is_active', 1)->where('type', 'dtf-transfer-by-size')->orderBy('id')->get();
 
         return view('dtf.index', compact('images', 'colors', 'sizes'));
     }
@@ -23,10 +23,18 @@ class DtfController extends Controller
     public function calculate(Request $request)
     {
         $size = DtfSize::findOrFail($request->size_id);
-        $color = DtfColor::findOrFail($request->color_id);
+        if($request->has('color_id')){
+            $color = DtfColor::findOrFail($request->color_id);
+            $cp = $color->surcharge;
+        } else {
+           // $color = new DtfColor();
+            $cp = 0;
+        }
+        
+
         $qty = (int) $request->quantity;
 
-        $unit_price = $size->rate + $color->surcharge;
+        $unit_price = $size->rate + $cp;
         $subtotal = $unit_price * $qty;
 
         return response()->json([
@@ -38,15 +46,19 @@ class DtfController extends Controller
     // Add to cart
     public function addToCart(Request $request)
     {
+        
         $request->validate([
             'size_id' => 'required|exists:dtf_sizes,id',
-            'color_id' => 'required|exists:dtf_colors,id',
+            'color_id' => 'nullable',
             'quantity' => 'required|integer|min:1',
             'artwork' => 'required|file|mimes:png,jpg,jpeg,pdf,svg|max:10240'
         ]);
+        
+
+
 
         $size = DtfSize::findOrFail($request->size_id);
-        $color = DtfColor::findOrFail($request->color_id);
+        //$color = DtfColor::findOrFail($request->color_id);
 
         /** 
          * Store file into public/dtf 
@@ -64,24 +76,19 @@ class DtfController extends Controller
          * - Base price per sq.inch = size->rate
          * - Color surcharge (flat OR per sq.inch)
          */
-        $area = $size->width * $size->height;
-
-        // If your "rate" is per square inch:
-        $basePrice = $area * $size->rate;
-
-        // If your "surcharge" is also per square inch:
-        $surcharge = $area * $color->surcharge;
+       
 
         // Final price per item
         $pricePerItem = $request->unitprice;
 
+        //dd($pricePerItem);
         $cart = session()->get('cart', []);
-
+        
         $cart[] = [
             'type' => 'dtf',
             'name' => "DTF Transfer - {$size->title}",
             'size_title' => $size->title,
-            'color' => $color->label,
+            //'color' => $color->label,
             'width' => $size->width,
             'height' => $size->height,
             'price' => $pricePerItem,
@@ -89,6 +96,7 @@ class DtfController extends Controller
             'artwork' => $path, // saved path in /public/dtf
             'artwork_url' => asset($path), // helpful for displaying in cart
         ];
+        //dd($cart);
 
         session()->put('cart', $cart);
 

@@ -261,7 +261,7 @@
                 </button>
 
                 <!-- Links -->
-                <div class="d-none d-xl-flex gap-4 fw-semibold">
+                <div class="d-none d-xl-flex  fw-semibold" style="gap: 0.8rem !important;">
                     <li class="nav-item dropdown list-unstyled">
                         <a href="#" class="text-dark text-decoration-none nav-link dropdown-toggle" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">DTF
@@ -276,6 +276,9 @@
                         </ul>
                     </li>
                     <a href="{{url('/blanks')}}" class="text-dark text-decoration-none">BLANKS</a>
+                    <a href="{{url('/shop')}}" class="text-dark text-decoration-none">SHOP</a>
+                    <a href="{{url('/pod')}}" class="text-dark text-decoration-none">PRINT ON DEMAND</a>
+                    <a href="#" class="text-dark text-decoration-none">CUSTOM PRINT</a>
                 </div>
 
             </div>
@@ -328,7 +331,7 @@
                                 <div class="main-menu__nav">
                                     <ul class="main-menu__list">
                                         {{-- <li class="dropdown">
-                                            <a href="javascript:void(0);">
+                                            <a href="javascript:void(0);" class="">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                     viewBox="0 0 24 24" fill="none">
                                                     <path
@@ -425,7 +428,7 @@
                 <div class="header-buttons d-flex align-items-center justify-content-end gap-3">
 
                     <!-- Search -->
-                    <a href="javascript:;" id="magnifying-btn" class="button-block search-toggler d-none d-sm-flex">
+                    <a href="javascript:;" id="magnifying-btn" class="button-block search-toggler d-none d-sm-flex icon-hover">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path
                                 d="M9.74 0C15.11 0 19.48 4.37 19.48 9.74c0 2.43-.9 4.66-2.38 6.37l6.69 6.69a.75.75 0 1 1-1.06 1.06l-6.69-6.69a9.72 9.72 0 0 1-6.37 2.38C4.37 19.48 0 15.11 0 9.74 0 4.37 4.37 0 9.74 0Zm0 18.08c4.6 0 8.33-3.74 8.33-8.34 0-4.6-3.73-8.33-8.33-8.33-4.6 0-8.34 3.73-8.34 8.33 0 4.6 3.74 8.34 8.34 8.34Z"
@@ -436,7 +439,7 @@
                     <!-- User Dropdown -->
                     @if(Auth::check())
                         <div class="dropdown">
-                            <a href="javascript:void(0);" class="button-block d-flex align-items-center"
+                            <a href="javascript:void(0);" class="button-block d-flex align-items-center icon-hover"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                     viewBox="0 0 24 24">
@@ -463,7 +466,7 @@
                             </ul>
                         </div>
                     @else
-                        <a href="{{ route('login') }}" class="button-block d-flex align-items-center">
+                        <a href="{{ route('login') }}" class="button-block d-flex align-items-center icon-hover">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                     viewBox="0 0 24 24">
                                     <path
@@ -477,7 +480,7 @@
                     @endif
 
                     <!-- Cart -->
-                    <a href="#" class="button-block d-flex align-items-center position-relative cart-button">
+                    <a href="#" class="button-block d-flex align-items-center position-relative cart-button icon-hover">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path
                                 d="M22.36 21.48c-.59-4.1-2.02-14.12-2.02-14.12a.68.68 0 0 0-.7-.6h-3.07V4.45C16.36-1.48 7.86-1.48 7.63 4.45v2.31H4.57a.68.68 0 0 0-.7.61S2.44 17.37 1.85 21.48c-.09.64.1 1.28.53 1.76.42.48 1.03.76 1.66.76h16.13c.63 0 1.24-.28 1.66-.76.43-.48.62-1.12.53-1.76ZM9.04 4.45c.16-4.06 5.98-4.06 6.13 0v2.31H9.04V4.45Zm11.74 17.87a.67.67 0 0 1-.61.27H4.04a.67.67 0 0 1-.61-.27.67.67 0 0 1-.19-.64c.5-3.5 1.61-11.39 1.93-13.6h2.46v1.56c.04.94 1.38.94 1.42 0V8.17h6.13v1.56c.04.94 1.38.94 1.42 0V8.17h2.46c.32 2.22 1.43 10.1 1.93 13.6a.67.67 0 0 1-.19.64Z"

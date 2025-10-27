@@ -37,19 +37,37 @@
             mode: 'production',
             sizes: [
                 
-                { id: 1, width: 22, height: 22, title: '22 × 22 in' },
-                { id: 2, width: 22, height: 60, title: '22 × 60 in' },
-                { id: 3, width: 22, height: 120, title: '22 × 120 in' },
+                { id: 1, width: 22, height: 24, title: '22 × 24 in' },
+                { id: 2, width: 22, height: 36, title: '22 × 36 in' },
+                { id: 3, width: 22, height: 48, title: '22 × 48 in' },
+                { id: 4, width: 22, height: 60, title: '22 × 60 in' },
+                { id: 5, width: 22, height: 72, title: '22 × 72 in' },
+                { id: 6, width: 22, height: 84, title: '22 × 84 in' },
+                { id: 7, width: 22, height: 96, title: '22 × 96 in' },
+
+
+                { id: 8, width: 22, height: 108, title: '22 × 108 in' },
+
+
+                { id: 9, width: 22, height: 120, title: '22 × 120 in' },
+                { id: 10, width: 22, height: 132, title: '22 × 132 in' },
+                { id: 11, width: 22, height: 144, title: '22 × 144 in' },
+                { id: 12, width: 22, height: 156, title: '22 × 156 in' },
+                { id: 13, width: 22, height: 168, title: '22 × 168 in' },
+                { id: 14, width: 22, height: 180, title: '22 × 180 in' },
+                { id: 15, width: 22, height: 192, title: '22 × 192 in' },
+                { id: 16, width: 22, height: 204, title: '22 × 204 in' },
+                { id: 17, width: 22, height: 216, title: '22 × 216 in' },
+                { id: 18, width: 22, height: 228, title: '22 × 228 in' },
+                { id: 19, width: 22, height: 240, title: '22 × 240 in' },
                 // Add more standard sizes if needed:
-                { id: 4, width: 24, height: 36, title: '24 × 36 in' },
-                { id: 5, width: 24, height: 48, title: '24 × 48 in' },
-                { id: 6, width: 48, height: 60, title: '48 × 60 in' },
+               
 
 
             ],
             customer: {
-                id: {{ auth()->id() ?? 'null' }},
-                name: {!! json_encode(auth()->user()->name ?? '') !!},
+                id: {{ auth()->id() ?? '2' }},
+                name: {!! json_encode(auth()->user()->name ?? 'default') !!},
                 email: {!! json_encode(auth()->user()->email ?? '') !!}
             },
             settings: { showStartModal: false }

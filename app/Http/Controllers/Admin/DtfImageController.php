@@ -11,7 +11,7 @@ class DtfImageController extends Controller
 {
     public function index()
     {
-        $images = DtfImage::orderBy('sort')->paginate(20);
+        $images = DtfImage::orderBy('sort')->get();
         return view('admin.dtf.images.index', compact('images'));
     }
 

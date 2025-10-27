@@ -100,7 +100,7 @@
                                 @foreach($images as $img)
                                     <div class="swiper-slide">
                                         <img src="{{ asset('dtf-transfer/' . $img->path) }}"
-                                            class="img-fluid rounded shadow-sm">
+                                            class="img-fluid rounded shadow-sm main-image">
                                     </div>
                                 @endforeach
                             </div>
@@ -133,7 +133,8 @@
                         </p>
                         <div class="star-rating mb-2 text-dark">★★★★★ <small class="text-dark text-dark">745
                                 Reviews</small></div>
-                        <p class="mb-2">$0.02 per square inch</p>
+                        <p id="priceDisplay" class="mb-2 text-dark" style="font-size: 20px;font-weight: 700;">$19.99</p>
+                        <p class="mb-2 text-dark">$0.02 per square inch</p>
                         <div class="row mb-3 fs-6 text-dark">
                             <div class="col-6 d-flex align-items-center mb-2">
                                 <i class="fa-solid fa-print feature-icon"></i> Print On Virtually Any Fabric
@@ -166,16 +167,68 @@
                                 <label class="form-label fw-bold text-dark">Select size <small class="text-muted">(all sizes
                                         are 22
                                         inches wide)</small></label>
+                
+
                                 <div class="d-flex flex-wrap gap-2 mb-2">
-                                    <button type="button" class="btn btn-outline-dark active" aria-pressed="true">2
-                                        Feet</button>
-                                    <button type="button" class="btn btn-outline-dark">5 Feet</button>
-                                    <button type="button" class="btn btn-outline-dark">7 Feet</button>
-                                    <button type="button" class="btn btn-outline-dark">10 Feet</button>
-                                    <button type="button" class="btn btn-outline-dark">15 Feet</button>
-                                    <button type="button" class="btn btn-outline-dark">20 Feet</button>
-                                    <button type="button" class="btn btn-outline-dark">30 Feet</button>
-                                </div>
+                                    <input type="radio" class="btn-check" name="size" id="size2" data-height="24" data-path="22 × 24.jpg" autocomplete="off" checked>
+                                    <label class="btn btn-outline-dark" for="size2">2 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size3" data-height="36" data-path="22 × 36.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size3">3 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size4" data-height="48" data-path="22 × 48.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size4">4 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size5" data-height="60" data-path="22 × 60.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size5">5 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size6" data-height="72" data-path="22 × 72.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size6">6 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size7" data-height="84" data-path="22 × 84.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size7">7 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size8" data-height="96" data-path="22 × 96.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size8">8 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size9" data-height="108" data-path="22 × 108.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size9">9 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size10" data-height="120" data-path="22 × 120.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size10">10 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size11" data-height="132" data-path="22 × 132.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size11">11 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size12" data-height="144" data-path="22 × 144.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size12">12 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size13" data-height="156" data-path="22 × 156.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size13">13 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size14" data-height="168" data-path="22 × 168.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size14">14 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size15" data-height="180" data-path="22 × 180.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size15">15 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size16" data-height="192" data-path="22 × 192.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size16">16 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size17" data-height="204" data-path="22 × 204.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size17">17 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size18" data-height="216" data-path="22 × 216.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size18">18 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size19" data-height="228" data-path="22 × 228.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size19">19 Feet</label>
+
+                                    <input type="radio" class="btn-check" name="size" id="size20" data-height="240" data-path="22 × 240.jpg" autocomplete="off">
+                                    <label class="btn btn-outline-dark" for="size20">20 Feet</label>
+                                    </div>
+
+
                                 {{-- <div class="d-flex flex-wrap gap-4 text-success" style="font-size: 0.9rem;">
                                     <span>37% off</span>
                                     <span>37% off</span>
@@ -196,7 +249,7 @@
                                         class="text-muted">Choose from our
                                         professional-grade finishes:
                                     </small></label>
-                                <div class="btn-group" role="group" aria-label="Film style selection">
+                                <div class="btn-group d-flex flex-wrap gap-2 mb-2" role="group" aria-label="Film style selection">
                                     <input type="radio" class="btn-check" name="filmStyle" id="styleStandard"
                                         autocomplete="off" checked>
                                     <label class="btn btn-outline-dark" for="styleStandard">Standard</label>
@@ -228,7 +281,7 @@
                             <div class="border p-3 rounded text-center">
                                 <p class="mb-1 fw-bold">Already have a print-ready gang sheet?</p>
                                 <p class="mb-3 text-dark">Easily upload your gang sheet in just a few clicks!</p>
-                                <a href="#" class="text-decoration-none fw-semibold">Upload a Gang Sheet &rarr;</a>
+                                <a href="{{url('/dtf/upload-gangsheet')}}" class="text-decoration-none fw-semibold">Upload a Gang Sheet &rarr;</a>
                             </div>
                         </section>
                     </div>
@@ -756,6 +809,87 @@
                 </div>
             </div> --}}
     </section>
+
+
+
+
+
+
+
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const width = 22; // constant width (as per your PHP)
+  const qty = 1;    // you can make this dynamic if needed
+  const priceDisplay = document.getElementById('priceDisplay');
+  const sizeInputs = document.querySelectorAll('input[name="size"]');
+
+  // JS equivalent of your PHP calculateGangsheetPrice
+  function calculateGangsheetPrice(width, height, qty) {
+    const pricing = {
+      24: 18.99,
+      36: 29.99,
+      48: 34.99,
+      60: 39.99,
+      72: 44.99,
+      84: 49.99,
+      96: 54.99,
+      108: 59.99,
+      120: 69.99,
+      132: 74.99,
+      144: 79.99,
+      156: 84.99,
+      168: 89.99,
+      180: 94.99,
+      192: 99.99,
+      204: 104.99,
+      216: 109.99,
+      228: 114.99,
+      240: 119.99
+    };
+
+    return (pricing[height] || 0) * qty;
+  }
+
+  function updatePrice() {
+    const selected = document.querySelector('input[name="size"]:checked');
+    if (selected) {
+      const height = parseInt(selected.getAttribute('data-height'));
+      const price = calculateGangsheetPrice(width, height, qty);
+      priceDisplay.textContent = `$${price.toFixed(2)}`;
+    }
+  }
+
+  // Listen for change on any size input
+  sizeInputs.forEach(input => {
+    input.addEventListener('change', updatePrice);
+  });
+
+  // Initial load
+  updatePrice();
+
+
+    // Update main image based on selected size
+
+  const mainImage = document.querySelector('.swiper .swiper-slide img'); // adjust selector if needed
+
+  function updateMainImage() {
+    const selected = document.querySelector('input[name="size"]:checked');
+    if (selected && mainImage) {
+      const imagePath = selected.getAttribute('data-path');
+      mainImage.src = `/dtf-transfer/${imagePath}`;
+    }
+  }
+
+  sizeInputs.forEach(input => {
+    input.addEventListener('change', updateMainImage);
+  });
+
+  // Set correct image on page load
+  updateMainImage();
+
+
+});
+</script>
 
     <script>
         var swiper = new Swiper(".mySwiper", {

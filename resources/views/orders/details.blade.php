@@ -10,7 +10,7 @@
                 <h3 class="mb-0">Invoice</h3>
                 <small>Order #{{ $order->id }}</small>
             </div>
-            <div class="text-end">
+            <div class="text-center">
                 <h5 class="mb-0">Ardens Print</h5>
                 <small class="d-block">16131 N Eldridge Pkwy, Suite 108, Tomball, TX 77377</small>
                 <small class="d-block">info@ardensprint.com</small>
@@ -28,7 +28,7 @@
         <div class="card-body p-5">
             {{-- Order Info --}}
             <div class="row mb-4">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <h6 class="fw-bold">Order Info</h6>
                     <p class="mb-1"><strong>Date:</strong> {{ $order->created_at->format('d M Y, h:i A') }}</p>
                     <p class="mb-1"><strong>Status:</strong> 
@@ -38,7 +38,7 @@
                     </p>
                     <p class="mb-1"><strong>Payment Method:</strong> {{ ucfirst($order->payment_method) }}</p>
                 </div>
-                <div class="col-md-6 text-md-end">
+                <div class="col-md-4 text-md-start">
                     <h6 class="fw-bold">Billing Information</h6>
                     <p class="mb-1"><strong>{{ $order->billing_name }}</strong></p>
                     <p class="mb-1">{{ $order->billing_email }}</p>
@@ -69,7 +69,12 @@
                                         <strong>{{ $item->design_name ?? 'Gangsheet Design' }}</strong>
                                         @if($item->preview)
                                             <br>
-                                            <img src="{{ asset($item->preview) }}" alt="Preview" width="80" class="mt-2 rounded border">
+                                            @if(Str::endsWith($item->preview, '.pdf'))
+                                            <label style="cursor:pointer;" onclick="openModal('{{ asset($item->preview) }}')">View PDF</label>
+                                                @else
+                                            <img src="{{ asset($item->preview) }}" style="cursor:pointer;" alt="Preview" width="80" class="mt-2 rounded border" onclick="openModal('{{ asset($item->preview) }}')">
+                                            @endif
+
                                         @endif
                                     @else
                                         <strong>{{ $item->product->name ?? 'Product' }}</strong>
@@ -134,4 +139,11 @@
         </div>
     </div>
 </div>
+
+<script>
+                                    function openModal(fileUrl) {
+                                        var pdfWindow = window.open("");
+                                        pdfWindow.document.write("<iframe width='100%' height='100%' src='" + fileUrl + "'></iframe>");
+                                    }
+                                </script>
 @endsection

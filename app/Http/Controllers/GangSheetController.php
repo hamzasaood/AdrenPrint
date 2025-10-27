@@ -385,9 +385,70 @@ private function calculateGangsheetPrice($width, $height, $qty)
     if (!$width || !$height) return 0;
 
     // Example pricing: $0.25 per square inch
-    $rate = 0.25;
+   /* $rate = 0.25;
     $area = ($width * $height);
     return ($area * $rate) * $qty;
+    */
+    if($width == 22 && $height == 24){
+        return 18.99 * $qty;
+    }
+    elseif($width == 22 && $height == 36){
+        return 29.99 * $qty;
+    }
+    elseif($width == 22 && $height == 48){
+        return 34.99 * $qty;
+    }
+    elseif($width == 22 && $height == 60){
+        return 39.99 * $qty;
+    }
+    elseif($width == 22 && $height == 72){
+        return 44.99 * $qty;
+    }
+    elseif($width == 22 && $height == 84){
+        return 49.99 * $qty;
+    }
+    elseif($width == 22 && $height == 96){
+        return 54.99 * $qty;
+    }
+    elseif($width == 22 && $height == 108){
+        return 59.99 * $qty;
+    }
+    elseif($width == 22 && $height == 120){
+        return 69.99 * $qty;
+    }
+    elseif($width == 22 && $height == 132){
+        return 74.99 * $qty;
+    }
+    elseif($width == 22 && $height == 144){
+        return 79.99 * $qty;
+    }
+    elseif($width == 22 && $height == 156){
+        return 84.99 * $qty;
+    }
+    elseif($width == 22 && $height == 168){
+        return 89.99 * $qty;
+    }
+    elseif($width == 22 && $height == 180){
+        return 94.99 * $qty;
+    }
+    elseif($width == 22 && $height == 192){
+        return 99.99 * $qty;
+    }
+    elseif($width == 22 && $height == 204){
+        return 104.99 * $qty;
+    }
+    elseif($width == 22 && $height == 216){
+        return 109.99 * $qty;
+    }
+    elseif($width == 22 && $height == 228){
+        return 114.99 * $qty;
+    }
+    elseif($width == 22 && $height == 240){
+        return 119.99 * $qty;
+    }
+    else{
+        return 0;
+    }
 }
 
 
